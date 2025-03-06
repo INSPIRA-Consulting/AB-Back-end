@@ -1,26 +1,28 @@
 package school.sptech.Inspira;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Ingrediente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer ingrediente_id;
+
+    @ManyToMany(mappedBy = "ingredientes")
+    private List<Produto> produtos;
 
     private String nome;
     private String medida;
     private Double preco;
 
     public Integer getId() {
-        return id;
+        return ingrediente_id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.ingrediente_id = id;
     }
 
     public String getNome() {

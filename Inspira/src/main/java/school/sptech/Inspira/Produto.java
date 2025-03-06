@@ -9,20 +9,25 @@ import java.util.List;
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Integer produto_id;
 
-    @ManyToMany
-    private List<Ingrediente> ingredientes = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL) // Define relação muitos-para-muitos
+    @JoinTable(
+            name = "produto_ingrediente", // Nome da tabela intermediária
+            joinColumns = @JoinColumn(name = "produto_id"), // Chave estrangeira para Produto
+            inverseJoinColumns = @JoinColumn(name = "ingrediente_id") // Chave estrangeira para Ingrediente
+    )
+    private List<Ingrediente> ingredientes;
     private String nome;
     private Double valor;
 
 
     public Integer getId() {
-        return id;
+        return produto_id;
     }
 
     public void setId(Integer id) {
-        this.id = id;
+        this.produto_id = id;
     }
 
     public List<Ingrediente> getIngredientes() {
