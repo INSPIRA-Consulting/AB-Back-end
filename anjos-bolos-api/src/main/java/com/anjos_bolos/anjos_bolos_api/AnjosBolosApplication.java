@@ -1,13 +1,13 @@
-package school.sptech.Inspira;
+package com.anjos_bolos.anjos_bolos_api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class InspiraApplication {
+public class AnjosBolosApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(InspiraApplication.class, args);
+		SpringApplication.run(AnjosBolosApplication.class, args);
 	}
 
 }

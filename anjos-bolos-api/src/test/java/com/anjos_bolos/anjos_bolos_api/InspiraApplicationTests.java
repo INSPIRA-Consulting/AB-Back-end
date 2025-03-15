@@ -1,4 +1,4 @@
-package school.sptech.Inspira;
+package com.anjos_bolos.anjos_bolos_api;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

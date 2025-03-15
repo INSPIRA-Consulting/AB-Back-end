@@ -1,7 +1,7 @@
-package school.sptech.Inspira.Repository;
+package com.anjos_bolos.anjos_bolos_api.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import school.sptech.Inspira.Entity.Produto;
+import com.anjos_bolos.anjos_bolos_api.entity.Produto;
 
 import java.util.List;
 

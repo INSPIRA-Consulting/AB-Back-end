@@ -1,12 +1,11 @@
-package school.sptech.Inspira.Controller;
+package com.anjos_bolos.anjos_bolos_api.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import school.sptech.Inspira.Entity.Produto;
-import school.sptech.Inspira.Repository.IngredienteRepository;
-import school.sptech.Inspira.Repository.ProdutoRepository;
+import com.anjos_bolos.anjos_bolos_api.entity.Produto;
+import com.anjos_bolos.anjos_bolos_api.repository.ProdutoRepository;
 
 import java.util.List;
 

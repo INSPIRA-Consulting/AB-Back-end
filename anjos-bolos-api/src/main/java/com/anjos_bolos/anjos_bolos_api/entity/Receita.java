@@ -1,4 +1,4 @@
-package school.sptech.Inspira.Entity;
+package com.anjos_bolos.anjos_bolos_api.entity;
 
 import jakarta.persistence.*;
 
