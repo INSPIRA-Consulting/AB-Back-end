@@ -1,8 +1,10 @@
-package school.sptech.Inspira;
+package school.sptech.Inspira.Controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import school.sptech.Inspira.Entity.Ingrediente;
+import school.sptech.Inspira.Repository.IngredienteRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,22 +13,21 @@ import java.util.Optional;
 @RequestMapping("/ingredientes")
 public class IngredienteController {
     @Autowired
-    private IngredienteRepository repository;
+    private IngredienteRepository ingredienteRepository;
 
     @PostMapping
-    public ResponseEntity<Ingrediente> cadastrar(
-            @RequestBody Ingrediente ingredienteParaCadastrar
-    ) {
+    public ResponseEntity<Ingrediente> cadastrar(@RequestBody Ingrediente ingrediente) {
+        if (ingredienteRepository.existsByNome(ingrediente.getNome())) {
+            return ResponseEntity.status(409).build();
+        }
 
-        ingredienteParaCadastrar.setId(null);
-        Ingrediente ingredienteSalvo = repository.save(ingredienteParaCadastrar);
-
+        Ingrediente ingredienteSalvo = ingredienteRepository.save(ingrediente);
         return ResponseEntity.status(201).body(ingredienteSalvo);
     }
 
     @GetMapping
     public ResponseEntity<List<Ingrediente>> listar() {
-        List<Ingrediente> listaIngredientes = repository.findAll();
+        List<Ingrediente> listaIngredientes = ingredienteRepository.findAll();
 
         if (listaIngredientes.isEmpty()) {
             return ResponseEntity.status(204).build();
@@ -35,11 +36,11 @@ public class IngredienteController {
         return ResponseEntity.status(200).body(listaIngredientes);
     }
 
-    @GetMapping("/nome")
+    @GetMapping("/filtro-nome")
     public ResponseEntity<List<Ingrediente>> listarPorNome(
             @RequestParam String nome
     ) {
-        List<Ingrediente> response = repository.findByNomeContainsIgnoreCase(nome);
+        List<Ingrediente> response = ingredienteRepository.findByNomeContainsIgnoreCase(nome);
 
         if (response.isEmpty()) {
             return ResponseEntity.status(204).build();
@@ -53,13 +54,13 @@ public class IngredienteController {
             @PathVariable Integer id,
             @RequestBody Double precoParaAtualizar
     ) {
-        Optional<Ingrediente> ingredienteAchado = repository.findById(id);
+        Optional<Ingrediente> ingredienteAchado = ingredienteRepository.findById(id);
 
         if (ingredienteAchado.isPresent()) {
             Ingrediente ingrediente = ingredienteAchado.get();
             ingrediente.setPreco(precoParaAtualizar);
 
-            return ResponseEntity.status(200).body(repository.save(ingrediente));
+            return ResponseEntity.status(200).body(ingredienteRepository.save(ingrediente));
         }
 
         return ResponseEntity.status(404).build();
@@ -70,11 +71,11 @@ public class IngredienteController {
             @PathVariable Integer id,
             @RequestBody Ingrediente ingredienteParaAtualizar
     ) {
-        Optional<Ingrediente> ingredienteAchado = repository.findById(id);
+        Optional<Ingrediente> ingredienteAchado = ingredienteRepository.findById(id);
 
         if (ingredienteAchado.isPresent()) {
-            ingredienteParaAtualizar.setId(id);
-            return ResponseEntity.status(200).body(repository.save(ingredienteParaAtualizar));
+            ingredienteParaAtualizar.setIngrediente_id(id);
+            return ResponseEntity.status(200).body(ingredienteRepository.save(ingredienteParaAtualizar));
         }
 
         return ResponseEntity.status(404).build();
@@ -84,10 +85,10 @@ public class IngredienteController {
     public ResponseEntity<Void> deletar (
         @PathVariable Integer id
     ) {
-        Optional<Ingrediente> ingredienteAchado = repository.findById(id);
+        Optional<Ingrediente> ingredienteAchado = ingredienteRepository.findById(id);
 
         if (ingredienteAchado.isPresent()) {
-            repository.deleteById(id);
+            ingredienteRepository.deleteById(id);
             return ResponseEntity.status(204).build();
         }
 
