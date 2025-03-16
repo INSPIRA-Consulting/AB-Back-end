@@ -27,32 +27,28 @@ public class ReceitaController {
 
 
     @PostMapping
-    public ResponseEntity<Receita> cadastrar(
-            @RequestBody Receita receitaParaCadastrar
-    ) {
-        Optional<Produto> produto = produtoRepository.findById(receitaParaCadastrar.getProduto().getProdutoId());
-        if (produto.isEmpty()) {
-            return ResponseEntity.status(404).build();
-        }
+    public ResponseEntity<Receita> cadastrarReceita(@RequestBody Receita receitaParaCadastrar) {
+        Optional<Produto> produto = produtoRepository.findById(receitaParaCadastrar.getProduto().getIdProduto());
+        Optional<Ingrediente> ingrediente = ingredienteRepository.findById(receitaParaCadastrar.getIngrediente().getIdIngrediente());
 
-        Optional<Ingrediente> ingrediente = ingredienteRepository.findById(receitaParaCadastrar.getIngrediente().getIngrediente_id());
-        if (ingrediente.isEmpty()) {
+        if (produto.isEmpty() || ingrediente.isEmpty()) {
             return ResponseEntity.status(404).build();
         }
 
         receitaParaCadastrar.setProduto(produto.get());
         receitaParaCadastrar.setIngrediente(ingrediente.get());
-        receitaParaCadastrar.setId(null);
-        Receita receitaSalva = receitaRepository.save(receitaParaCadastrar);
-        return ResponseEntity.status(201).body(receitaSalva);
+        receitaParaCadastrar.setIdReceita(null);
+        Receita receitaCadastrada = receitaRepository.save(receitaParaCadastrar);
+
+        return ResponseEntity.status(201).body(receitaCadastrada);
     }
 
     @GetMapping
-    public ResponseEntity<List<Receita>> listar() {
+    public ResponseEntity<List<Receita>> listarReceitas() {
         List<Receita> receitas = receitaRepository.findAll();
 
         if (receitas.isEmpty()) {
-            return ResponseEntity.status(204).build(); // Retorna 204 se não houver receitas
+            return ResponseEntity.status(204).build();
         }
 
         return ResponseEntity.status(200).body(receitas);
@@ -61,24 +57,31 @@ public class ReceitaController {
     @GetMapping("/calcular-preco")
     public ResponseEntity<String> calcularPreco() {
         List<Receita> receitas = receitaRepository.findAll();
+        Double valorCusto = .0;
 
-        double valorCusto = .0;
         for (Receita receita : receitas) {
-            valorCusto += receita.getIngrediente().getPreco() * receita.getQuantidade();
+            Double precoIngrediente = receita.getIngrediente().getPreco();
+            Double quantidadeIngrediente = receita.getQuantidade();
+
+            valorCusto += precoIngrediente * quantidadeIngrediente;
         }
 
-        return ResponseEntity.status(200).body("O valor de custo de produção desse produto é de R$ %.2f, preço sugerido R$ %.2f".formatted(valorCusto, valorCusto * 1.40));
+        return ResponseEntity.status(200).body("O valor de custo de produção desse produto é de R$ %.2f, preço sugerido R$ %.2f"
+                .formatted(valorCusto, valorCusto * 1.40));
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Void> deletar(
-            @PathVariable Integer id
+    @DeleteMapping("{idReceita}")
+    public ResponseEntity<Void> excluirReceita(
+            @PathVariable Integer idReceita
     ) {
-        if (receitaRepository.existsById(id)) {
-            receitaRepository.deleteById(id);
-            return ResponseEntity.status(204).build();
+        Boolean receitaExistePorId = receitaRepository.existsById(idReceita);
+
+        if (!receitaExistePorId) {
+            return ResponseEntity.status(404).build();
         }
 
-        return ResponseEntity.status(404).build();
+        receitaRepository.deleteById(idReceita);
+
+        return ResponseEntity.status(204).build();
     }
 }

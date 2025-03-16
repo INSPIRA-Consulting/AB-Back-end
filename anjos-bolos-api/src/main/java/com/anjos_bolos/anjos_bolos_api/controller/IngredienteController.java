@@ -13,86 +13,99 @@ import java.util.Optional;
 @RequestMapping("/ingredientes")
 public class IngredienteController {
     @Autowired
-    private IngredienteRepository ingredienteRepository;
+    private IngredienteRepository repositoryIngrediente;
 
     @PostMapping
-    public ResponseEntity<Ingrediente> cadastrar(@RequestBody Ingrediente ingrediente) {
-        if (ingredienteRepository.existsByNome(ingrediente.getNome())) {
+    public ResponseEntity<Ingrediente> cadastrarIngrediente(@RequestBody Ingrediente ingredienteParaCadastrar) {
+        Boolean ingredienteExistePorNome = repositoryIngrediente.existsByNome(ingredienteParaCadastrar.getNome());
+
+        if (ingredienteExistePorNome) {
             return ResponseEntity.status(409).build();
         }
 
-        Ingrediente ingredienteSalvo = ingredienteRepository.save(ingrediente);
-        return ResponseEntity.status(201).body(ingredienteSalvo);
+        Ingrediente ingredienteCadastrado = repositoryIngrediente.save(ingredienteParaCadastrar);
+
+        return ResponseEntity.status(201).body(ingredienteCadastrado);
     }
 
     @GetMapping
-    public ResponseEntity<List<Ingrediente>> listar() {
-        List<Ingrediente> listaIngredientes = ingredienteRepository.findAll();
+    public ResponseEntity<List<Ingrediente>> listarIngredientes() {
+        List<Ingrediente> ingredientes = repositoryIngrediente.findAll();
 
-        if (listaIngredientes.isEmpty()) {
+        if (ingredientes.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
 
-        return ResponseEntity.status(200).body(listaIngredientes);
+        return ResponseEntity.status(200).body(ingredientes);
     }
 
     @GetMapping("/filtro-nome")
-    public ResponseEntity<List<Ingrediente>> listarPorNome(
-            @RequestParam String nome
+    public ResponseEntity<List<Ingrediente>> listarPorNomeIngrediente(
+            @RequestParam String nomeIngrediente
     ) {
-        List<Ingrediente> response = ingredienteRepository.findByNomeContainsIgnoreCase(nome);
+        List<Ingrediente> ingredientesFiltrados = repositoryIngrediente.findByNomeContainsIgnoreCase(nomeIngrediente);
 
-        if (response.isEmpty()) {
+        if (ingredientesFiltrados.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
 
-        return ResponseEntity.status(200).body(response);
+        return ResponseEntity.status(200).body(ingredientesFiltrados);
     }
 
-    @PatchMapping("{id}")
+    @PatchMapping("{idIngrediente}")
     public ResponseEntity<Ingrediente> atualizarPrecoIngrediente(
-            @PathVariable Integer id,
-            @RequestBody Double precoParaAtualizar
+            @PathVariable Integer idIngrediente,
+            @RequestParam Double precoParaAtualizar
     ) {
-        Optional<Ingrediente> ingredienteAchado = ingredienteRepository.findById(id);
+        Optional<Ingrediente> optIngrediente = repositoryIngrediente.findById(idIngrediente);
 
-        if (ingredienteAchado.isPresent()) {
-            Ingrediente ingrediente = ingredienteAchado.get();
-            ingrediente.setPreco(precoParaAtualizar);
-
-            return ResponseEntity.status(200).body(ingredienteRepository.save(ingrediente));
+        if (optIngrediente.isEmpty()) {
+            return ResponseEntity.status(404).build();
         }
 
-        return ResponseEntity.status(404).build();
+        Ingrediente ingredienteAtualizado = optIngrediente.get();
+        ingredienteAtualizado.setPreco(precoParaAtualizar);
+
+        return ResponseEntity.status(200).body(repositoryIngrediente.save(ingredienteAtualizado));
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<Ingrediente> atualizar (
-            @PathVariable Integer id,
+    @PutMapping("{idIngrediente}")
+    public ResponseEntity<Ingrediente> atualizarIngrediente (
+            @PathVariable Integer idIngrediente,
             @RequestBody Ingrediente ingredienteParaAtualizar
     ) {
-        Optional<Ingrediente> ingredienteAchado = ingredienteRepository.findById(id);
+        Optional<Ingrediente> optIngrediente = repositoryIngrediente.findById(idIngrediente);
 
-        if (ingredienteAchado.isPresent()) {
-            ingredienteParaAtualizar.setIngrediente_id(id);
-            return ResponseEntity.status(200).body(ingredienteRepository.save(ingredienteParaAtualizar));
+        if (optIngrediente.isEmpty()) {
+            return ResponseEntity.status(404).build();
         }
 
-        return ResponseEntity.status(404).build();
+        Boolean ingredienteExistePorNome = repositoryIngrediente.existsByNomeEqualsIgnoreCaseAndIdIngredienteNot(
+                ingredienteParaAtualizar.getNome(), idIngrediente
+        );
+
+        if (ingredienteExistePorNome) {
+            return ResponseEntity.status(409).build();
+        }
+
+        ingredienteParaAtualizar.setIdIngrediente(idIngrediente);
+
+        return ResponseEntity.status(200).body(repositoryIngrediente.save(ingredienteParaAtualizar));
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Void> deletar (
-        @PathVariable Integer id
+    @DeleteMapping("/{idIngrediente}")
+    public ResponseEntity<Void> excluirIngrediente(
+        @PathVariable Integer idIngrediente
     ) {
-        Optional<Ingrediente> ingredienteAchado = ingredienteRepository.findById(id);
+        Boolean produtoExistePorId = repositoryIngrediente.existsById(idIngrediente);
 
-        if (ingredienteAchado.isPresent()) {
-            ingredienteRepository.deleteById(id);
-            return ResponseEntity.status(204).build();
+        if (!produtoExistePorId) {
+            return ResponseEntity.status(404).build();
         }
 
-        return ResponseEntity.status(404).build();
+        repositoryIngrediente.deleteById(idIngrediente);
+
+        return ResponseEntity.status(204).build();
     }
 
 }

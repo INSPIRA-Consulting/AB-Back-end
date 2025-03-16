@@ -7,17 +7,17 @@ public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer produtoId;
+    private Integer idProduto;
 
     private String nome;
     private Double valorFinal;
 
-    public Integer getProdutoId() {
-        return produtoId;
+    public Integer getIdProduto() {
+        return idProduto;
     }
 
-    public void setProdutoId(Integer produtoId) {
-        this.produtoId = produtoId;
+    public void setIdProduto(Integer idProduto) {
+        this.idProduto = idProduto;
     }
 
     public String getNome() {

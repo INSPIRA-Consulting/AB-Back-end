@@ -13,22 +13,25 @@ import java.util.List;
 @RequestMapping("/produtos")
 public class ProdutoController {
     @Autowired
-    private ProdutoRepository produtoRepository;
+    private ProdutoRepository repositoryProduto;
 
     @PostMapping
-    public ResponseEntity<Produto> cadastrar(@RequestBody Produto produtoParaCadastrar) {
-        if (!produtoRepository.existsByNomeIgnoreCase(produtoParaCadastrar.getNome())) {
-            produtoParaCadastrar.setProdutoId(null);
-            Produto usuarioCadasrado = produtoRepository.save(produtoParaCadastrar);
-            return ResponseEntity.status(201).body(usuarioCadasrado);
+    public ResponseEntity<Produto> cadastrarProduto(@RequestBody Produto produtoParaCadastrar) {
+        Boolean produtoExistePorNome = repositoryProduto.existsByNomeIgnoreCase(produtoParaCadastrar.getNome());
+
+        if (produtoExistePorNome) {
+            return ResponseEntity.status(409).build();
         }
 
-        return ResponseEntity.status(409).build();
+        produtoParaCadastrar.setIdProduto(null);
+        Produto produtoCadastrado = repositoryProduto.save(produtoParaCadastrar);
+
+        return ResponseEntity.status(201).body(produtoCadastrado);
     }
 
     @GetMapping
-    public ResponseEntity<List<Produto>> listar() {
-        List<Produto> produtos = produtoRepository.findAll();
+    public ResponseEntity<List<Produto>> listarProdutos() {
+        List<Produto> produtos = repositoryProduto.findAll();
 
         if (produtos.isEmpty()) {
             return ResponseEntity.status(204).build();
@@ -38,10 +41,10 @@ public class ProdutoController {
     }
 
     @GetMapping("/filtro-nome")
-    public ResponseEntity<List<Produto>> buscarPorNome(
-            @RequestParam String nome
+    public ResponseEntity<List<Produto>> buscarPorNomeProduto(
+            @RequestParam String nomeProduto
     ) {
-        List<Produto> produtos = produtoRepository.findByNomeContainsIgnoreCase(nome);
+        List<Produto> produtos = repositoryProduto.findByNomeContainsIgnoreCase(nomeProduto);
 
         if (produtos.isEmpty()) {
             return ResponseEntity.status(204).build();
@@ -50,35 +53,44 @@ public class ProdutoController {
         return ResponseEntity.status(200).body(produtos);
     }
 
-    @PutMapping("{id}")
-    public ResponseEntity<Produto> atualizar(
-            @PathVariable Integer id,
+    @PutMapping("{idProduto}")
+    public ResponseEntity<Produto> atualizarProduto(
+            @PathVariable Integer idProduto,
             @RequestBody Produto produtoParaAtualizar
     ) {
-        if (!produtoRepository.existsById(id)) {
+        Boolean produtoExistePorId = repositoryProduto.existsById(idProduto);
+
+        if (!produtoExistePorId) {
             return ResponseEntity.status(404).build();
         }
 
-        if (produtoRepository.existsByNomeIgnoreCaseAndProdutoIdNot(produtoParaAtualizar.getNome(), id)
-        ) {
+        Boolean produtoExistePorNome = repositoryProduto.existsByNomeEqualsIgnoreCaseAndIdProdutoNot(
+                produtoParaAtualizar.getNome(), idProduto
+        );
+
+        if (produtoExistePorNome) {
             return ResponseEntity.status(409).build();
         }
 
-        produtoParaAtualizar.setProdutoId(id);
-        Produto produtoAtualizado = produtoRepository.save(produtoParaAtualizar);
+        produtoParaAtualizar.setIdProduto(idProduto);
+        Produto produtoAtualizado = repositoryProduto.save(produtoParaAtualizar);
+
         return ResponseEntity.status(200).body(produtoAtualizado);
     }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<Void> deletar(
-            @PathVariable Integer id
+    @DeleteMapping("{idProduto}")
+    public ResponseEntity<Void> excluirProduto(
+            @PathVariable Integer idProduto
     ) {
-        if (produtoRepository.existsById(id)) {
-            produtoRepository.deleteById(id);
-            return ResponseEntity.status(204).build();
+        Boolean produtoExistePorId = repositoryProduto.existsById(idProduto);
+
+        if (!produtoExistePorId) {
+            return ResponseEntity.status(404).build();
         }
 
-        return ResponseEntity.status(404).build();
+        repositoryProduto.deleteById(idProduto);
+
+        return ResponseEntity.status(204).build();
     }
 
 }

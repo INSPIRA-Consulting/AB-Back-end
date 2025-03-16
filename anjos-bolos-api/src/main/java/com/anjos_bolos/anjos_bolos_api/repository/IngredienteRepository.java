@@ -11,5 +11,7 @@ public interface IngredienteRepository extends JpaRepository<Ingrediente, Intege
 
     Optional<Ingrediente> findByNome(String nome);
 
+    Boolean existsByNomeEqualsIgnoreCaseAndIdIngredienteNot(String nome, Integer id);
+
     Boolean existsByNome(String nome);
 }

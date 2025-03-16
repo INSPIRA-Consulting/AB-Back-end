@@ -6,19 +6,18 @@ import jakarta.persistence.*;
 public class Ingrediente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer ingrediente_id;
+    private Integer idIngrediente;
 
     private String nome;
     private String medida;
     private Double preco;
 
-
-    public Integer getIngrediente_id() {
-        return ingrediente_id;
+    public Integer getIdIngrediente() {
+        return idIngrediente;
     }
 
-    public void setIngrediente_id(Integer ingrediente_id) {
-        this.ingrediente_id = ingrediente_id;
+    public void setIdIngrediente(Integer idIngrediente) {
+        this.idIngrediente = idIngrediente;
     }
 
     public String getNome() {
