@@ -54,27 +54,39 @@ public class ReceitaController {
         return ResponseEntity.status(200).body(receitas);
     }
 
-    @GetMapping("/calcular-preco")
-    public ResponseEntity<String> calcularPreco() {
+    @GetMapping("/calcular-preco/{idProduto}")
+    public ResponseEntity<String> calcularPreco(
+            @PathVariable Integer idProduto
+    ) {
+        Optional<Produto> produto = produtoRepository.findById(idProduto);
         List<Receita> receitas = receitaRepository.findAll();
-        Double valorCusto = .0;
+
+        double valorCusto = .0;
+        double precoIngrediente = .0;
+        double quantidadeIngrediente = .0;
+
+        if (produto.isEmpty()) {
+            return ResponseEntity.status(404).build();
+        }
 
         for (Receita receita : receitas) {
-            Double precoIngrediente = receita.getIngrediente().getPreco();
-            Double quantidadeIngrediente = receita.getQuantidade();
+            if (receita.getProduto().getIdProduto().equals(idProduto)) {
+                precoIngrediente = receita.getIngrediente().getPreco();
+                quantidadeIngrediente = receita.getQuantidade();
+            }
 
             valorCusto += precoIngrediente * quantidadeIngrediente;
         }
 
-        return ResponseEntity.status(200).body("O valor de custo de produção desse produto é de R$ %.2f, preço sugerido R$ %.2f"
-                .formatted(valorCusto, valorCusto * 1.40));
+        return ResponseEntity.status(200).body("O valor de custo de produção desse produto é de R$ %.2f, preço sugerido R$ %.2f. O preço atual desse produto é de R$ %.2f"
+                .formatted(valorCusto, valorCusto * 1.40, produto.get().getValorFinal()));
     }
 
     @DeleteMapping("{idReceita}")
     public ResponseEntity<Void> excluirReceita(
             @PathVariable Integer idReceita
     ) {
-        Boolean receitaExistePorId = receitaRepository.existsById(idReceita);
+        boolean receitaExistePorId = receitaRepository.existsById(idReceita);
 
         if (!receitaExistePorId) {
             return ResponseEntity.status(404).build();
