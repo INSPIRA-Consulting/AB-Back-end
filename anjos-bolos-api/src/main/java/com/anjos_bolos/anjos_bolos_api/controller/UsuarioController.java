@@ -70,7 +70,7 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 
-    @GetMapping("/{funcao}")
+    @GetMapping("/funcao/{funcao}")
     public ResponseEntity<List<Usuario>> buscarPorFuncao(
             @PathVariable String funcao
     ) {

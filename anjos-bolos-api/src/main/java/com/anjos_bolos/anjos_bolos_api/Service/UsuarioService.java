@@ -12,8 +12,11 @@ import java.util.Optional;
 
 @Service
 public class UsuarioService {
-    @Autowired
-    private UsuarioRepository repository;
+    private final UsuarioRepository repository;
+
+    public UsuarioService(UsuarioRepository repository) {
+        this.repository = repository;
+    }
 
     public boolean existePorEmail(String email) {
         return repository.existsByEmailIgnoreCase(email);
@@ -27,22 +30,20 @@ public class UsuarioService {
         return repository.existsByCpf(cpf);
     }
 
-
     public List<Usuario> listar() {
         return repository.findAll();
     }
 
-    public Usuario cadastrar(Usuario usuario){
-
+    public Usuario cadastrar(Usuario usuario) {
         return repository.save(usuario);
     }
 
-    public List<Usuario> buscarPorNome(String nome){
+    public List<Usuario> buscarPorNome(String nome) {
         return repository.findByNomeContainingIgnoreCase(nome);
     }
 
-    public List<Usuario> buscarPorFuncao(Funcao funcao){
-        return repository.findByFuncaoContainingIgnoreCase(funcao);
+    public List<Usuario> buscarPorFuncao(Funcao funcao) {
+        return repository.findByFuncao(funcao);
     }
 
     public boolean deletarPorId(Integer id) {
@@ -53,10 +54,8 @@ public class UsuarioService {
         return false;
     }
 
-    public Usuario atualizarPorNome(String nome,Usuario usuarioAtualizado){
-
+    public Usuario atualizarPorNome(String nome, Usuario usuarioAtualizado) {
         Optional<Usuario> usuarioEncontrado = repository.findByNome(nome);
-
 
         if (usuarioEncontrado.isEmpty()) {
             return null;
@@ -85,5 +84,4 @@ public class UsuarioService {
 
         return repository.save(usuario);
     }
-
 }
