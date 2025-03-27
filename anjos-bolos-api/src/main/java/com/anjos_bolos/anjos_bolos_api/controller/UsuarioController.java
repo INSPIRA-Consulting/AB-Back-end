@@ -70,13 +70,11 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 
-    @GetMapping("/funcao/{funcao}")
+    @GetMapping("/funcao")
     public ResponseEntity<List<Usuario>> buscarPorFuncao(
-            @PathVariable String funcao
+            @RequestParam Funcao funcao
     ) {
-        Funcao funcaoEnum = Funcao.valueOf(funcao.toUpperCase());
-        List<Usuario> usuarios = service.buscarPorFuncao(funcaoEnum);
-
+        List<Usuario> usuarios = service.buscarPorFuncao(funcao);
 
         if (usuarios.isEmpty()) {
             return ResponseEntity.status(204).build();
