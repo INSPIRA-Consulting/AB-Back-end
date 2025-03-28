@@ -4,25 +4,32 @@ import jakarta.persistence.*;
 
 @Entity
 public class Receita {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idReceita;
+    @EmbeddedId
+    private ReceitaPrimaryKey idReceita;
 
-    @ManyToOne
-    @JoinColumn(name = "idProduto", nullable = false)
+    @ManyToOne @MapsId("fkProduto")
     private Produto produto;
 
-    @ManyToOne
-    @JoinColumn(name = "idIngrediente", nullable = false)
+    @ManyToOne @MapsId("fkIngrediente")
     private Ingrediente ingrediente;
 
     private Double quantidade;
 
-    public Integer getIdReceita() {
+    public Receita() {
+    }
+
+    public Receita(ReceitaPrimaryKey idReceita, Produto produto, Ingrediente ingrediente, Double quantidade) {
+        this.idReceita = idReceita;
+        this.produto = produto;
+        this.ingrediente = ingrediente;
+        this.quantidade = quantidade;
+    }
+
+    public ReceitaPrimaryKey getIdReceita() {
         return idReceita;
     }
 
-    public void setIdReceita(Integer idReceita) {
+    public void setIdReceita(ReceitaPrimaryKey idReceita) {
         this.idReceita = idReceita;
     }
 
