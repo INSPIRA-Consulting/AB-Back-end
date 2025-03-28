@@ -54,11 +54,11 @@ public class ReceitaController {
                 .formatted(valorCusto, valorCusto * 1.40, valorFinal));
     }
 
-    @DeleteMapping("{idProduto}/{idIngrediente}")
+    @DeleteMapping("produto/{idProduto}")
     public ResponseEntity<Void> excluirReceita(
-            @PathVariable Integer idProduto, @PathVariable Integer idIngrediente
+            @PathVariable Integer idProduto
     ) {
-        receitaService.excluir(idProduto, idIngrediente);
+        receitaService.excluir(idProduto);
 
         return ResponseEntity.status(204).build();
     }

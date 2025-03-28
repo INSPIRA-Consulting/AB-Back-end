@@ -9,6 +9,7 @@ import com.anjos_bolos.anjos_bolos_api.exception.EntidadeNaoEncontradaException;
 import com.anjos_bolos.anjos_bolos_api.repository.IngredienteRepository;
 import com.anjos_bolos.anjos_bolos_api.repository.ProdutoRepository;
 import com.anjos_bolos.anjos_bolos_api.repository.ReceitaRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -69,6 +70,16 @@ public class ReceitaService {
         return receitas;
     }
 
+    public Receita buscarReceitaPorProduto(Integer idProduto) {
+        Optional<Receita> receita = receitaRepository.findByProduto_IdProduto(idProduto);
+
+        if (receita.isEmpty()) {
+            throw new EntidadeNaoEncontradaException("Receita não encontrada com Produto de ID %d.".formatted(idProduto));
+        }
+
+        return receita.get();
+    }
+
     public Double calcularPreco(Integer idProduto) {
         Boolean existeProduto = produtoRepository.existsById(idProduto);
         List<Receita> receitas = receitaRepository.findAll();
@@ -85,25 +96,15 @@ public class ReceitaService {
             return valorCusto;
     }
 
-    public void excluir(Integer idProduto, Integer idIngrediente) {
-        ReceitaPrimaryKey idReceita = new ReceitaPrimaryKey(idProduto, idIngrediente);
-        Boolean existePorId = receitaRepository.existsById(idReceita);
+    @Transactional
+    public void excluir(Integer idProduto) {
+        Boolean existePorId = receitaRepository.existsByProduto_IdProduto(idProduto);
 
         if (!existePorId) {
-            throw new EntidadeNaoEncontradaException("Receita não encontrada com Produto de ID %d e Ingrediente de ID %d."
-                    .formatted(idProduto, idIngrediente));
+            throw new EntidadeNaoEncontradaException("Nenhuma Receita encontrada com Produto de ID %d."
+                    .formatted(idProduto));
         }
 
-        receitaRepository.deleteById(idReceita);
-    }
-
-    public Receita buscarReceitaPorProduto(Integer idProduto) {
-        Optional<Receita> receita = receitaRepository.findByProduto_IdProduto(idProduto);
-
-        if (receita.isEmpty()) {
-            throw new EntidadeNaoEncontradaException("Receita não encontrada com Produto de ID %d.".formatted(idProduto));
-        }
-
-        return receita.get();
+        receitaRepository.deleteAllByProduto_IdProduto(idProduto);
     }
 }

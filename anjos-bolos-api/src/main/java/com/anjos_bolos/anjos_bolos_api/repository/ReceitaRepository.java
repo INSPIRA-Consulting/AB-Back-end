@@ -8,4 +8,8 @@ import java.util.Optional;
 
 public interface ReceitaRepository extends JpaRepository<Receita, ReceitaPrimaryKey> {
     Optional<Receita> findByProduto_IdProduto(Integer idProduto);
+
+    Boolean existsByProduto_IdProduto(Integer idProduto);
+
+    void deleteAllByProduto_IdProduto(Integer idProduto);
 }
