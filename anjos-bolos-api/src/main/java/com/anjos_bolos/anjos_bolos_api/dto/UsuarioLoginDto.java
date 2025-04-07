@@ -7,12 +7,6 @@ public class UsuarioLoginDto {
     @NotBlank
     @Email
     private String email;
-    private boolean autenticado;
-
-    public boolean isLoginValido(String email, String senha) {
-        autenticado = this.email.equalsIgnoreCase(email) && this.senha.equalsIgnoreCase(senha);
-        return autenticado;
-    }
 
     @NotBlank
     private String senha;

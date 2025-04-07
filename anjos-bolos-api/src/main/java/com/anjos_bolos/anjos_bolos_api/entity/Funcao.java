@@ -4,6 +4,4 @@ public enum Funcao {
     ADMINISTRADOR,
     GERENTE,
     ATENDENTE
-
-
 }
