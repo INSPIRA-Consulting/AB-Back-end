@@ -22,8 +22,23 @@ public class Usuario {
     @Enumerated(EnumType.STRING)
     private Funcao funcao;
     private String senha;
+    private boolean autenticado;
+
+    public boolean isLoginValido(String email, String senha) {
+        autenticado = this.email.equalsIgnoreCase(email) && this.senha.equalsIgnoreCase(senha);
+        return autenticado;
+    }
+
 
     public Usuario() {
+    }
+
+    public boolean isAutenticado() {
+        return autenticado;
+    }
+
+    public void setAutenticado(boolean autenticado) {
+        this.autenticado = autenticado;
     }
 
     public Funcao getFuncao() {

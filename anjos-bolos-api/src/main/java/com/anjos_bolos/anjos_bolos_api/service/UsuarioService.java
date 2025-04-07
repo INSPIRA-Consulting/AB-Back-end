@@ -2,11 +2,12 @@ package com.anjos_bolos.anjos_bolos_api.Service;
 
 import com.anjos_bolos.anjos_bolos_api.entity.Funcao;
 import com.anjos_bolos.anjos_bolos_api.entity.Usuario;
+import com.anjos_bolos.anjos_bolos_api.exception.EntidadeNaoEncontradaException;
+import com.anjos_bolos.anjos_bolos_api.exception.FalhaAutenticacaoException;
 import com.anjos_bolos.anjos_bolos_api.repository.UsuarioRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.FailedLoginException;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +37,17 @@ public class UsuarioService {
 
     public Usuario cadastrar(Usuario usuario) {
         return repository.save(usuario);
+    }
+
+    public Usuario login(String email, String senha) throws FailedLoginException {
+        Optional<Usuario> usuarioExistente = repository.findByEmail(email);
+
+        if (usuarioExistente.isEmpty() || !usuarioExistente.get().isLoginValido(email, senha)) {
+            throw new FalhaAutenticacaoException("Login inválido");
+        }
+
+        return usuarioExistente.get();
+
     }
 
     public List<Usuario> buscarPorNome(String nome) {
