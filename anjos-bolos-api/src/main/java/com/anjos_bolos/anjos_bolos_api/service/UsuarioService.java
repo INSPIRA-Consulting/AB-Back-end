@@ -1,5 +1,6 @@
 package com.anjos_bolos.anjos_bolos_api.Service;
 
+import com.anjos_bolos.anjos_bolos_api.dto.UsuarioLoginDto;
 import com.anjos_bolos.anjos_bolos_api.entity.Funcao;
 import com.anjos_bolos.anjos_bolos_api.entity.Usuario;
 import com.anjos_bolos.anjos_bolos_api.exception.FalhaAutenticacaoException;
@@ -38,8 +39,8 @@ public class UsuarioService {
         return repository.save(usuario);
     }
 
-    public Usuario login(String email, String senha) throws FailedLoginException {
-        Optional<Usuario> usuarioExistente = repository.findByEmail(email);
+    public UsuarioLoginDto login(String email, String senha) throws FailedLoginException {
+        Optional<UsuarioLoginDto> usuarioExistente = repository.findByEmail(email);
 
         if (usuarioExistente.isEmpty() || !usuarioExistente.get().isLoginValido(email, senha)) {
             throw new FalhaAutenticacaoException("Login inválido");
