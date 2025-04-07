@@ -5,7 +5,7 @@ import com.anjos_bolos.anjos_bolos_api.entity.Produto;
 import com.anjos_bolos.anjos_bolos_api.entity.Receita;
 import com.anjos_bolos.anjos_bolos_api.entity.ReceitaPrimaryKey;
 import com.anjos_bolos.anjos_bolos_api.exception.EntidadeConflitoException;
-import com.anjos_bolos.anjos_bolos_api.exception.EntidadeNaoEncontradaException;
+import com.anjos_bolos.anjos_bolos_api.exception.FalhaAutenticacaoException;
 import com.anjos_bolos.anjos_bolos_api.repository.IngredienteRepository;
 import com.anjos_bolos.anjos_bolos_api.repository.ProdutoRepository;
 import com.anjos_bolos.anjos_bolos_api.repository.ReceitaRepository;
@@ -38,11 +38,11 @@ public class ReceitaService {
 
 
         if (produtoOptional.isEmpty()) {
-            throw new EntidadeNaoEncontradaException("Produto com ID %d não encontrado.".formatted(idProduto));
+            throw new FalhaAutenticacaoException("Produto com ID %d não encontrado.".formatted(idProduto));
         }
 
         if (ingredienteOptional.isEmpty()) {
-            throw new EntidadeNaoEncontradaException("Ingrediente com ID %d não encontrado.".formatted(idIngrediente));
+            throw new FalhaAutenticacaoException("Ingrediente com ID %d não encontrado.".formatted(idIngrediente));
         }
 
         Produto produto = produtoOptional.get();
@@ -74,7 +74,7 @@ public class ReceitaService {
         Optional<Receita> receita = receitaRepository.findByProduto_IdProduto(idProduto);
 
         if (receita.isEmpty()) {
-            throw new EntidadeNaoEncontradaException("Receita não encontrada com Produto de ID %d.".formatted(idProduto));
+            throw new FalhaAutenticacaoException("Receita não encontrada com Produto de ID %d.".formatted(idProduto));
         }
 
         return receita.get();
@@ -85,7 +85,7 @@ public class ReceitaService {
         List<Receita> receitas = receitaRepository.findAll();
 
         if (!existeProduto) {
-            throw new EntidadeNaoEncontradaException("Produto com ID %d não encontrado.".formatted(idProduto));
+            throw new FalhaAutenticacaoException("Produto com ID %d não encontrado.".formatted(idProduto));
         }
 
         Double valorCusto = receitas.stream()
@@ -101,7 +101,7 @@ public class ReceitaService {
         Boolean existePorId = receitaRepository.existsByProduto_IdProduto(idProduto);
 
         if (!existePorId) {
-            throw new EntidadeNaoEncontradaException("Nenhuma Receita encontrada com Produto de ID %d."
+            throw new FalhaAutenticacaoException("Nenhuma Receita encontrada com Produto de ID %d."
                     .formatted(idProduto));
         }
 

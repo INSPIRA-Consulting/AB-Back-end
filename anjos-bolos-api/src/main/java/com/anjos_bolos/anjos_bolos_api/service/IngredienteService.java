@@ -2,7 +2,7 @@ package com.anjos_bolos.anjos_bolos_api.service;
 
 import com.anjos_bolos.anjos_bolos_api.entity.Ingrediente;
 import com.anjos_bolos.anjos_bolos_api.exception.EntidadeConflitoException;
-import com.anjos_bolos.anjos_bolos_api.exception.EntidadeNaoEncontradaException;
+import com.anjos_bolos.anjos_bolos_api.exception.FalhaAutenticacaoException;
 import com.anjos_bolos.anjos_bolos_api.repository.IngredienteRepository;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +46,7 @@ public class IngredienteService {
         Boolean existePorId = ingredienteRepository.existsById(idIngrediente);
 
         if (!existePorId) {
-            throw new EntidadeNaoEncontradaException("Ingrediente com ID %d não encontrado.".formatted(idIngrediente));
+            throw new FalhaAutenticacaoException("Ingrediente com ID %d não encontrado.".formatted(idIngrediente));
         }
 
         Boolean existePorNome = ingredienteRepository.existsByNomeEqualsIgnoreCaseAndIdIngredienteNot(
@@ -67,7 +67,7 @@ public class IngredienteService {
         Boolean existePorId = ingredienteRepository.existsById(idIngrediente);
 
         if (!existePorId) {
-            throw new EntidadeNaoEncontradaException("Ingrediente com ID %d não encontrado.".formatted(idIngrediente));
+            throw new FalhaAutenticacaoException("Ingrediente com ID %d não encontrado.".formatted(idIngrediente));
         }
 
         ingredienteRepository.deleteById(idIngrediente);
