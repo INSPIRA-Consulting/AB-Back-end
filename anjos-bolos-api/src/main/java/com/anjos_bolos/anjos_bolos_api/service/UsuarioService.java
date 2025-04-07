@@ -2,7 +2,6 @@ package com.anjos_bolos.anjos_bolos_api.Service;
 
 import com.anjos_bolos.anjos_bolos_api.entity.Funcao;
 import com.anjos_bolos.anjos_bolos_api.entity.Usuario;
-import com.anjos_bolos.anjos_bolos_api.exception.EntidadeNaoEncontradaException;
 import com.anjos_bolos.anjos_bolos_api.exception.FalhaAutenticacaoException;
 import com.anjos_bolos.anjos_bolos_api.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;

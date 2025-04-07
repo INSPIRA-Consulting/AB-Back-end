@@ -67,8 +67,6 @@ public class UsuarioController {
     }
 
 
-
-
     @GetMapping("/{nome}")
     public ResponseEntity<List<Usuario>> buscarPorNome(
             @PathVariable String nome
