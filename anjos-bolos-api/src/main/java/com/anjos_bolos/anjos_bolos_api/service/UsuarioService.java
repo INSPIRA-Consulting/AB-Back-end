@@ -38,15 +38,18 @@ public class UsuarioService {
         return repository.save(usuario);
     }
 
+    public boolean isLoginValido(Usuario usuario, String email, String senha) {
+        return usuario.getEmail().equalsIgnoreCase(email) && usuario.getSenha().equalsIgnoreCase(senha);
+    }
+
     public Usuario login(String email, String senha) throws FailedLoginException {
         Optional<Usuario> usuarioExistente = repository.findByEmail(email);
 
-        if (usuarioExistente.isEmpty() || !usuarioExistente.get().isLoginValido(email, senha)) {
+        if (usuarioExistente.isEmpty() || !isLoginValido(usuarioExistente.get(), email, senha)) {
             throw new FalhaAutenticacaoException("Login inválido");
         }
 
         return usuarioExistente.get();
-
     }
 
     public List<Usuario> buscarPorNome(String nome) {
