@@ -11,15 +11,10 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUsuario;
-    @NotNull
     private String nome;
-    @Email
     private String email;
     private String telefone;
-    @CPF
-    @Min(11)
     private String cpf;
-    @Enumerated(EnumType.STRING)
     private Funcao funcao;
     private String senha;
     private boolean autenticado;

@@ -1,19 +1,15 @@
 package com.anjos_bolos.anjos_bolos_api.controller;
 
-
-import com.anjos_bolos.anjos_bolos_api.Service.UsuarioService;
+import com.anjos_bolos.anjos_bolos_api.service.UsuarioService;
 import com.anjos_bolos.anjos_bolos_api.dto.UsuarioLoginDto;
 import com.anjos_bolos.anjos_bolos_api.entity.Funcao;
 import com.anjos_bolos.anjos_bolos_api.entity.Usuario;
-import com.anjos_bolos.anjos_bolos_api.repository.UsuarioRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import javax.security.auth.login.FailedLoginException;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/usuarios")
@@ -52,7 +48,6 @@ public class UsuarioController {
             return ResponseEntity.status(400).build();
         }
 
-
         Usuario usuarioAtualizado = service.cadastrar(usuario);
 
         return ResponseEntity.status(201).body(usuarioAtualizado);
@@ -60,9 +55,10 @@ public class UsuarioController {
 
     @PostMapping("/login")
     public ResponseEntity<String> autenticarLogin(
-            @Valid @RequestBody UsuarioLoginDto usuarioDto
-    ) throws FailedLoginException {
-        service.login(usuarioDto.getEmail(), usuarioDto.getSenha());
+            @Valid @RequestBody UsuarioLoginDto usuario
+    ){
+        service.login(usuario.getUsuario(), usuario.getEmail(), usuario.getSenha());
+        usuario.setAutenticado(true);
         return ResponseEntity.status(200).build();
     }
 
@@ -121,7 +117,4 @@ public class UsuarioController {
 
         return ResponseEntity.ok(usuario);
     }
-
-
 }
-

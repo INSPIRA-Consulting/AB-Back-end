@@ -22,5 +22,5 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     List<Usuario> findByFuncao(Funcao funcao);
 
-    Optional<Usuario> findByEmail(String email);
+    Optional<UsuarioLoginDto> findByEmail(String email);
 }

@@ -5,11 +5,29 @@ import jakarta.validation.constraints.NotBlank;
 
 public class UsuarioLoginDto {
     @NotBlank
+    private String usuario;
+    @NotBlank
     @Email
     private String email;
-
+    private boolean autenticado;
     @NotBlank
     private String senha;
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public boolean isAutenticado() {
+        return autenticado;
+    }
+
+    public void setAutenticado(boolean autenticado) {
+        this.autenticado = autenticado;
+    }
 
     public String getEmail() {
         return email;

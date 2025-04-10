@@ -1,18 +1,18 @@
-package com.anjos_bolos.anjos_bolos_api.Service;
+package com.anjos_bolos.anjos_bolos_api.service;
 
+import com.anjos_bolos.anjos_bolos_api.dto.UsuarioLoginDto;
 import com.anjos_bolos.anjos_bolos_api.entity.Funcao;
 import com.anjos_bolos.anjos_bolos_api.entity.Usuario;
 import com.anjos_bolos.anjos_bolos_api.exception.FalhaAutenticacaoException;
 import com.anjos_bolos.anjos_bolos_api.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
-
-import javax.security.auth.login.FailedLoginException;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UsuarioService {
     private final UsuarioRepository repository;
+
 
     public UsuarioService(UsuarioRepository repository) {
         this.repository = repository;
@@ -37,19 +37,27 @@ public class UsuarioService {
     public Usuario cadastrar(Usuario usuario) {
         return repository.save(usuario);
     }
+//    public boolean isLoginValido(String email, String senha) {
+//        autenticado = this.email.equalsIgnoreCase(email) && this.senha.equalsIgnoreCase(senha);
+//        return autenticado;
+//    }
+    public UsuarioLoginDto login(String UsuarioLoginDto, String email, String senha){
+        Optional<UsuarioLoginDto> usuarioExistente = repository.findByEmail(email);
 
-    public boolean isLoginValido(Usuario usuario, String email, String senha) {
-        return usuario.getEmail().equalsIgnoreCase(email) && usuario.getSenha().equalsIgnoreCase(senha);
-    }
-
-    public Usuario login(String email, String senha) throws FailedLoginException {
-        Optional<Usuario> usuarioExistente = repository.findByEmail(email);
-
-        if (usuarioExistente.isEmpty() || !isLoginValido(usuarioExistente.get(), email, senha)) {
+        if (usuarioExistente.isEmpty()) {
             throw new FalhaAutenticacaoException("Login inválido");
         }
 
-        return usuarioExistente.get();
+        UsuarioLoginDto usuarioLoginDto = usuarioExistente.get();
+
+        boolean emailIgual = usuarioLoginDto.getEmail().equalsIgnoreCase(email);
+        boolean senhaIgual = usuarioLoginDto.getSenha().equals(senha);
+
+        if (!emailIgual || !senhaIgual) {
+            throw new FalhaAutenticacaoException("Login inválido");
+        }
+
+        return usuarioLoginDto;
     }
 
     public List<Usuario> buscarPorNome(String nome) {
