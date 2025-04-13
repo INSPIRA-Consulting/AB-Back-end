@@ -30,34 +30,21 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 
-    @PostMapping
-    public ResponseEntity <Usuario> cadastrar(
-            @RequestBody Usuario usuario
-
-    ) {
-
-        if (service.existePorEmail(usuario.getEmail())) {
-            return ResponseEntity.status(400).build();
-        }
-
-        if (service.existePorNome(usuario.getNome())) {
-            return ResponseEntity.status(400).build();
-        }
-
-        if (service.existePorCpf(usuario.getCpf())) {
-            return ResponseEntity.status(400).build();
-        }
-
-        Usuario usuarioAtualizado = service.cadastrar(usuario);
-
-        return ResponseEntity.status(201).body(usuarioAtualizado);
-    }
+//    @PostMapping
+//    public ResponseEntity <Usuario> cadastrar(
+//            @RequestBody Usuario usuario
+//
+//    ) {
+//        Usuario usuarioCadastrado = service.cadastro();
+//
+//        return ResponseEntity.status(201).body(usuarioCadastrado);
+//    }
 
     @PostMapping("/login")
     public ResponseEntity<String> autenticarLogin(
             @Valid @RequestBody UsuarioLoginDto usuario
     ){
-        service.login(usuario.getUsuario(), usuario.getEmail(), usuario.getSenha());
+        service.login(usuario.getEmail(), usuario.getSenha());
         usuario.setAutenticado(true);
         return ResponseEntity.status(200).build();
     }

@@ -1,9 +1,11 @@
 package com.anjos_bolos.anjos_bolos_api.service;
-
+import com.anjos_bolos.anjos_bolos_api.controller.mapper.UsuarioMapper;
+import com.anjos_bolos.anjos_bolos_api.dto.UsuarioCadastroDto;
 import com.anjos_bolos.anjos_bolos_api.dto.UsuarioLoginDto;
 import com.anjos_bolos.anjos_bolos_api.entity.Funcao;
 import com.anjos_bolos.anjos_bolos_api.entity.Usuario;
 import com.anjos_bolos.anjos_bolos_api.exception.FalhaAutenticacaoException;
+import com.anjos_bolos.anjos_bolos_api.exception.FalhaCadastroException;
 import com.anjos_bolos.anjos_bolos_api.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -18,46 +20,28 @@ public class UsuarioService {
         this.repository = repository;
     }
 
-    public boolean existePorEmail(String email) {
-        return repository.existsByEmailIgnoreCase(email);
-    }
-
-    public boolean existePorNome(String nome) {
-        return repository.existsByNomeIgnoreCase(nome);
-    }
-
-    public boolean existePorCpf(String cpf) {
-        return repository.existsByCpf(cpf);
-    }
-
     public List<Usuario> listar() {
         return repository.findAll();
     }
-
-    public Usuario cadastrar(Usuario usuario) {
-        return repository.save(usuario);
-    }
-//    public boolean isLoginValido(String email, String senha) {
-//        autenticado = this.email.equalsIgnoreCase(email) && this.senha.equalsIgnoreCase(senha);
-//        return autenticado;
-//    }
-    public UsuarioLoginDto login(String UsuarioLoginDto, String email, String senha){
-        Optional<UsuarioLoginDto> usuarioExistente = repository.findByEmail(email);
+    
+    
+    public UsuarioLoginDto login(String email, String senha){
+        Optional<Usuario> usuarioExistente = repository.findByEmail(email);
 
         if (usuarioExistente.isEmpty()) {
             throw new FalhaAutenticacaoException("Login inválido");
         }
 
-        UsuarioLoginDto usuarioLoginDto = usuarioExistente.get();
+        Usuario usuarioLogin= usuarioExistente.get();
 
-        boolean emailIgual = usuarioLoginDto.getEmail().equalsIgnoreCase(email);
-        boolean senhaIgual = usuarioLoginDto.getSenha().equals(senha);
+        boolean emailIgual = usuarioLogin.getEmail().equalsIgnoreCase(email);
+        boolean senhaIgual = usuarioLogin.getSenha().equals(senha);
 
         if (!emailIgual || !senhaIgual) {
             throw new FalhaAutenticacaoException("Login inválido");
         }
 
-        return usuarioLoginDto;
+        return UsuarioMapper.toLoginDto(usuarioLogin);
     }
 
     public List<Usuario> buscarPorNome(String nome) {
@@ -76,6 +60,20 @@ public class UsuarioService {
         return false;
     }
 
+    public UsuarioCadastroDto cadastro(String nome, String email, String senha, Funcao funcao){
+
+        Optional<Usuario> usuarioCadastrado = repository.findByEmailAndNome(email, nome);
+
+        if(usuarioCadastrado.isEmpty()){
+            Usuario usuarioCadastro = usuarioCadastrado.get();
+            repository.save(usuarioCadastro);
+            return UsuarioMapper.toCadastroDto(usuarioCadastro);
+        }
+
+        throw new FalhaCadastroException("Email já foi cadastrado");
+
+    }
+
     public Usuario atualizarPorNome(String nome, Usuario usuarioAtualizado) {
         Optional<Usuario> usuarioEncontrado = repository.findByNome(nome);
 
@@ -91,12 +89,7 @@ public class UsuarioService {
         if (usuarioAtualizado.getEmail() != null) {
             usuario.setEmail(usuarioAtualizado.getEmail());
         }
-        if (usuarioAtualizado.getTelefone() != null) {
-            usuario.setTelefone(usuarioAtualizado.getTelefone());
-        }
-        if (usuarioAtualizado.getCpf() != null) {
-            usuario.setCpf(usuarioAtualizado.getCpf());
-        }
+   
         if (usuarioAtualizado.getSenha() != null) {
             usuario.setSenha(usuarioAtualizado.getSenha());
         }
@@ -105,5 +98,8 @@ public class UsuarioService {
         }
 
         return repository.save(usuario);
+
+
+        }
     }
-}
+

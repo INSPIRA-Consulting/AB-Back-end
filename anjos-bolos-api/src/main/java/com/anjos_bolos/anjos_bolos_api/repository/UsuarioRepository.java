@@ -1,5 +1,6 @@
 package com.anjos_bolos.anjos_bolos_api.repository;
 
+import com.anjos_bolos.anjos_bolos_api.dto.UsuarioCadastroDto;
 import com.anjos_bolos.anjos_bolos_api.dto.UsuarioLoginDto;
 import com.anjos_bolos.anjos_bolos_api.entity.Funcao;
 import com.anjos_bolos.anjos_bolos_api.entity.Usuario;
@@ -14,13 +15,10 @@ public interface UsuarioRepository extends JpaRepository<Usuario, Integer> {
 
     Optional<Usuario> findByNome(String nome);
 
-    boolean existsByEmailIgnoreCase(String email);
-
-    boolean existsByNomeIgnoreCase(String nome);
-
-    boolean existsByCpf(String cpf);
 
     List<Usuario> findByFuncao(Funcao funcao);
 
-    Optional<UsuarioLoginDto> findByEmail(String email);
+    Optional<Usuario> findByEmail(String email);
+
+    Optional<Usuario> findByEmailAndNome(String email, String nome);
 }

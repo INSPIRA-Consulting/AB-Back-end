@@ -1,10 +1,7 @@
 package com.anjos_bolos.anjos_bolos_api.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.br.CPF;
+
 
 @Entity
 public class Usuario {
@@ -13,37 +10,11 @@ public class Usuario {
     private Integer idUsuario;
     private String nome;
     private String email;
-    private String telefone;
-    private String cpf;
     private Funcao funcao;
     private String senha;
     private boolean autenticado;
 
     public Usuario() {
-    }
-
-    public boolean isAutenticado() {
-        return autenticado;
-    }
-
-    public void setAutenticado(boolean autenticado) {
-        this.autenticado = autenticado;
-    }
-
-    public Funcao getFuncao() {
-        return funcao;
-    }
-
-    public void setFuncao(Funcao funcao) {
-        this.funcao = funcao;
-    }
-
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
     }
 
     public Integer getIdUsuario() {
@@ -70,12 +41,12 @@ public class Usuario {
         this.email = email;
     }
 
-    public String getTelefone() {
-        return telefone;
+    public Funcao getFuncao() {
+        return funcao;
     }
 
-    public void setTelefone(String telefone) {
-        this.telefone = telefone;
+    public void setFuncao(Funcao funcao) {
+        this.funcao = funcao;
     }
 
     public String getSenha() {
@@ -84,5 +55,13 @@ public class Usuario {
 
     public void setSenha(String senha) {
         this.senha = senha;
+    }
+
+    public boolean isAutenticado() {
+        return autenticado;
+    }
+
+    public void setAutenticado(boolean autenticado) {
+        this.autenticado = autenticado;
     }
 }
