@@ -7,21 +7,15 @@ public class UsuarioLoginDto {
     @NotBlank
     @Email
     private String email;
-    private boolean autenticado;
     @NotBlank
     private String senha;
+
+    public UsuarioLoginDto() {
+    }
 
     public UsuarioLoginDto(String email, String senha) {
         this.email = email;
         this.senha = senha;
-    }
-
-    public boolean isAutenticado() {
-        return autenticado;
-    }
-
-    public void setAutenticado(boolean autenticado) {
-        this.autenticado = autenticado;
     }
 
     public String getEmail() {

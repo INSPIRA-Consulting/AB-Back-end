@@ -1,9 +1,12 @@
 package com.anjos_bolos.anjos_bolos_api.controller;
 
+import com.anjos_bolos.anjos_bolos_api.dto.UsuarioCadastroDto;
+import com.anjos_bolos.anjos_bolos_api.dto.UsuarioResponseDto;
 import com.anjos_bolos.anjos_bolos_api.service.UsuarioService;
 import com.anjos_bolos.anjos_bolos_api.dto.UsuarioLoginDto;
 import com.anjos_bolos.anjos_bolos_api.entity.Funcao;
 import com.anjos_bolos.anjos_bolos_api.entity.Usuario;
+import com.anjos_bolos.anjos_bolos_api.mapper.UsuarioMapper;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -30,23 +33,25 @@ public class UsuarioController {
         return ResponseEntity.ok(usuarios);
     }
 
-//    @PostMapping
-//    public ResponseEntity <Usuario> cadastrar(
-//            @RequestBody Usuario usuario
-//
-//    ) {
-//        Usuario usuarioCadastrado = service.cadastro();
-//
-//        return ResponseEntity.status(201).body(usuarioCadastrado);
-//    }
+    @PostMapping
+    public ResponseEntity <UsuarioResponseDto> cadastrarUsuario(
+            @RequestBody UsuarioCadastroDto usuarioCadastrado
+
+            ) {
+        Usuario entity = UsuarioMapper.toEntity(usuarioCadastrado);
+        Usuario response = service.cadastro(entity);
+        UsuarioResponseDto usuarioResponseDto = UsuarioMapper.toResponse(entity);
+
+        return ResponseEntity.status(201).body(usuarioResponseDto);
+    }
 
     @PostMapping("/login")
     public ResponseEntity<String> autenticarLogin(
-            @Valid @RequestBody UsuarioLoginDto usuario
+            @Valid @RequestBody UsuarioLoginDto usuarioLogado
     ){
-        service.login(usuario.getEmail(), usuario.getSenha());
-        usuario.setAutenticado(true);
-        return ResponseEntity.status(200).build();
+        Usuario entity = UsuarioMapper.toEntity(usuarioLogado);
+        Usuario response = service.login(entity);
+        return ResponseEntity.status(200).body("Login realizado com sucesso");
     }
 
 

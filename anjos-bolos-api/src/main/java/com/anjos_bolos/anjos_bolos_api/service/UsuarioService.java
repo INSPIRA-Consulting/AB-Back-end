@@ -1,7 +1,4 @@
 package com.anjos_bolos.anjos_bolos_api.service;
-import com.anjos_bolos.anjos_bolos_api.controller.mapper.UsuarioMapper;
-import com.anjos_bolos.anjos_bolos_api.dto.UsuarioCadastroDto;
-import com.anjos_bolos.anjos_bolos_api.dto.UsuarioLoginDto;
 import com.anjos_bolos.anjos_bolos_api.entity.Funcao;
 import com.anjos_bolos.anjos_bolos_api.entity.Usuario;
 import com.anjos_bolos.anjos_bolos_api.exception.FalhaAutenticacaoException;
@@ -25,23 +22,23 @@ public class UsuarioService {
     }
     
     
-    public UsuarioLoginDto login(String email, String senha){
-        Optional<Usuario> usuarioExistente = repository.findByEmail(email);
+    public Usuario login(Usuario usuario){
+        Optional<Usuario> usuarioExistente = repository.findByEmail(usuario.getEmail());
 
         if (usuarioExistente.isEmpty()) {
             throw new FalhaAutenticacaoException("Login inválido");
         }
 
-        Usuario usuarioLogin= usuarioExistente.get();
-
-        boolean emailIgual = usuarioLogin.getEmail().equalsIgnoreCase(email);
-        boolean senhaIgual = usuarioLogin.getSenha().equals(senha);
+        Usuario usuarioEncontrado = usuarioExistente.get();
+        boolean emailIgual = usuarioEncontrado.getEmail().equalsIgnoreCase(usuario.getEmail());
+        boolean senhaIgual = usuarioEncontrado.getSenha().equals(usuario.getSenha());
 
         if (!emailIgual || !senhaIgual) {
             throw new FalhaAutenticacaoException("Login inválido");
         }
 
-        return UsuarioMapper.toLoginDto(usuarioLogin);
+        usuarioEncontrado.setAutenticado(true);
+        return usuarioEncontrado;
     }
 
     public List<Usuario> buscarPorNome(String nome) {
@@ -60,14 +57,13 @@ public class UsuarioService {
         return false;
     }
 
-    public UsuarioCadastroDto cadastro(String nome, String email, String senha, Funcao funcao){
+    public Usuario cadastro(Usuario usuario){
 
-        Optional<Usuario> usuarioCadastrado = repository.findByEmailAndNome(email, nome);
+        Optional<Usuario> usuarioCadastrado = repository.findByEmailAndNome(usuario.getEmail(), usuario.getNome());
 
         if(usuarioCadastrado.isEmpty()){
             Usuario usuarioCadastro = usuarioCadastrado.get();
             repository.save(usuarioCadastro);
-            return UsuarioMapper.toCadastroDto(usuarioCadastro);
         }
 
         throw new FalhaCadastroException("Email já foi cadastrado");
