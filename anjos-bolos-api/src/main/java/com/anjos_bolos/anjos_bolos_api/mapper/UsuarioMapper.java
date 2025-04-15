@@ -1,13 +1,17 @@
 package com.anjos_bolos.anjos_bolos_api.mapper;
 
-import com.anjos_bolos.anjos_bolos_api.dto.UsuarioCadastroDto;
-import com.anjos_bolos.anjos_bolos_api.dto.UsuarioLoginDto;
-import com.anjos_bolos.anjos_bolos_api.dto.UsuarioResponseDto;
+import com.anjos_bolos.anjos_bolos_api.dto.usuario.UsuarioCadastroDto;
+import com.anjos_bolos.anjos_bolos_api.dto.usuario.UsuarioLoginDto;
+import com.anjos_bolos.anjos_bolos_api.dto.usuario.UsuarioResponseDto;
 import com.anjos_bolos.anjos_bolos_api.entity.Usuario;
 
 public class UsuarioMapper {
 
     public static Usuario toEntity(UsuarioCadastroDto dto) {
+        if (dto == null) {
+            return null;
+        }
+
         Usuario usuario = new Usuario();
         usuario.setFuncao(dto.getFuncao());
         usuario.setEmail(dto.getEmail());
@@ -17,6 +21,9 @@ public class UsuarioMapper {
     }
 
     public static Usuario toEntity(UsuarioLoginDto dto) {
+        if (dto == null) {
+            return null;
+        }
         Usuario usuario = new Usuario();
         usuario.setEmail(dto.getEmail());
         usuario.setSenha(dto.getSenha());
@@ -24,6 +31,9 @@ public class UsuarioMapper {
     }
 
     public static UsuarioResponseDto toResponse(Usuario usuario) {
+        if (usuario == null) {
+            return null;
+        }
         UsuarioResponseDto usuarioDto = new UsuarioResponseDto();
         usuarioDto.setNome(usuario.getNome());
         usuarioDto.setFuncao(usuario.getFuncao());

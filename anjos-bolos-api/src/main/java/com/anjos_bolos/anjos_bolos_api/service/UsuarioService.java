@@ -1,8 +1,8 @@
 package com.anjos_bolos.anjos_bolos_api.service;
 import com.anjos_bolos.anjos_bolos_api.entity.Funcao;
 import com.anjos_bolos.anjos_bolos_api.entity.Usuario;
+import com.anjos_bolos.anjos_bolos_api.exception.CadastroConflitoException;
 import com.anjos_bolos.anjos_bolos_api.exception.FalhaAutenticacaoException;
-import com.anjos_bolos.anjos_bolos_api.exception.FalhaCadastroException;
 import com.anjos_bolos.anjos_bolos_api.repository.UsuarioRepository;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -66,7 +66,7 @@ public class UsuarioService {
             repository.save(usuarioCadastro);
         }
 
-        throw new FalhaCadastroException("Email já foi cadastrado");
+        throw new CadastroConflitoException("Email já foi cadastrado");
 
     }
 

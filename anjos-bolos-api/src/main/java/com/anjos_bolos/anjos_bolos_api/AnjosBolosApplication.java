@@ -10,4 +10,5 @@ public class AnjosBolosApplication {
 		SpringApplication.run(AnjosBolosApplication.class, args);
 	}
 
+
 }

@@ -1,7 +1,5 @@
 package com.anjos_bolos.anjos_bolos_api.repository;
 
-import com.anjos_bolos.anjos_bolos_api.dto.UsuarioCadastroDto;
-import com.anjos_bolos.anjos_bolos_api.dto.UsuarioLoginDto;
 import com.anjos_bolos.anjos_bolos_api.entity.Funcao;
 import com.anjos_bolos.anjos_bolos_api.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;

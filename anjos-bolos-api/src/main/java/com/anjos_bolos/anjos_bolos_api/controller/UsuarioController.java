@@ -1,9 +1,9 @@
 package com.anjos_bolos.anjos_bolos_api.controller;
 
-import com.anjos_bolos.anjos_bolos_api.dto.UsuarioCadastroDto;
-import com.anjos_bolos.anjos_bolos_api.dto.UsuarioResponseDto;
+import com.anjos_bolos.anjos_bolos_api.dto.usuario.UsuarioCadastroDto;
+import com.anjos_bolos.anjos_bolos_api.dto.usuario.UsuarioResponseDto;
 import com.anjos_bolos.anjos_bolos_api.service.UsuarioService;
-import com.anjos_bolos.anjos_bolos_api.dto.UsuarioLoginDto;
+import com.anjos_bolos.anjos_bolos_api.dto.usuario.UsuarioLoginDto;
 import com.anjos_bolos.anjos_bolos_api.entity.Funcao;
 import com.anjos_bolos.anjos_bolos_api.entity.Usuario;
 import com.anjos_bolos.anjos_bolos_api.mapper.UsuarioMapper;

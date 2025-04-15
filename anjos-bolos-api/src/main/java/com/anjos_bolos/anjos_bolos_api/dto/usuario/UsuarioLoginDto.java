@@ -1,4 +1,4 @@
-package com.anjos_bolos.anjos_bolos_api.dto;
+package com.anjos_bolos.anjos_bolos_api.dto.usuario;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

@@ -5,6 +5,15 @@ public class IngredienteCadastroDto {
     private String medida;
     private double preco;
 
+    public IngredienteCadastroDto() {
+    }
+
+    public IngredienteCadastroDto(String nome, String medida, double preco) {
+        this.nome = nome;
+        this.medida = medida;
+        this.preco = preco;
+    }
+
     public String getNome() {
         return nome;
     }
