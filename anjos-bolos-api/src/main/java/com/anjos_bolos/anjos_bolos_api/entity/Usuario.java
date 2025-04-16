@@ -64,4 +64,6 @@ public class Usuario {
     public void setAutenticado(boolean autenticado) {
         this.autenticado = autenticado;
     }
+
+
 }

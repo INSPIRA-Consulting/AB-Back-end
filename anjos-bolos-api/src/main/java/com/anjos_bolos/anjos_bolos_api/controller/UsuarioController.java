@@ -1,10 +1,7 @@
 package com.anjos_bolos.anjos_bolos_api.controller;
 
-import com.anjos_bolos.anjos_bolos_api.dto.usuario.UsuarioAtualizacaoDto;
-import com.anjos_bolos.anjos_bolos_api.dto.usuario.UsuarioCadastroDto;
-import com.anjos_bolos.anjos_bolos_api.dto.usuario.UsuarioResponseDto;
+import com.anjos_bolos.anjos_bolos_api.dto.usuario.*;
 import com.anjos_bolos.anjos_bolos_api.service.UsuarioService;
-import com.anjos_bolos.anjos_bolos_api.dto.usuario.UsuarioLoginDto;
 import com.anjos_bolos.anjos_bolos_api.entity.Funcao;
 import com.anjos_bolos.anjos_bolos_api.entity.Usuario;
 import com.anjos_bolos.anjos_bolos_api.mapper.UsuarioMapper;
@@ -23,7 +20,7 @@ public class UsuarioController {
     private UsuarioService service;
 
     @GetMapping
-    public ResponseEntity<List<Usuario>> listar() {
+    public ResponseEntity<List<UsuarioListagemDto>> listar() {
         List<Usuario> usuarios = service.listar();
 
 
@@ -31,7 +28,8 @@ public class UsuarioController {
             return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.ok(usuarios);
+        List<UsuarioListagemDto> usuariosDto = UsuarioMapper.toListagemDtos(usuarios);
+        return ResponseEntity.ok(usuariosDto);
     }
 
     @PostMapping

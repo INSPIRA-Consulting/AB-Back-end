@@ -1,10 +1,9 @@
 package com.anjos_bolos.anjos_bolos_api.mapper;
 
-import com.anjos_bolos.anjos_bolos_api.dto.usuario.UsuarioAtualizacaoDto;
-import com.anjos_bolos.anjos_bolos_api.dto.usuario.UsuarioCadastroDto;
-import com.anjos_bolos.anjos_bolos_api.dto.usuario.UsuarioLoginDto;
-import com.anjos_bolos.anjos_bolos_api.dto.usuario.UsuarioResponseDto;
+import com.anjos_bolos.anjos_bolos_api.dto.usuario.*;
 import com.anjos_bolos.anjos_bolos_api.entity.Usuario;
+
+import java.util.List;
 
 public class UsuarioMapper {
 
@@ -61,6 +60,33 @@ public class UsuarioMapper {
         usuarioDto.setFuncao(usuario.getFuncao());
         return usuarioDto;
     }
+
+    public static UsuarioListagemDto toListagemDto(Usuario entity){
+
+        if(entity == null){
+            return null;
+        }
+
+        return new UsuarioListagemDto(
+                entity.getIdUsuario(),
+                entity.getNome(),
+                entity.getEmail(),
+                entity.getSenha(),
+                entity.getFuncao()
+        );
+    }
+
+    public static List<UsuarioListagemDto> toListagemDtos(List<Usuario> entities){
+
+        if (entities == null) {
+            return null;
+        }
+
+        return entities.stream()
+                .map(UsuarioMapper::toListagemDto)
+                .toList();
+    }
+
 
 
 
