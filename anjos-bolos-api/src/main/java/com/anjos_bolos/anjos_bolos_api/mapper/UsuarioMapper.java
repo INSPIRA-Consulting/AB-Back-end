@@ -66,12 +66,10 @@ public class UsuarioMapper {
         if(entity == null){
             return null;
         }
-
         return new UsuarioListagemDto(
                 entity.getIdUsuario(),
                 entity.getNome(),
                 entity.getEmail(),
-                entity.getSenha(),
                 entity.getFuncao()
         );
     }

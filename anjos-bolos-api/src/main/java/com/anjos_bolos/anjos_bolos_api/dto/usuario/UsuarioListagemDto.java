@@ -8,7 +8,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 
-
 public class UsuarioListagemDto {
     @NotBlank
     @Id
@@ -19,8 +18,6 @@ public class UsuarioListagemDto {
     @Email
     private String email;
     @NotBlank
-    private String senha;
-    @NotBlank
     @Enumerated(EnumType.STRING)
     private Funcao funcao;
 
@@ -28,11 +25,10 @@ public class UsuarioListagemDto {
     public UsuarioListagemDto() {
     }
 
-    public UsuarioListagemDto(Integer idUsuario, String nome, String email, String senha, Funcao funcao) {
+    public UsuarioListagemDto(Integer idUsuario, String nome, String email, Funcao funcao) {
         this.idUsuario = idUsuario;
         this.nome = nome;
         this.email = email;
-        this.senha = senha;
         this.funcao = funcao;
     }
 
@@ -60,13 +56,6 @@ public class UsuarioListagemDto {
         this.email = email;
     }
 
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
 
     public Funcao getFuncao() {
         return funcao;

@@ -56,7 +56,7 @@ public class UsuarioController {
 
 
     @GetMapping("/{nome}")
-    public ResponseEntity<List<Usuario>> buscarPorNome(
+    public ResponseEntity<List<UsuarioListagemDto>> buscarPorNome(
             @PathVariable String nome
     ) {
         List<Usuario> usuarios = service.buscarPorNome(nome);
@@ -65,11 +65,12 @@ public class UsuarioController {
             return ResponseEntity.noContent().build();
         }
 
-        return ResponseEntity.ok(usuarios);
+        List<UsuarioListagemDto> usuariosDto = UsuarioMapper.toListagemDtos(usuarios);
+        return ResponseEntity.ok(usuariosDto);
     }
 
     @GetMapping("/funcao")
-    public ResponseEntity<List<Usuario>> buscarPorFuncao(
+    public ResponseEntity<List<UsuarioListagemDto>> buscarPorFuncao(
             @RequestParam Funcao funcao
     ) {
         List<Usuario> usuarios = service.buscarPorFuncao(funcao);
@@ -78,7 +79,9 @@ public class UsuarioController {
             return ResponseEntity.status(204).build();
         }
 
-        return ResponseEntity.ok(usuarios);
+        List<UsuarioListagemDto> usuariosDto = UsuarioMapper.toListagemDtos(usuarios);
+
+        return ResponseEntity.ok(usuariosDto);
     }
 
     @DeleteMapping("/{id}")
