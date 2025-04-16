@@ -1,6 +1,6 @@
 package com.anjos_bolos.anjos_bolos_api.dto;
 
-// teste
+// IngredienteCadastroDto
 
 public class IngredienteCadastroDto {
     private String nome;
