@@ -1,5 +1,6 @@
 package com.anjos_bolos.anjos_bolos_api.controller;
 
+import com.anjos_bolos.anjos_bolos_api.dto.usuario.UsuarioAtualizacaoDto;
 import com.anjos_bolos.anjos_bolos_api.dto.usuario.UsuarioCadastroDto;
 import com.anjos_bolos.anjos_bolos_api.dto.usuario.UsuarioResponseDto;
 import com.anjos_bolos.anjos_bolos_api.service.UsuarioService;
@@ -51,6 +52,7 @@ public class UsuarioController {
     ){
         Usuario entity = UsuarioMapper.toEntity(usuarioLogado);
         Usuario response = service.login(entity);
+        UsuarioResponseDto usuarioResponseDto = UsuarioMapper.toResponse(entity);
         return ResponseEntity.status(200).body("Login realizado com sucesso");
     }
 
@@ -95,18 +97,22 @@ public class UsuarioController {
     }
 
     @PutMapping("/{nome}")
-    public ResponseEntity<Usuario> atualizarPorNome(
+    public ResponseEntity<UsuarioResponseDto> atualizarPorNome(
             @PathVariable String nome,
-            @RequestBody Usuario usuarioAtualizado
+            @RequestBody UsuarioAtualizacaoDto usuarioDto
     ) {
 
-        Usuario usuario = service.atualizarPorNome(nome, usuarioAtualizado);
+
+        Usuario entity = UsuarioMapper.toEntity(usuarioDto);
+        Usuario response = service.atualizarPorNome(nome, entity);
+        UsuarioResponseDto usuarioResponseDto = UsuarioMapper.toResponse(entity);
 
 
-        if (usuario == null) {
+
+        if (usuarioResponseDto == null) {
             return ResponseEntity.status(404).build();
         }
 
-        return ResponseEntity.ok(usuario);
+        return ResponseEntity.ok(usuarioResponseDto);
     }
 }
