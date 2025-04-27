@@ -1,6 +1,10 @@
 package com.anjos_bolos.anjos_bolos_api.controller;
 
+import com.anjos_bolos.anjos_bolos_api.dto.receita.ReceitaCadastroDto;
+import com.anjos_bolos.anjos_bolos_api.dto.receita.ReceitaListagemDto;
+import com.anjos_bolos.anjos_bolos_api.dto.receita.ReceitaResponseDto;
 import com.anjos_bolos.anjos_bolos_api.entity.ReceitaPrimaryKey;
+import com.anjos_bolos.anjos_bolos_api.mapper.ReceitaMapper;
 import com.anjos_bolos.anjos_bolos_api.service.ReceitaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,22 +29,29 @@ public class ReceitaController {
     }
 
     @PostMapping
-    public ResponseEntity<Receita> cadastrarReceita(@RequestBody Receita receitaParaCadastrar) {
+    public ResponseEntity<ReceitaResponseDto> cadastrarReceita(
+            @RequestBody ReceitaCadastroDto receitaParaCadastrar) {
 
-        Receita receitaCadastrada = receitaService.cadastrar(receitaParaCadastrar);
 
-        return ResponseEntity.status(201).body(receitaCadastrada);
+        Receita entity = ReceitaMapper.toEntity(receitaParaCadastrar);
+        Receita receitaCadastrada = receitaService.cadastrar(entity);
+        ReceitaResponseDto dto = ReceitaMapper.toResponse(receitaCadastrada);
+
+
+        return ResponseEntity.status(201).body(dto);
     }
 
     @GetMapping
-    public ResponseEntity<List<Receita>> listarReceitas() {
+    public ResponseEntity<List<ReceitaListagemDto>> listarReceitas() {
         List<Receita> receitas = receitaService.listar();
 
         if (receitas.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
 
-        return ResponseEntity.status(200).body(receitas);
+        List<ReceitaListagemDto> dto = ReceitaMapper.toListagemDtos(receitas);
+
+        return ResponseEntity.status(200).body(dto);
     }
 
     @GetMapping("/calcular-preco/{idProduto}")
