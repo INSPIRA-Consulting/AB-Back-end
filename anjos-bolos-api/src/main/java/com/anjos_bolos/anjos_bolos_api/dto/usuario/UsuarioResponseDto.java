@@ -14,12 +14,13 @@ public class UsuarioResponseDto {
     private Funcao funcao;
 
 
-    public UsuarioResponseDto() {
-    }
-
     public UsuarioResponseDto(String nome, Funcao funcao) {
         this.nome = nome;
         this.funcao = funcao;
+    }
+
+    public UsuarioResponseDto() {
+
     }
 
     public String getNome() {
