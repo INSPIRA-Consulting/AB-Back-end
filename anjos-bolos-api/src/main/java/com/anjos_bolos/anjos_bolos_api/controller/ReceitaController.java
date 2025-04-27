@@ -1,6 +1,10 @@
 package com.anjos_bolos.anjos_bolos_api.controller;
 
-import com.anjos_bolos.anjos_bolos_api.entity.Receita;
+import com.anjos_bolos.anjos_bolos_api.dto.receita.ReceitaCadastroDto;
+import com.anjos_bolos.anjos_bolos_api.dto.receita.ReceitaListagemDto;
+import com.anjos_bolos.anjos_bolos_api.dto.receita.ReceitaResponseDto;
+import com.anjos_bolos.anjos_bolos_api.entity.ReceitaPrimaryKey;
+import com.anjos_bolos.anjos_bolos_api.mapper.ReceitaMapper;
 import com.anjos_bolos.anjos_bolos_api.service.ReceitaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,9 +30,14 @@ public class ReceitaController {
             @ApiResponse(responseCode = "409", description = "Conflito ao cadastrar receita")
     })
     @PostMapping
-    public ResponseEntity<Receita> cadastrarReceita(@RequestBody Receita receitaParaCadastrar) {
-        Receita receitaCadastrada = receitaService.cadastrar(receitaParaCadastrar);
-        return ResponseEntity.status(201).body(receitaCadastrada);
+    public ResponseEntity<ReceitaResponseDto> cadastrarReceita(
+            @RequestBody ReceitaCadastroDto receitaParaCadastrar) {
+
+        Receita entity = ReceitaMapper.toEntity(receitaParaCadastrar);
+        Receita receitaCadastrada = receitaService.cadastrar(entity);
+        ReceitaResponseDto dto = ReceitaMapper.toResponse(receitaCadastrada);
+
+        return ResponseEntity.status(201).body(dto);
     }
 
     @Operation(summary = "Listar todas as receitas", description = "Retorna uma lista com todas as receitas cadastradas.")
@@ -37,12 +46,14 @@ public class ReceitaController {
             @ApiResponse(responseCode = "204", description = "Nenhuma receita encontrada")
     })
     @GetMapping
-    public ResponseEntity<List<Receita>> listarReceitas() {
+    public ResponseEntity<List<ReceitaListagemDto>> listarReceitas() {
         List<Receita> receitas = receitaService.listar();
         if (receitas.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
-        return ResponseEntity.status(200).body(receitas);
+
+        List<ReceitaListagemDto> dto = ReceitaMapper.toListagemDtos(receitas);
+        return ResponseEntity.status(200).body(dto);
     }
 
     @Operation(summary = "Calcular custo da receita", description = "Calcula o custo de produção de uma receita e sugere um preço de venda com base no markup.")
