@@ -1,18 +1,20 @@
 .swagger-ui .topbar {
-  background-color: #db63bb;
+    background-color: #f8cdd0;
 }
 
-.swagger-ui .info {
-  background-color: #f3f3f3;
-  border-radius: 8px;
-  padding: 16px;
+.swagger-ui .topbar .topbar-wrapper img {
+    content: url("img/anjosBolosPic.jpg");
+    height: 40px;
 }
 
-.swagger-ui .topbar .download-url-wrapper .download-url-button {
-    background-color: #050505;
+.swagger-ui .topbar-wrapper span {
+    display: none;
 }
 
-.swagger-ui .topbar .download-url-wrapper input[type=text]{
-    border: 2px solid #050505;
+body {
+    font-family: "Segoe UI", sans-serif;
 }
 
+.swagger-ui .info hgroup h2 {
+    color: #d94f70;
+}
