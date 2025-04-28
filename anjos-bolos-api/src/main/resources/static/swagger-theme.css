@@ -18,3 +18,16 @@ body {
 .swagger-ui .info hgroup h2 {
     color: #d94f70;
 }
+
+
+.logo_small_svg__cls-3 {
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbn0n1ros9jfKXoK9mEbFQGSE6noPdfDgP1g&s");
+    background-color: #cccccc; /* Cor de fundo de fallback */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain; /* Ajusta a imagem para caber no elemento sem cortar */
+    height: auto; /* Ajusta automaticamente à altura do conteúdo */
+    width: 100%; /* Garante que o elemento ocupe a largura total */
+    display: block; /* Evita bugs em navegadores com inline-block */
+    border-radius: 8px; /* Adiciona cantos arredondados como exemplo */
+}

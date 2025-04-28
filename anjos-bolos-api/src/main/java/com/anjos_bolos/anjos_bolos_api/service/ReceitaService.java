@@ -30,6 +30,9 @@ public class ReceitaService {
     }
 
     public Receita cadastrar(Receita novaReceita) {
+
+        System.out.println("Acessando Service...");
+
         Integer idProduto = novaReceita.getIdReceita().getFkProduto();
         Integer idIngrediente = novaReceita.getIdReceita().getFkIngrediente();
 
@@ -48,18 +51,22 @@ public class ReceitaService {
         Produto produto = produtoOptional.get();
         Ingrediente ingrediente = ingredienteOptional.get();
 
-        ReceitaPrimaryKey idReceita = new ReceitaPrimaryKey(produto.getIdProduto(), ingrediente.getIdIngrediente());
+        // ReceitaPrimaryKey idReceita = new ReceitaPrimaryKey(produto.getIdProduto(), ingrediente.getIdIngrediente());
 
-        Boolean existeReceita = receitaRepository.existsById(idReceita);
+        Boolean existeReceita = receitaRepository.existsById(novaReceita.getIdReceita());
 
         if (existeReceita) {
             throw new EntidadeConflitoException("Já existe uma Receita do Produto '%s' com o Ingrediente '%s' cadastrada."
                     .formatted(produto.getNome(), ingrediente.getNome()));
         }
 
-        novaReceita = new Receita(idReceita, produto, ingrediente, novaReceita.getQuantidade());
+        novaReceita = new Receita(novaReceita.getIdReceita(), produto, ingrediente, novaReceita.getQuantidade());
+
+        System.out.println("Cadastrando Receita...");
 
         Receita receitaCadastrada = receitaRepository.save(novaReceita);
+
+        System.out.println("Receita Cadastrada...");
 
         return receitaCadastrada;
     }

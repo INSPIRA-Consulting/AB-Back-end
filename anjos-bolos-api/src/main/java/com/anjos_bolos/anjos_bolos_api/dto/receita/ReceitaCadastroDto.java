@@ -1,36 +1,27 @@
 package com.anjos_bolos.anjos_bolos_api.dto.receita;
 
-import com.anjos_bolos.anjos_bolos_api.entity.Ingrediente;
-import com.anjos_bolos.anjos_bolos_api.entity.Produto;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.MapsId;
+import com.anjos_bolos.anjos_bolos_api.entity.ReceitaPrimaryKey;
 
 public class ReceitaCadastroDto {
 
-    private Produto produto;
-    private Ingrediente ingrediente;
+    private ReceitaPrimaryKey idReceita;
+
     private Double quantidade;
 
-    public ReceitaCadastroDto(Produto produto, Ingrediente ingrediente, Double quantidade) {
-        this.produto = produto;
-        this.ingrediente = ingrediente;
+    public ReceitaCadastroDto() {
+    }
+
+    public ReceitaCadastroDto(ReceitaPrimaryKey idReceita, Double quantidade) {
+        this.idReceita = idReceita;
         this.quantidade = quantidade;
     }
 
-    public Produto getProduto() {
-        return produto;
+    public ReceitaPrimaryKey getIdReceita() {
+        return idReceita;
     }
 
-    public void setProduto(Produto produto) {
-        this.produto = produto;
-    }
-
-    public Ingrediente getIngrediente() {
-        return ingrediente;
-    }
-
-    public void setIngrediente(Ingrediente ingrediente) {
-        this.ingrediente = ingrediente;
+    public void setIdReceita(ReceitaPrimaryKey idReceita) {
+        this.idReceita = idReceita;
     }
 
     public Double getQuantidade() {

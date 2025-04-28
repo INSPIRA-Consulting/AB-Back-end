@@ -2,15 +2,19 @@ package com.anjos_bolos.anjos_bolos_api.dto.receita;
 
 import com.anjos_bolos.anjos_bolos_api.entity.Ingrediente;
 import com.anjos_bolos.anjos_bolos_api.entity.Produto;
+import com.anjos_bolos.anjos_bolos_api.entity.ReceitaPrimaryKey;
+import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 
 public class ReceitaAtualizacaoDto {
-
+    @ManyToOne @MapsId("fkProduto")
     private Produto produto;
-    private Ingrediente ingrediente;
-    private Double quantidade;
 
+    @ManyToOne @MapsId("fkIngrediente")
+    private Ingrediente ingrediente;
+
+    private Double quantidade;
     public ReceitaAtualizacaoDto(Produto produto, Ingrediente ingrediente, Double quantidade) {
         this.produto = produto;
         this.ingrediente = ingrediente;
