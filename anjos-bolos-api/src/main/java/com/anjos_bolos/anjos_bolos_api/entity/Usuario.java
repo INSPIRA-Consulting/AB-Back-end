@@ -9,7 +9,9 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idUsuario;
     private String nome;
+    @Column(unique = true)
     private String email;
+    @Enumerated(EnumType.STRING)
     private Funcao funcao;
     private String senha;
 

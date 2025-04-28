@@ -40,9 +40,9 @@ public class GerenciadorTokenJwt {
         return Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim("authorities", authorities)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtTokenValidity))
                 .signWith(parseSecret())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtTokenValidity * 1_000))
                 .compact();
     }
 

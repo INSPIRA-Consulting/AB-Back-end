@@ -3,6 +3,7 @@ package com.anjos_bolos.anjos_bolos_api.config;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
@@ -17,7 +18,7 @@ public class AutenticacaoEntryPoint implements AuthenticationEntryPoint {
                          HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
 
-        if (authException instanceof BadCredentialsException) {
+        if (authException.getClass().equals(BadCredentialsException.class) || authException.getClass().equals(InsufficientAuthenticationException.class)) {
             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Credenciais inválidas");
         } else {
             response.sendError(HttpServletResponse.SC_FORBIDDEN, "Acesso não autorizado");

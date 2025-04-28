@@ -51,7 +51,8 @@ public class SecurityConfiguracao {
             new AntPathRequestMatcher("/webjars/**"),
             new AntPathRequestMatcher("/v3/api-docs/**"),
             new AntPathRequestMatcher("/actuator/**"),
-            new AntPathRequestMatcher("/usuarios/login"),
+            new AntPathRequestMatcher("/usuarios/login/**"),
+            new AntPathRequestMatcher("/usuarios/**"),
             new AntPathRequestMatcher("/h2-console/**"),
             new AntPathRequestMatcher("/h2-console/**/**"),
             new AntPathRequestMatcher("/error/**")
@@ -79,6 +80,7 @@ public class SecurityConfiguracao {
                                 "/actuator/**",
                                 "/h2-console/**",
                                 "/usuarios/login",
+                                "/usuarios/cadastro",
                                 "/error/**",
                                 "/api-docs/**",
                                 "/swagger-config/**",
