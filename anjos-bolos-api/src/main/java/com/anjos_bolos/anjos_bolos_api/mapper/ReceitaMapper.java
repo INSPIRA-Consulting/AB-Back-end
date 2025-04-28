@@ -5,7 +5,7 @@ import com.anjos_bolos.anjos_bolos_api.dto.receita.ReceitaCadastroDto;
 import com.anjos_bolos.anjos_bolos_api.dto.receita.ReceitaListagemDto;
 import com.anjos_bolos.anjos_bolos_api.dto.receita.ReceitaResponseDto;
 import com.anjos_bolos.anjos_bolos_api.entity.Receita;
-import com.anjos_bolos.anjos_bolos_api.entity.Usuario;
+import com.anjos_bolos.anjos_bolos_api.entity.ReceitaPrimaryKey;
 
 import java.util.List;
 
@@ -18,9 +18,12 @@ public class ReceitaMapper {
 
         ReceitaResponseDto dto = new ReceitaResponseDto();
         dto.setIdReceita(receita.getIdReceita());
-        dto.setQuantidade(receita.getQuantidade());
         dto.setProduto(receita.getProduto());
         dto.setIngrediente(receita.getIngrediente());
+        dto.setQuantidade(receita.getQuantidade());
+
+        System.out.println("Convertendo para Response...");
+
         return dto;
     }
 
@@ -54,9 +57,11 @@ public class ReceitaMapper {
         }
 
         Receita receita = new Receita();
-        receita.setProduto(dto.getProduto());
-        receita.setIngrediente(dto.getIngrediente());
+        receita.setIdReceita(dto.getIdReceita());
         receita.setQuantidade(dto.getQuantidade());
+
+        System.out.println("Convertendo para Cadastro...");
+
         return receita;
     }
 

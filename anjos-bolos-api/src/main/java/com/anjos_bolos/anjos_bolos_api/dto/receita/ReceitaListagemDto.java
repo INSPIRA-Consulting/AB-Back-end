@@ -9,9 +9,15 @@ import jakarta.persistence.MapsId;
 
 public class ReceitaListagemDto {
 
+    @EmbeddedId
     private ReceitaPrimaryKey idReceita;
+
+    @ManyToOne @MapsId("fkProduto")
     private Produto produto;
+
+    @ManyToOne @MapsId("fkIngrediente")
     private Ingrediente ingrediente;
+
     private Double quantidade;
 
     public ReceitaListagemDto(ReceitaPrimaryKey idReceita, Produto produto, Ingrediente ingrediente, Double quantidade) {
