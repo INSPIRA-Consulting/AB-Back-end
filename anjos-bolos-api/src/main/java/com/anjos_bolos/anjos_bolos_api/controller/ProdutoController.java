@@ -1,10 +1,12 @@
 package com.anjos_bolos.anjos_bolos_api.controller;
 
-
+import com.anjos_bolos.anjos_bolos_api.dto.produto.ProdutoCadastroDto;
+import com.anjos_bolos.anjos_bolos_api.dto.produto.ProdutoAtualizacaoDto;
+import com.anjos_bolos.anjos_bolos_api.dto.produto.ProdutoResponseDto;
 import com.anjos_bolos.anjos_bolos_api.service.ProdutoService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.anjos_bolos.anjos_bolos_api.entity.Produto;
 
 import java.util.List;
 
@@ -19,15 +21,14 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<Produto> cadastrarProduto(@RequestBody Produto produtoParaCadastrar) {
-        Produto produtoCadastrado = produtoService.cadastrar(produtoParaCadastrar);
-
+    public ResponseEntity<ProdutoResponseDto> cadastrarProduto(@RequestBody @Valid ProdutoCadastroDto produtoParaCadastrar) {
+        ProdutoResponseDto produtoCadastrado = produtoService.cadastrar(produtoParaCadastrar);
         return ResponseEntity.status(201).body(produtoCadastrado);
     }
 
     @GetMapping
-    public ResponseEntity<List<Produto>> listarProdutos() {
-        List<Produto> produtos = produtoService.listar();
+    public ResponseEntity<List<ProdutoResponseDto>> listarProdutos() {
+        List<ProdutoResponseDto> produtos = produtoService.listar();
 
         if (produtos.isEmpty()) {
             return ResponseEntity.status(204).build();
@@ -37,35 +38,28 @@ public class ProdutoController {
     }
 
     @GetMapping("/filtro-nome")
-    public ResponseEntity<List<Produto>> buscarPorNomeProduto(
-            @RequestParam String nomeProduto
-    ) {
-        List<Produto> produtos = produtoService.listarPorNome(nomeProduto);
+    public ResponseEntity<List<ProdutoResponseDto>> buscarPorNomeProduto(@RequestParam String nomeProduto) {
+        List<ProdutoResponseDto> produtosFiltrados = produtoService.listarPorNome(nomeProduto);
 
-        if (produtos.isEmpty()) {
+        if (produtosFiltrados.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
 
-        return ResponseEntity.status(200).body(produtos);
+        return ResponseEntity.status(200).body(produtosFiltrados);
     }
 
     @PutMapping("{idProduto}")
-    public ResponseEntity<Produto> atualizarProduto(
+    public ResponseEntity<ProdutoResponseDto> atualizarProduto(
             @PathVariable Integer idProduto,
-            @RequestBody Produto produtoParaAtualizar
+            @RequestBody @Valid ProdutoAtualizacaoDto produtoParaAtualizar
     ) {
-        Produto produtoAtualizado = produtoService.atualizar(idProduto, produtoParaAtualizar);
-
+        ProdutoResponseDto produtoAtualizado = produtoService.atualizar(idProduto, produtoParaAtualizar);
         return ResponseEntity.status(200).body(produtoAtualizado);
     }
 
     @DeleteMapping("{idProduto}")
-    public ResponseEntity<Void> excluirProduto(
-            @PathVariable Integer idProduto
-    ) {
+    public ResponseEntity<Void> excluirProduto(@PathVariable Integer idProduto) {
         produtoService.excluir(idProduto);
-
         return ResponseEntity.status(204).build();
     }
-
 }

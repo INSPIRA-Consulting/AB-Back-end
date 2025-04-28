@@ -1,12 +1,17 @@
 package com.anjos_bolos.anjos_bolos_api.service;
 
+import com.anjos_bolos.anjos_bolos_api.dto.produto.ProdutoCadastroDto;
+import com.anjos_bolos.anjos_bolos_api.dto.produto.ProdutoAtualizacaoDto;
+import com.anjos_bolos.anjos_bolos_api.dto.produto.ProdutoResponseDto;
 import com.anjos_bolos.anjos_bolos_api.entity.Produto;
 import com.anjos_bolos.anjos_bolos_api.exception.EntidadeConflitoException;
 import com.anjos_bolos.anjos_bolos_api.exception.FalhaAutenticacaoException;
+import com.anjos_bolos.anjos_bolos_api.mapper.ProdutoMapper;
 import com.anjos_bolos.anjos_bolos_api.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProdutoService {
@@ -16,33 +21,36 @@ public class ProdutoService {
         this.produtoRepository = produtoRepository;
     }
 
-    public Produto cadastrar(Produto novoProduto) {
-        Boolean produtoExistePorNome = produtoRepository.existsByNomeIgnoreCase(novoProduto.getNome());
+    public ProdutoResponseDto cadastrar(ProdutoCadastroDto novoProdutoDto) {
+        Boolean produtoExistePorNome = produtoRepository.existsByNomeIgnoreCase(novoProdutoDto.getNome());
 
         if (produtoExistePorNome) {
-            throw new EntidadeConflitoException("Já existe um Produto '%s' cadastrado.".formatted(novoProduto.getNome()));
+            throw new EntidadeConflitoException("Já existe um Produto '%s' cadastrado.".formatted(novoProdutoDto.getNome()));
         }
 
-        novoProduto.setIdProduto(null);
+        Produto produtoParaSalvar = ProdutoMapper.toProduto(novoProdutoDto);
+        produtoParaSalvar.setIdProduto(null);
 
-        Produto produtoCadastrado = produtoRepository.save(novoProduto);
+        Produto produtoSalvo = produtoRepository.save(produtoParaSalvar);
 
-        return produtoCadastrado;
+        return ProdutoMapper.toProdutoResponseDto(produtoSalvo);
     }
 
-    public List<Produto> listar() {
+    public List<ProdutoResponseDto> listar() {
         List<Produto> produtos = produtoRepository.findAll();
-
-        return produtos;
+        return produtos.stream()
+                .map(ProdutoMapper::toProdutoResponseDto)
+                .collect(Collectors.toList());
     }
 
-    public List<Produto> listarPorNome(String nomeProduto) {
-        List<Produto> produtos = produtoRepository.findByNomeContainsIgnoreCase(nomeProduto);
-
-        return produtos;
+    public List<ProdutoResponseDto> listarPorNome(String nomeProduto) {
+        List<Produto> produtosFiltrados = produtoRepository.findByNomeContainsIgnoreCase(nomeProduto);
+        return produtosFiltrados.stream()
+                .map(ProdutoMapper::toProdutoResponseDto)
+                .collect(Collectors.toList());
     }
 
-    public Produto atualizar(Integer idProduto, Produto produtoParaAtualizar) {
+    public ProdutoResponseDto atualizar(Integer idProduto, ProdutoAtualizacaoDto produtoParaAtualizarDto) {
         Boolean existePorId = produtoRepository.existsById(idProduto);
 
         if (!existePorId) {
@@ -50,17 +58,19 @@ public class ProdutoService {
         }
 
         Boolean existePorNome = produtoRepository.existsByNomeEqualsIgnoreCaseAndIdProdutoNot(
-                produtoParaAtualizar.getNome(), idProduto
+                produtoParaAtualizarDto.getNome(), idProduto
         );
 
         if (existePorNome) {
-            throw new EntidadeConflitoException("Já existe um Produto '%s' cadastrado.".formatted(produtoParaAtualizar.getNome()));
+            throw new EntidadeConflitoException("Já existe um Produto '%s' cadastrado.".formatted(produtoParaAtualizarDto.getNome()));
         }
 
-        produtoParaAtualizar.setIdProduto(idProduto);
-        Produto produtoAtualizado = produtoRepository.save(produtoParaAtualizar);
+        Produto produtoParaSalvar = ProdutoMapper.toProduto(produtoParaAtualizarDto);
+        produtoParaSalvar.setIdProduto(idProduto);
 
-        return produtoAtualizado;
+        Produto produtoAtualizado = produtoRepository.save(produtoParaSalvar);
+
+        return ProdutoMapper.toProdutoResponseDto(produtoAtualizado);
     }
 
     public void excluir(Integer idProduto) {
@@ -72,5 +82,4 @@ public class ProdutoService {
 
         produtoRepository.deleteById(idProduto);
     }
-
 }

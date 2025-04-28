@@ -1,5 +1,8 @@
 package com.anjos_bolos.anjos_bolos_api.service;
 
+import com.anjos_bolos.anjos_bolos_api.dto.ingrediente.IngredienteAtualizacaoDto;
+import com.anjos_bolos.anjos_bolos_api.dto.IngredienteCadastroDto;
+import com.anjos_bolos.anjos_bolos_api.dto.ingrediente.IngredienteResponseDto;
 import com.anjos_bolos.anjos_bolos_api.entity.Ingrediente;
 import com.anjos_bolos.anjos_bolos_api.exception.EntidadeConflitoException;
 import com.anjos_bolos.anjos_bolos_api.exception.FalhaAutenticacaoException;
@@ -7,6 +10,7 @@ import com.anjos_bolos.anjos_bolos_api.repository.IngredienteRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class IngredienteService {
@@ -16,33 +20,55 @@ public class IngredienteService {
         this.ingredienteRepository = ingredienteRepository;
     }
 
-    public Ingrediente cadastrar(Ingrediente novoIngrediente) {
-        Boolean ingredienteExistePorNome = ingredienteRepository.existsByNome(novoIngrediente.getNome());
+    public IngredienteResponseDto cadastrar(IngredienteCadastroDto novoIngredienteDto) {
+        Boolean ingredienteExistePorNome = ingredienteRepository.existsByNome(novoIngredienteDto.getNome());
 
         if (ingredienteExistePorNome) {
-            throw new EntidadeConflitoException("Já existe um Ingrediente '%s' cadastrado.".formatted(novoIngrediente.getNome()));
+            throw new EntidadeConflitoException("Já existe um Ingrediente '%s' cadastrado.".formatted(novoIngredienteDto.getNome()));
         }
 
-        novoIngrediente.setIdIngrediente(null);
+        Ingrediente novoIngrediente = new Ingrediente();
+        novoIngrediente.setNome(novoIngredienteDto.getNome());
+        novoIngrediente.setMedida(novoIngredienteDto.getMedida());
+        novoIngrediente.setPreco(novoIngredienteDto.getPreco());
 
         Ingrediente ingredienteCadastrado = ingredienteRepository.save(novoIngrediente);
 
-        return ingredienteCadastrado;
+        return new IngredienteResponseDto(
+                ingredienteCadastrado.getIdIngrediente(),
+                ingredienteCadastrado.getNome(),
+                ingredienteCadastrado.getMedida(),
+                ingredienteCadastrado.getPreco()
+        );
     }
 
-    public List<Ingrediente> listar() {
+    public List<IngredienteResponseDto> listar() {
         List<Ingrediente> ingredientes = ingredienteRepository.findAll();
 
-        return ingredientes;
+        return ingredientes.stream()
+                .map(ingrediente -> new IngredienteResponseDto(
+                        ingrediente.getIdIngrediente(),
+                        ingrediente.getNome(),
+                        ingrediente.getMedida(),
+                        ingrediente.getPreco()
+                ))
+                .collect(Collectors.toList());
     }
 
-    public List<Ingrediente> listarPorNome(String nomeIngrediente) {
+    public List<IngredienteResponseDto> listarPorNome(String nomeIngrediente) {
         List<Ingrediente> ingredientesFiltrados = ingredienteRepository.findByNomeContainsIgnoreCase(nomeIngrediente);
 
-        return ingredientesFiltrados;
+        return ingredientesFiltrados.stream()
+                .map(ingrediente -> new IngredienteResponseDto(
+                        ingrediente.getIdIngrediente(),
+                        ingrediente.getNome(),
+                        ingrediente.getMedida(),
+                        ingrediente.getPreco()
+                ))
+                .collect(Collectors.toList());
     }
 
-    public Ingrediente atualizar(Integer idIngrediente, Ingrediente ingredienteParaAtualizar) {
+    public IngredienteResponseDto atualizar(Integer idIngrediente, IngredienteAtualizacaoDto ingredienteParaAtualizarDto) {
         Boolean existePorId = ingredienteRepository.existsById(idIngrediente);
 
         if (!existePorId) {
@@ -50,17 +76,27 @@ public class IngredienteService {
         }
 
         Boolean existePorNome = ingredienteRepository.existsByNomeEqualsIgnoreCaseAndIdIngredienteNot(
-                ingredienteParaAtualizar.getNome(), idIngrediente
+                ingredienteParaAtualizarDto.getNome(), idIngrediente
         );
 
         if (existePorNome) {
-            throw new EntidadeConflitoException("Já existe um Ingrediente '%s' cadastrado.".formatted(ingredienteParaAtualizar.getNome()));
+            throw new EntidadeConflitoException("Já existe um Ingrediente '%s' cadastrado.".formatted(ingredienteParaAtualizarDto.getNome()));
         }
 
+        Ingrediente ingredienteParaAtualizar = new Ingrediente();
         ingredienteParaAtualizar.setIdIngrediente(idIngrediente);
+        ingredienteParaAtualizar.setNome(ingredienteParaAtualizarDto.getNome());
+        ingredienteParaAtualizar.setMedida(ingredienteParaAtualizarDto.getMedida());
+        ingredienteParaAtualizar.setPreco(ingredienteParaAtualizarDto.getPreco());
+
         Ingrediente ingredienteAtualizado = ingredienteRepository.save(ingredienteParaAtualizar);
 
-        return ingredienteAtualizado;
+        return new IngredienteResponseDto(
+                ingredienteAtualizado.getIdIngrediente(),
+                ingredienteAtualizado.getNome(),
+                ingredienteAtualizado.getMedida(),
+                ingredienteAtualizado.getPreco()
+        );
     }
 
     public void excluir(Integer idIngrediente) {
