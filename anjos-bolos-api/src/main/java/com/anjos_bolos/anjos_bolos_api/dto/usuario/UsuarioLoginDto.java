@@ -1,13 +1,16 @@
 package com.anjos_bolos.anjos_bolos_api.dto.usuario;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public class UsuarioLoginDto {
     @NotBlank
     @Email
+    @Schema(description = "Email do usuário", example = "ana@gmail.com")
     private String email;
     @NotBlank
+    @Schema(description = "Senha do usuário", example = "123456")
     private String senha;
 
     public UsuarioLoginDto() {

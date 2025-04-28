@@ -1,6 +1,7 @@
 package com.anjos_bolos.anjos_bolos_api.dto.usuario;
 
 import com.anjos_bolos.anjos_bolos_api.entity.Funcao;
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.Id;
@@ -11,13 +12,17 @@ import jakarta.validation.constraints.NotBlank;
 public class UsuarioListagemDto {
     @NotBlank
     @Id
+    @Schema(description = "Id usuário", example = "1")
     private Integer idUsuario;
     @NotBlank
+    @Schema(description = "Nome do usuário", example = "Anna Rita")
     private String nome;
     @NotBlank
     @Email
+    @Schema(description = "Email do usuário", example = "ana@gmail.com")
     private String email;
     @NotBlank
+    @Schema(description = "Função do usuário", example = "ADMINISTRADOR")
     @Enumerated(EnumType.STRING)
     private Funcao funcao;
 
