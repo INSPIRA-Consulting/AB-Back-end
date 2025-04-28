@@ -77,21 +77,18 @@ public class UsuarioService {
         return false;
     }
 
-    public Usuario cadastro(Usuario usuario){
-
+    public Usuario cadastro(Usuario usuario) {
         Optional<Usuario> usuarioCadastrado = repository.findByEmailAndNome(usuario.getEmail(), usuario.getNome());
 
-        if(usuarioCadastrado.isEmpty()){
-            String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
-            usuario.setSenha(senhaCriptografada);
-            repository.save(usuario);
 
+        if (usuarioCadastrado.isPresent()) {
+            throw new CadastroConflitoException("Email já foi cadastrado");
         }
 
-        throw new CadastroConflitoException("Email já foi cadastrado");
-
+        String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
+        usuario.setSenha(senhaCriptografada);
+        return repository.save(usuario);
     }
-
     public Usuario atualizarPorNome(String nome, Usuario usuarioAtualizado) {
         Optional<Usuario> usuarioEncontrado = repository.findByNome(nome);
 

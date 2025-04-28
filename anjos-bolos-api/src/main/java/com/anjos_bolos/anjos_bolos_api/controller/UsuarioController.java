@@ -44,8 +44,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "201", description = "Usuário cadastrado com sucesso"),
             @ApiResponse(responseCode = "409", description = "Conflito ao cadastrar usuário")
     })
-    @PostMapping
-    @SecurityRequirement(name = "Bearer")
+    @PostMapping("/cadastro")
     public ResponseEntity<UsuarioResponseDto> cadastrarUsuario(
             @RequestBody UsuarioCadastroDto usuarioCadastrado
     ) {
