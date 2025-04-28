@@ -15,7 +15,6 @@ public class IngredienteAtualizacaoDto {
     @Positive
     private Double preco;
 
-    // Getters e Setters
     public String getNome() {
         return nome;
     }

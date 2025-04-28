@@ -13,7 +13,6 @@ public class IngredienteResponseDto {
         this.preco = preco;
     }
 
-    // Getters e Setters
     public Integer getIdIngrediente() {
         return idIngrediente;
     }
