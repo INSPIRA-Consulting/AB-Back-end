@@ -1,11 +1,14 @@
 package com.anjos_bolos.anjos_bolos_api.controller;
 
-import com.anjos_bolos.anjos_bolos_api.entity.Produto;
+import com.anjos_bolos.anjos_bolos_api.dto.produto.ProdutoCadastroDto;
+import com.anjos_bolos.anjos_bolos_api.dto.produto.ProdutoAtualizacaoDto;
+import com.anjos_bolos.anjos_bolos_api.dto.produto.ProdutoResponseDto;
 import com.anjos_bolos.anjos_bolos_api.service.ProdutoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,8 +30,8 @@ public class ProdutoController {
             @ApiResponse(responseCode = "409", description = "Produto com nome duplicado")
     })
     @PostMapping
-    public ResponseEntity<Produto> cadastrarProduto(@RequestBody Produto produtoParaCadastrar) {
-        Produto produtoCadastrado = produtoService.cadastrar(produtoParaCadastrar);
+    public ResponseEntity<ProdutoResponseDto> cadastrarProduto(@RequestBody @Valid ProdutoCadastroDto produtoParaCadastrar) {
+        ProdutoResponseDto produtoCadastrado = produtoService.cadastrar(produtoParaCadastrar);
         return ResponseEntity.status(201).body(produtoCadastrado);
     }
 
@@ -38,8 +41,8 @@ public class ProdutoController {
             @ApiResponse(responseCode = "204", description = "Nenhum produto encontrado")
     })
     @GetMapping
-    public ResponseEntity<List<Produto>> listarProdutos() {
-        List<Produto> produtos = produtoService.listar();
+    public ResponseEntity<List<ProdutoResponseDto>> listarProdutos() {
+        List<ProdutoResponseDto> produtos = produtoService.listar();
         if (produtos.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
@@ -52,15 +55,15 @@ public class ProdutoController {
             @ApiResponse(responseCode = "204", description = "Nenhum produto encontrado")
     })
     @GetMapping("/filtro-nome")
-    public ResponseEntity<List<Produto>> buscarPorNomeProduto(
+    public ResponseEntity<List<ProdutoResponseDto>> buscarPorNomeProduto(
             @Parameter(description = "Nome parcial ou completo do produto a ser buscado")
             @RequestParam String nomeProduto
     ) {
-        List<Produto> produtos = produtoService.listarPorNome(nomeProduto);
-        if (produtos.isEmpty()) {
+        List<ProdutoResponseDto> produtosFiltrados = produtoService.listarPorNome(nomeProduto);
+        if (produtosFiltrados.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
-        return ResponseEntity.status(200).body(produtos);
+        return ResponseEntity.status(200).body(produtosFiltrados);
     }
 
     @Operation(summary = "Atualizar produto", description = "Atualiza os dados de um produto existente com base no ID.")
@@ -70,11 +73,11 @@ public class ProdutoController {
             @ApiResponse(responseCode = "409", description = "Produto com esse nome já existe")
     })
     @PutMapping("{idProduto}")
-    public ResponseEntity<Produto> atualizarProduto(
+    public ResponseEntity<ProdutoResponseDto> atualizarProduto(
             @Parameter(description = "ID do produto a ser atualizado") @PathVariable Integer idProduto,
-            @RequestBody Produto produtoParaAtualizar
+            @RequestBody @Valid ProdutoAtualizacaoDto produtoParaAtualizar
     ) {
-        Produto produtoAtualizado = produtoService.atualizar(idProduto, produtoParaAtualizar);
+        ProdutoResponseDto produtoAtualizado = produtoService.atualizar(idProduto, produtoParaAtualizar);
         return ResponseEntity.status(200).body(produtoAtualizado);
     }
 
@@ -83,7 +86,6 @@ public class ProdutoController {
             @ApiResponse(responseCode = "204", description = "Produto excluído com sucesso"),
             @ApiResponse(responseCode = "404", description = "Produto não encontrado")
     })
-
     @DeleteMapping("{idProduto}")
     public ResponseEntity<Void> excluirProduto(
             @Parameter(description = "ID do produto a ser excluído") @PathVariable Integer idProduto
