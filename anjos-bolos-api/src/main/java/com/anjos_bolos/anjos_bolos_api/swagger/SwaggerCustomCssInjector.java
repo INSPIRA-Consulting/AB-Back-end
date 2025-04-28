@@ -45,7 +45,7 @@ public class SwaggerCustomCssInjector extends SwaggerIndexPageTransformer {
     }
 
     private String injectCss(String html) {
-        String cssPath = "/static/swagger-theme.css";
+        String cssPath = "/swagger-theme.css";
         return html.replace("</head>", "<link rel=\"stylesheet\" type=\"text/css\" href=\"" + cssPath + "\" /></head>");
     }
 }

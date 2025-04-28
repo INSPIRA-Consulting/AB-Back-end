@@ -4,6 +4,10 @@ import com.anjos_bolos.anjos_bolos_api.dto.ingrediente.IngredienteAtualizacaoDto
 import com.anjos_bolos.anjos_bolos_api.dto.IngredienteCadastroDto;
 import com.anjos_bolos.anjos_bolos_api.dto.ingrediente.IngredienteResponseDto;
 import com.anjos_bolos.anjos_bolos_api.service.IngredienteService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,18 +17,29 @@ import java.util.List;
 @RestController
 @RequestMapping("/ingredientes")
 public class IngredienteController {
+
     private final IngredienteService ingredienteService;
 
     public IngredienteController(IngredienteService ingredienteService) {
         this.ingredienteService = ingredienteService;
     }
 
+    @Operation(summary = "Cadastrar novo ingrediente", description = "Cria e salva um novo ingrediente no banco de dados.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Ingrediente cadastrado com sucesso"),
+            @ApiResponse(responseCode = "409", description = "Ingrediente já existe")
+    })
     @PostMapping
     public ResponseEntity<IngredienteResponseDto> cadastrarIngrediente(@RequestBody @Valid IngredienteCadastroDto ingredienteDto) {
         IngredienteResponseDto ingredienteCadastrado = ingredienteService.cadastrar(ingredienteDto);
         return ResponseEntity.status(201).body(ingredienteCadastrado);
     }
 
+    @Operation(summary = "Listar todos os ingredientes", description = "Retorna uma lista com todos os ingredientes cadastrados.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ingredientes encontrados"),
+            @ApiResponse(responseCode = "204", description = "Nenhum ingrediente encontrado")
+    })
     @GetMapping
     public ResponseEntity<List<IngredienteResponseDto>> listarIngredientes() {
         List<IngredienteResponseDto> ingredientes = ingredienteService.listar();
@@ -34,6 +49,11 @@ public class IngredienteController {
         return ResponseEntity.status(200).body(ingredientes);
     }
 
+    @Operation(summary = "Buscar ingredientes por nome", description = "Filtra ingredientes que contenham parte do nome informado (sem case sensitive).")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ingredientes encontrados"),
+            @ApiResponse(responseCode = "204", description = "Nenhum ingrediente encontrado")
+    })
     @GetMapping("/filtro-nome")
     public ResponseEntity<List<IngredienteResponseDto>> listarPorNomeIngrediente(@RequestParam String nomeIngrediente) {
         List<IngredienteResponseDto> ingredientesFiltrados = ingredienteService.listarPorNome(nomeIngrediente);
@@ -43,17 +63,30 @@ public class IngredienteController {
         return ResponseEntity.status(200).body(ingredientesFiltrados);
     }
 
+    @Operation(summary = "Atualizar ingrediente", description = "Atualiza um ingrediente existente com base no ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Ingrediente atualizado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Ingrediente não encontrado"),
+            @ApiResponse(responseCode = "409", description = "Ingrediente com esse nome já existe")
+    })
     @PutMapping("/{idIngrediente}")
     public ResponseEntity<IngredienteResponseDto> atualizarIngrediente(
-            @PathVariable Integer idIngrediente,
+            @Parameter(description = "ID do ingrediente a ser atualizado") @PathVariable Integer idIngrediente,
             @RequestBody @Valid IngredienteAtualizacaoDto ingredienteParaAtualizar
     ) {
         IngredienteResponseDto ingredienteAtualizado = ingredienteService.atualizar(idIngrediente, ingredienteParaAtualizar);
         return ResponseEntity.status(200).body(ingredienteAtualizado);
     }
 
+    @Operation(summary = "Excluir ingrediente", description = "Remove um ingrediente do sistema com base no ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Ingrediente excluído com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Ingrediente não encontrado")
+    })
     @DeleteMapping("/{idIngrediente}")
-    public ResponseEntity<Void> excluirIngrediente(@PathVariable Integer idIngrediente) {
+    public ResponseEntity<Void> excluirIngrediente(
+            @Parameter(description = "ID do ingrediente a ser excluído") @PathVariable Integer idIngrediente
+    ) {
         ingredienteService.excluir(idIngrediente);
         return ResponseEntity.status(204).build();
     }
