@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "204", description = "Nenhum usuário encontrado")
     })
     @GetMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<UsuarioListagemDto>> listar() {
         List<Usuario> usuarios = service.listar();
         if (usuarios.isEmpty()) {
@@ -43,6 +45,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "409", description = "Conflito ao cadastrar usuário")
     })
     @PostMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<UsuarioResponseDto> cadastrarUsuario(
             @RequestBody UsuarioCadastroDto usuarioCadastrado
     ) {
@@ -57,12 +60,13 @@ public class UsuarioController {
             @ApiResponse(responseCode = "401", description = "Credenciais inválidas")
     })
     @PostMapping("/login")
-    public ResponseEntity<String> autenticarLogin(
+    public ResponseEntity<UsuarioTokenDto> autenticarLogin(
             @Valid @RequestBody UsuarioLoginDto usuarioLogado
     ) {
-        Usuario entity = UsuarioMapper.toEntity(usuarioLogado);
-        service.login(entity);
-        return ResponseEntity.status(200).body("Login realizado com sucesso");
+        final Usuario entity = UsuarioMapper.toEntity(usuarioLogado);
+        UsuarioTokenDto usuarioTokenDto = service.autenticar(entity);
+        service.autenticar(entity);
+        return ResponseEntity.status(200).body(usuarioTokenDto);
     }
 
     @Operation(summary = "Buscar usuários por nome", description = "Busca usuários com base no nome informado.")
@@ -70,7 +74,9 @@ public class UsuarioController {
             @ApiResponse(responseCode = "200", description = "Usuários encontrados"),
             @ApiResponse(responseCode = "204", description = "Nenhum usuário encontrado com esse nome")
     })
+
     @GetMapping("/{nome}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<UsuarioListagemDto>> buscarPorNome(
             @PathVariable String nome
     ) {

@@ -3,6 +3,7 @@ package com.anjos_bolos.anjos_bolos_api.controller;
 import com.anjos_bolos.anjos_bolos_api.dto.receita.ReceitaCadastroDto;
 import com.anjos_bolos.anjos_bolos_api.dto.receita.ReceitaListagemDto;
 import com.anjos_bolos.anjos_bolos_api.dto.receita.ReceitaResponseDto;
+import com.anjos_bolos.anjos_bolos_api.entity.Receita;
 import com.anjos_bolos.anjos_bolos_api.entity.ReceitaPrimaryKey;
 import com.anjos_bolos.anjos_bolos_api.mapper.ReceitaMapper;
 import com.anjos_bolos.anjos_bolos_api.service.ReceitaService;

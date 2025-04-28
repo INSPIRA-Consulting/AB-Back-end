@@ -1,20 +1,20 @@
-package com.anjos_bolos.anjos_bolos_api.entity;
+package com.anjos_bolos.anjos_bolos_api.dto.usuario;
 
-import jakarta.persistence.*;
+import com.anjos_bolos.anjos_bolos_api.entity.Funcao;
 
-
-@Entity
-public class Usuario {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UsuarioTokenDto {
     private Integer idUsuario;
     private String nome;
     private String email;
     private Funcao funcao;
-    private String senha;
+    private String token;
 
+    public String getToken() {
+        return token;
+    }
 
-    public Usuario() {
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public Integer getIdUsuario() {
@@ -48,14 +48,4 @@ public class Usuario {
     public void setFuncao(Funcao funcao) {
         this.funcao = funcao;
     }
-
-    public String getSenha() {
-        return senha;
-    }
-
-    public void setSenha(String senha) {
-        this.senha = senha;
-    }
-
-
 }

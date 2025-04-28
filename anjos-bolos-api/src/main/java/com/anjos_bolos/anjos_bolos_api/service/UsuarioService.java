@@ -1,17 +1,37 @@
 package com.anjos_bolos.anjos_bolos_api.service;
+import com.anjos_bolos.anjos_bolos_api.config.GerenciadorTokenJwt;
+import com.anjos_bolos.anjos_bolos_api.dto.usuario.UsuarioTokenDto;
 import com.anjos_bolos.anjos_bolos_api.entity.Funcao;
 import com.anjos_bolos.anjos_bolos_api.entity.Usuario;
 import com.anjos_bolos.anjos_bolos_api.exception.CadastroConflitoException;
 import com.anjos_bolos.anjos_bolos_api.exception.FalhaAutenticacaoException;
+import com.anjos_bolos.anjos_bolos_api.mapper.UsuarioMapper;
 import com.anjos_bolos.anjos_bolos_api.repository.UsuarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
+
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class UsuarioService {
-    private final UsuarioRepository repository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private GerenciadorTokenJwt gerenciadorTokenJwt;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    private final UsuarioRepository repository;
 
     public UsuarioService(UsuarioRepository repository) {
         this.repository = repository;
@@ -20,26 +40,26 @@ public class UsuarioService {
     public List<Usuario> listar() {
         return repository.findAll();
     }
-    
-    
-    public Usuario login(Usuario usuario){
-        Optional<Usuario> usuarioExistente = repository.findByEmail(usuario.getEmail());
 
-        if (usuarioExistente.isEmpty()) {
-            throw new FalhaAutenticacaoException("Login inválido");
-        }
+    public UsuarioTokenDto autenticar(Usuario usuario) {
+        final var credentials = new UsernamePasswordAuthenticationToken(
+                usuario.getEmail(), usuario.getSenha()
+        );
 
-        Usuario usuarioEncontrado = usuarioExistente.get();
-        boolean emailIgual = usuarioEncontrado.getEmail().equalsIgnoreCase(usuario.getEmail());
-        boolean senhaIgual = usuarioEncontrado.getSenha().equals(usuario.getSenha());
+        final var authentication = authenticationManager.authenticate(credentials);
 
-        if (!emailIgual || !senhaIgual) {
-            throw new FalhaAutenticacaoException("Login inválido");
-        }
+        Usuario usuarioAutenticado = repository.findByEmail(usuario.getEmail())
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND, "Email ou senha inválidos"
+                ));
 
-        usuarioEncontrado.setAutenticado(true);
-        return usuarioEncontrado;
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        final String token = gerenciadorTokenJwt.generateToken(authentication);
+
+        return UsuarioMapper.of(usuarioAutenticado, token);
     }
+
 
     public List<Usuario> buscarPorNome(String nome) {
         return repository.findByNomeContainingIgnoreCase(nome);
@@ -62,8 +82,10 @@ public class UsuarioService {
         Optional<Usuario> usuarioCadastrado = repository.findByEmailAndNome(usuario.getEmail(), usuario.getNome());
 
         if(usuarioCadastrado.isEmpty()){
-            Usuario usuarioCadastro = usuarioCadastrado.get();
-            repository.save(usuarioCadastro);
+            String senhaCriptografada = passwordEncoder.encode(usuario.getSenha());
+            usuario.setSenha(senhaCriptografada);
+            repository.save(usuario);
+
         }
 
         throw new CadastroConflitoException("Email já foi cadastrado");
