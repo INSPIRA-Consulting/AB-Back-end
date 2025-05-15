@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 
-public class IngredienteCadastroDto {
+public class IngredienteAtualizacaoDto {
     @NotBlank
     private String nome;
 

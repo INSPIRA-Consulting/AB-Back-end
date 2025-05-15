@@ -34,9 +34,18 @@ public class ReceitaController {
     public ResponseEntity<ReceitaResponseDto> cadastrarReceita(
             @RequestBody ReceitaCadastroDto receitaParaCadastrar) {
 
+        System.out.println("Acessando Controller...");
+
         Receita entity = ReceitaMapper.toEntity(receitaParaCadastrar);
+
+        System.out.println("Convertido para Entidade");
+
         Receita receitaCadastrada = receitaService.cadastrar(entity);
+
+        System.out.println("Enviando para Service...");
+
         ReceitaResponseDto dto = ReceitaMapper.toResponse(receitaCadastrada);
+        System.out.println("Retornando...");
 
         return ResponseEntity.status(201).body(dto);
     }

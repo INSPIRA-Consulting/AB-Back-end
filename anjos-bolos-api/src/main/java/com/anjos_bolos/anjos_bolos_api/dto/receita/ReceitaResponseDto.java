@@ -8,10 +8,12 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.MapsId;
 
 public class ReceitaResponseDto {
-
     private ReceitaPrimaryKey idReceita;
+
     private Produto produto;
+
     private Ingrediente ingrediente;
+
     private Double quantidade;
 
     public ReceitaResponseDto(ReceitaPrimaryKey idReceita, Produto produto, Ingrediente ingrediente, Double quantidade) {

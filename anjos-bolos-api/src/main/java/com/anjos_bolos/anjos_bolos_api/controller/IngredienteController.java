@@ -1,6 +1,8 @@
 package com.anjos_bolos.anjos_bolos_api.controller;
 
-import com.anjos_bolos.anjos_bolos_api.entity.Ingrediente;
+import com.anjos_bolos.anjos_bolos_api.dto.ingrediente.IngredienteAtualizacaoDto;
+import com.anjos_bolos.anjos_bolos_api.dto.IngredienteCadastroDto;
+import com.anjos_bolos.anjos_bolos_api.dto.ingrediente.IngredienteResponseDto;
 import com.anjos_bolos.anjos_bolos_api.service.IngredienteService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -9,6 +11,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import jakarta.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -27,8 +30,8 @@ public class IngredienteController {
             @ApiResponse(responseCode = "409", description = "Ingrediente já existe")
     })
     @PostMapping
-    public ResponseEntity<Ingrediente> cadastrarIngrediente(@RequestBody Ingrediente ingredienteParaCadastrar) {
-        Ingrediente ingredienteCadastrado = ingredienteService.cadastrar(ingredienteParaCadastrar);
+    public ResponseEntity<IngredienteResponseDto> cadastrarIngrediente(@RequestBody @Valid IngredienteCadastroDto ingredienteDto) {
+        IngredienteResponseDto ingredienteCadastrado = ingredienteService.cadastrar(ingredienteDto);
         return ResponseEntity.status(201).body(ingredienteCadastrado);
     }
 
@@ -38,8 +41,8 @@ public class IngredienteController {
             @ApiResponse(responseCode = "204", description = "Nenhum ingrediente encontrado")
     })
     @GetMapping
-    public ResponseEntity<List<Ingrediente>> listarIngredientes() {
-        List<Ingrediente> ingredientes = ingredienteService.listar();
+    public ResponseEntity<List<IngredienteResponseDto>> listarIngredientes() {
+        List<IngredienteResponseDto> ingredientes = ingredienteService.listar();
         if (ingredientes.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
@@ -52,11 +55,8 @@ public class IngredienteController {
             @ApiResponse(responseCode = "204", description = "Nenhum ingrediente encontrado")
     })
     @GetMapping("/filtro-nome")
-    public ResponseEntity<List<Ingrediente>> listarPorNomeIngrediente(
-            @Parameter(description = "Nome parcial ou completo do ingrediente a ser buscado")
-            @RequestParam String nomeIngrediente
-    ) {
-        List<Ingrediente> ingredientesFiltrados = ingredienteService.listarPorNome(nomeIngrediente);
+    public ResponseEntity<List<IngredienteResponseDto>> listarPorNomeIngrediente(@RequestParam String nomeIngrediente) {
+        List<IngredienteResponseDto> ingredientesFiltrados = ingredienteService.listarPorNome(nomeIngrediente);
         if (ingredientesFiltrados.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
@@ -69,12 +69,12 @@ public class IngredienteController {
             @ApiResponse(responseCode = "404", description = "Ingrediente não encontrado"),
             @ApiResponse(responseCode = "409", description = "Ingrediente com esse nome já existe")
     })
-    @PutMapping("{idIngrediente}")
-    public ResponseEntity<Ingrediente> atualizarIngrediente(
+    @PutMapping("/{idIngrediente}")
+    public ResponseEntity<IngredienteResponseDto> atualizarIngrediente(
             @Parameter(description = "ID do ingrediente a ser atualizado") @PathVariable Integer idIngrediente,
-            @RequestBody Ingrediente ingredienteParaAtualizar
+            @RequestBody @Valid IngredienteAtualizacaoDto ingredienteParaAtualizar
     ) {
-        Ingrediente ingredienteAtualizado = ingredienteService.atualizar(idIngrediente, ingredienteParaAtualizar);
+        IngredienteResponseDto ingredienteAtualizado = ingredienteService.atualizar(idIngrediente, ingredienteParaAtualizar);
         return ResponseEntity.status(200).body(ingredienteAtualizado);
     }
 
