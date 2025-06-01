@@ -15,6 +15,12 @@ public class IngredienteAtualizacaoDto {
     @Positive
     private Double preco;
 
+    public IngredienteAtualizacaoDto(String nome, String medida, Double preco) {
+        this.nome = nome;
+        this.medida = medida;
+        this.preco = preco;
+    }
+
     public String getNome() {
         return nome;
     }

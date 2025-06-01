@@ -9,8 +9,20 @@ import jakarta.persistence.*;
         private Integer idIngrediente;
 
         private String nome;
+
+        public Ingrediente(Integer idIngrediente, String nome, String medida, Double preco) {
+            this.idIngrediente = idIngrediente;
+            this.nome = nome;
+            this.medida = medida;
+            this.preco = preco;
+        }
+
         private String medida;
         private Double preco;
+
+        public Ingrediente() {
+
+        }
 
         public Integer getIdIngrediente() {
             return idIngrediente;
