@@ -5,7 +5,7 @@ package com.anjos_bolos.anjos_bolos_api.dto;
 public class IngredienteCadastroDto {
     private String nome;
     private String medida;
-    private double preco;
+    private Double preco;
 
     public IngredienteCadastroDto() {
     }
