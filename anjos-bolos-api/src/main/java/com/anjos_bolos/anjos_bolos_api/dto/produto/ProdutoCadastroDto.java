@@ -18,6 +18,8 @@ public class ProdutoCadastroDto {
         this.valorFinal = valorFinal;
     }
 
+
+
     public String getNome() {
         return nome;
     }
