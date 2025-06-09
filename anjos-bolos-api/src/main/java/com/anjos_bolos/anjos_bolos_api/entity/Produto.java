@@ -12,6 +12,15 @@ public class Produto {
     private String nome;
     private Double valorFinal;
 
+    public Produto() {
+    }
+
+    public Produto(Integer idProduto, String nome, Double valorFinal) {
+        this.idProduto = idProduto;
+        this.nome = nome;
+        this.valorFinal = valorFinal;
+    }
+
     public Integer getIdProduto() {
         return idProduto;
     }
