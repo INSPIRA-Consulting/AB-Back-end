@@ -19,6 +19,14 @@ public class Usuario {
     public Usuario() {
     }
 
+    public Usuario(Integer idUsuario, String nome, String email, Funcao funcao, String senha) {
+        this.idUsuario = idUsuario;
+        this.nome = nome;
+        this.email = email;
+        this.funcao = funcao;
+        this.senha = senha;
+    }
+
     public Integer getIdUsuario() {
         return idUsuario;
     }
