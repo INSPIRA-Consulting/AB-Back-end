@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 public class Receita {
     @EmbeddedId
+    @Column(name = "idReceita")
     private ReceitaPrimaryKey idReceita;
 
     @ManyToOne @MapsId("fkProduto")

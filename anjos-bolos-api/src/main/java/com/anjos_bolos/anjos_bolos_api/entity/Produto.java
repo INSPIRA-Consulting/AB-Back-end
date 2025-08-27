@@ -7,6 +7,7 @@ public class Produto {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "idProduto")
     private Integer idProduto;
 
     private String nome;
