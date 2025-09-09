@@ -1,14 +1,15 @@
 package com.anjos_bolos.anjos_bolos_api.service;
 
-import com.anjos_bolos.anjos_bolos_api.entity.Ingrediente;
-import com.anjos_bolos.anjos_bolos_api.entity.Produto;
-import com.anjos_bolos.anjos_bolos_api.entity.Receita;
-import com.anjos_bolos.anjos_bolos_api.entity.ReceitaPrimaryKey;
-import com.anjos_bolos.anjos_bolos_api.exception.EntidadeConflitoException;
-import com.anjos_bolos.anjos_bolos_api.exception.FalhaAutenticacaoException;
-import com.anjos_bolos.anjos_bolos_api.repository.IngredienteRepository;
-import com.anjos_bolos.anjos_bolos_api.repository.ProdutoRepository;
-import com.anjos_bolos.anjos_bolos_api.repository.ReceitaRepository;
+import com.anjos_bolos.anjos_bolos_api.core.application.usecase.receita.ReceitaService;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.IngredienteEntity;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.Produto;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.Receita;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.ReceitaPrimaryKey;
+import com.anjos_bolos.anjos_bolos_api.core.application.exception.EntidadeConflitoException;
+import com.anjos_bolos.anjos_bolos_api.core.application.exception.FalhaAutenticacaoException;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.repository.IngredienteJpaRepository;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.repository.ProdutoRepository;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.repository.ReceitaRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -30,7 +31,7 @@ class ReceitaServiceTest {
     private ProdutoRepository produtoRepository;
 
     @Mock
-    private IngredienteRepository ingredienteRepository;
+    private IngredienteJpaRepository ingredienteJpaRepository;
 
     @InjectMocks
     private ReceitaService receitaService;
@@ -45,12 +46,12 @@ class ReceitaServiceTest {
     void cadastrar_ReceitaComSucesso() {
         // Arrange
         Produto produto = new Produto(1, "Bolo", 40.0);
-        Ingrediente ingrediente = new Ingrediente(2, "Farinha", "kg", 5.0);
+        IngredienteEntity ingredienteEntity = new IngredienteEntity(2, "Farinha", "kg", 5.0);
         ReceitaPrimaryKey id = new ReceitaPrimaryKey(1, 2);
-        Receita receita = new Receita(id, produto, ingrediente, 2.0);
+        Receita receita = new Receita(id, produto, ingredienteEntity, 2.0);
 
         when(produtoRepository.findById(1)).thenReturn(Optional.of(produto));
-        when(ingredienteRepository.findById(2)).thenReturn(Optional.of(ingrediente));
+        when(ingredienteJpaRepository.findById(2)).thenReturn(Optional.of(ingredienteEntity));
         when(receitaRepository.existsById(id)).thenReturn(false);
         when(receitaRepository.save(any())).thenReturn(receita);
 
@@ -59,7 +60,7 @@ class ReceitaServiceTest {
 
         // Assert
         assertEquals(produto, resultado.getProduto());
-        assertEquals(ingrediente, resultado.getIngrediente());
+        assertEquals(ingredienteEntity, resultado.getIngrediente());
         assertEquals(2.0, resultado.getQuantidade());
     }
 
@@ -83,7 +84,7 @@ class ReceitaServiceTest {
         Receita receita = new Receita(new ReceitaPrimaryKey(1, 99), produto, null, 2.0);
 
         when(produtoRepository.findById(1)).thenReturn(Optional.of(produto));
-        when(ingredienteRepository.findById(99)).thenReturn(Optional.empty());
+        when(ingredienteJpaRepository.findById(99)).thenReturn(Optional.empty());
 
         // Act & Assert
         assertThrows(FalhaAutenticacaoException.class, () -> receitaService.cadastrar(receita));
@@ -94,12 +95,12 @@ class ReceitaServiceTest {
     void cadastrar_ReceitaDuplicada() {
         // Arrange
         Produto produto = new Produto(1, "Bolo", 40.0);
-        Ingrediente ingrediente = new Ingrediente(2, "Farinha", "kg", 5.0);
+        IngredienteEntity ingredienteEntity = new IngredienteEntity(2, "Farinha", "kg", 5.0);
         ReceitaPrimaryKey id = new ReceitaPrimaryKey(1, 2);
-        Receita receita = new Receita(id, produto, ingrediente, 2.0);
+        Receita receita = new Receita(id, produto, ingredienteEntity, 2.0);
 
         when(produtoRepository.findById(1)).thenReturn(Optional.of(produto));
-        when(ingredienteRepository.findById(2)).thenReturn(Optional.of(ingrediente));
+        when(ingredienteJpaRepository.findById(2)).thenReturn(Optional.of(ingredienteEntity));
         when(receitaRepository.existsById(id)).thenReturn(true);
 
         // Act & Assert
@@ -149,8 +150,8 @@ class ReceitaServiceTest {
     void calcularPreco_Sucesso() {
         // Arrange
         Produto produto = new Produto(1, "Bolo", 40.0);
-        Ingrediente ingrediente = new Ingrediente(2, "Farinha", "kg", 5.0);
-        Receita receita = new Receita(new ReceitaPrimaryKey(1, 2), produto, ingrediente, 3.0);
+        IngredienteEntity ingredienteEntity = new IngredienteEntity(2, "Farinha", "kg", 5.0);
+        Receita receita = new Receita(new ReceitaPrimaryKey(1, 2), produto, ingredienteEntity, 3.0);
 
         when(produtoRepository.existsById(1)).thenReturn(true);
         when(receitaRepository.findAll()).thenReturn(List.of(receita));

@@ -1,12 +1,13 @@
 package com.anjos_bolos.anjos_bolos_api.service;
 
-import com.anjos_bolos.anjos_bolos_api.dto.produto.ProdutoAtualizacaoDto;
-import com.anjos_bolos.anjos_bolos_api.dto.produto.ProdutoCadastroDto;
-import com.anjos_bolos.anjos_bolos_api.dto.produto.ProdutoResponseDto;
-import com.anjos_bolos.anjos_bolos_api.entity.Produto;
-import com.anjos_bolos.anjos_bolos_api.exception.EntidadeConflitoException;
-import com.anjos_bolos.anjos_bolos_api.exception.FalhaAutenticacaoException;
-import com.anjos_bolos.anjos_bolos_api.repository.ProdutoRepository;
+import com.anjos_bolos.anjos_bolos_api.core.application.usecase.produto.ProdutoService;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.produto.ProdutoAtualizacaoDto;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.produto.ProdutoCadastroDto;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.produto.ProdutoResponseDto;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.Produto;
+import com.anjos_bolos.anjos_bolos_api.core.application.exception.EntidadeConflitoException;
+import com.anjos_bolos.anjos_bolos_api.core.application.exception.FalhaAutenticacaoException;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.repository.ProdutoRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

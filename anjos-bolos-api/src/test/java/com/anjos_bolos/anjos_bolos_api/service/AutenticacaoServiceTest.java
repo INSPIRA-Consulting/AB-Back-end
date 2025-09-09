@@ -5,8 +5,9 @@ import static org.mockito.Mockito.*;
 
 import java.util.Optional;
 
-import com.anjos_bolos.anjos_bolos_api.entity.Usuario;
-import com.anjos_bolos.anjos_bolos_api.repository.UsuarioRepository;
+import com.anjos_bolos.anjos_bolos_api.core.application.usecase.usuario.AutenticacaoService;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.Usuario;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.repository.UsuarioRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
