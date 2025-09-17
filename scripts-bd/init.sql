@@ -1,0 +1,24 @@
+-- Criação da Database
+CREATE DATABASE IF NOT EXISTS anjos_bolos;
+USE anjos_bolos;
+
+-- Tabela Usuario
+CREATE TABLE Usuario (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(60) NOT NULL,
+    cpf VARCHAR(14) NOT NULL UNIQUE,
+    email VARCHAR(50) NOT NULL UNIQUE,
+    senha VARCHAR(25) NOT NULL,
+    telefone VARCHAR(15) NOT NULL UNIQUE,
+    funcao VARCHAR(50) NOT NULL
+);
+
+-- Tabela Ingrediente
+CREATE TABLE Ingrediente (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(60) NOT NULL,
+    custoMedida DECIMAL(12,10) NOT NULL
+);
+
+SELECT * FROM Ingrediente;
+SELECT * FROM Usuario;
