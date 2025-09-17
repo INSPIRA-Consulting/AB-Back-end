@@ -14,12 +14,10 @@ public class CreateIngredienteUseCase {
 
     public Ingrediente execute(CreateIngredienteCommand command) {
         if (gateway.existsByNome(command.nome())) {
-            throw new EntityAlreadyExistsException("Já existe um ingrediente com este nome.");
+            throw new EntityAlreadyExistsException("Já existe um Ingrediente com este nome.");
         }
 
-        Ingrediente ingrediente = new Ingrediente();
-        ingrediente.setNome(command.nome());
-        ingrediente.calcularCustoMedida(command.valorEmbalagem(), command.quantidadeEmbalagem());
+        Ingrediente ingrediente = new Ingrediente(command.nome(), command.valorEmbalagem(), command.quantidadeEmbalagem());
 
         return gateway.save(ingrediente);
     }

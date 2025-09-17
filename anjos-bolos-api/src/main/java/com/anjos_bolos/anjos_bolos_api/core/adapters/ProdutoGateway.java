@@ -1,7 +1,6 @@
 package com.anjos_bolos.anjos_bolos_api.core.adapters;
 
-import com.anjos_bolos.anjos_bolos_api.core.domain.categoria_produto.CategoriaProduto;
-import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.Produto;
+import com.anjos_bolos.anjos_bolos_api.core.domain.produto.Produto;
 
 import java.util.List;
 
@@ -9,7 +8,11 @@ public interface ProdutoGateway {
 
     Produto save(Produto produto);
 
+    boolean existsById(Integer id);
+
     boolean existsByNome(String nome);
+
+    boolean existsByNomeAndIdNot(String nome, Integer id);
 
     List<Produto> findAll();
 
@@ -17,9 +20,9 @@ public interface ProdutoGateway {
 
     List<Produto> findByNome(String nome);
 
-    List<Produto> findByCategoriaProduto(CategoriaProduto categoriaProduto);
+    List<Produto> findByCategoriaProdutoId(Integer categoriaProdutoId);
 
-    void update(Produto produto);
+    Produto update(Produto produto);
 
     void delete(Integer id);
 }

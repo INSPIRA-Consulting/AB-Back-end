@@ -6,7 +6,23 @@ public class Produto {
     private Integer id;
     private String nome;
     private Double precoFinal;
-    private CategoriaProduto categoria;
+    private CategoriaProduto categoriaProduto;
+
+    public Produto() {
+    }
+
+    public Produto(String nome, Double precoFinal, CategoriaProduto categoriaProduto) {
+        this.nome = nome;
+        this.precoFinal = precoFinal;
+        this.categoriaProduto = categoriaProduto;
+    }
+
+    public Produto(Integer id, String nome, Double precoFinal, CategoriaProduto categoriaProduto) {
+        this.id = id;
+        this.nome = nome;
+        this.precoFinal = precoFinal;
+        this.categoriaProduto = categoriaProduto;
+    }
 
     public Integer getId() {
         return id;
@@ -30,5 +46,13 @@ public class Produto {
 
     public void setPrecoFinal(double precoFinal) {
         this.precoFinal = precoFinal;
+    }
+
+    public CategoriaProduto getCategoriaProduto() {
+        return categoriaProduto;
+    }
+
+    public void setCategoriaProduto(CategoriaProduto categoriaProduto) {
+        this.categoriaProduto = categoriaProduto;
     }
 }

@@ -8,15 +8,17 @@ public interface TipoReceitaGateway {
 
     TipoReceita save(TipoReceita tipoReceita);
 
-    boolean existsByTipoReceita(String tipoReceita);
+    boolean existsById(Integer id);
+
+    boolean existsByNome(String nome);
 
     List<TipoReceita> findAll();
 
     TipoReceita findById(Integer id);
 
-    TipoReceita findByTipoReceita(String tipoReceita);
+    TipoReceita findByNome(String nome);
 
-    void update(TipoReceita tipoReceita);
+    TipoReceita update(TipoReceita tipoReceita);
 
     void delete(Integer id);
 }

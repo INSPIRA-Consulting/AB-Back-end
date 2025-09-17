@@ -24,7 +24,7 @@ public class IngredienteController {
     private final DeleteIngredienteUseCase deleteIngredienteUseCase;
     private final ListIngredientesUseCase listIngredientesUseCase;
     private final GetIngredienteByIdUseCase getIngredienteByIdUseCase;
-    private final GetIngredienteByNomeUseCase getIngredienteByNomeUseCase;
+    private final ListIngredienteByNomeUseCase listIngredienteByNomeUseCase;
 
     public IngredienteController(
             CreateIngredienteUseCase createIngredienteUseCase,
@@ -32,13 +32,13 @@ public class IngredienteController {
             DeleteIngredienteUseCase deleteIngredienteUseCase,
             ListIngredientesUseCase listIngredientesUseCase,
             GetIngredienteByIdUseCase getIngredienteByIdUseCase,
-            GetIngredienteByNomeUseCase getIngredienteByNomeUseCase) {
+            ListIngredienteByNomeUseCase listIngredienteByNomeUseCase) {
         this.createIngredienteUseCase = createIngredienteUseCase;
         this.updateIngredienteUseCase = updateIngredienteUseCase;
         this.deleteIngredienteUseCase = deleteIngredienteUseCase;
         this.listIngredientesUseCase = listIngredientesUseCase;
         this.getIngredienteByIdUseCase = getIngredienteByIdUseCase;
-        this.getIngredienteByNomeUseCase = getIngredienteByNomeUseCase;
+        this.listIngredienteByNomeUseCase = listIngredienteByNomeUseCase;
     }
 
     @Operation(summary = "Cadastrar novo ingrediente", description = "Cria e salva um novo ingrediente no banco de dados.")
@@ -97,8 +97,8 @@ public class IngredienteController {
     })
     @GetMapping("/filtro-nome")
     public ResponseEntity<List<IngredienteResponseDTO>> listarPorNomeIngrediente(@RequestParam String nome) {
-        GetIngredienteByNomeQuery query = new GetIngredienteByNomeQuery(nome);
-        List<Ingrediente> ingredientes = getIngredienteByNomeUseCase.execute(query);
+        ListIngredientesByNomeQuery query = new ListIngredientesByNomeQuery(nome);
+        List<Ingrediente> ingredientes = listIngredienteByNomeUseCase.execute(query);
 
         if (ingredientes.isEmpty()) {
             return ResponseEntity.status(204).build();

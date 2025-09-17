@@ -1,7 +1,6 @@
 package com.anjos_bolos.anjos_bolos_api.core.adapters;
 
-import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.IngredienteEntity;
-import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.Receita;
+import com.anjos_bolos.anjos_bolos_api.core.domain.receita.Receita;
 
 import java.util.List;
 
@@ -9,7 +8,11 @@ public interface ReceitaGateway {
 
     Receita save(Receita receita);
 
+    boolean existsById(Integer id);
+
     boolean existsByNome(String nome);
+
+        boolean existsByIngredientesIds(List<Integer> ingredienteIds);
 
     List<Receita> findAll();
 
@@ -17,11 +20,11 @@ public interface ReceitaGateway {
 
     List<Receita> findByNome(String nome);
 
-    List<Receita> findByIngredienteId(List<IngredienteEntity> ingredienteEntities);
+    List<Receita> finByIngredientesIds(List<Integer> ingredienteIds);
 
     List<Receita> findByTipoReceitaId(Integer tipoReceitaId);
 
-    void update(Receita receita);
+    Receita update(Receita receita);
 
     void delete(Integer id);
 }

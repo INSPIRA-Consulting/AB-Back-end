@@ -1,4 +1,4 @@
-package com.anjos_bolos.anjos_bolos_api.infrastructure.config.swagger;
+package com.anjos_bolos.anjos_bolos_api.swagger;
 
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;

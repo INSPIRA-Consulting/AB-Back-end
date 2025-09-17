@@ -9,6 +9,22 @@ public class Cliente {
     private String nome;
     private Telefone telefone;
 
+    public Cliente () {
+    }
+
+    public Cliente(CPF cpf, String nome, Telefone telefone) {
+        this.cpf = cpf;
+        this.nome = nome;
+        this.telefone = telefone;
+    }
+
+    public Cliente(Integer id, CPF cpf, String nome, Telefone telefone) {
+        this.id = id;
+        this.cpf = cpf;
+        this.nome = nome;
+        this.telefone = telefone;
+    }
+
     public Integer getId() {
         return id;
     }

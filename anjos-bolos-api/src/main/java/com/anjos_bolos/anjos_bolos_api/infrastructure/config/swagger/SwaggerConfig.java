@@ -1,4 +1,4 @@
-package com.anjos_bolos.anjos_bolos_api.infrastructure.config.swagger;
+package com.anjos_bolos.anjos_bolos_api.swagger;
 
 import org.springdoc.core.properties.SwaggerUiConfigParameters;
 import org.springdoc.core.properties.SwaggerUiConfigProperties;

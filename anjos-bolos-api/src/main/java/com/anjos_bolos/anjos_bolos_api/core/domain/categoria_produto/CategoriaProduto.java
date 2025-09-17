@@ -2,8 +2,22 @@ package com.anjos_bolos.anjos_bolos_api.core.domain.categoria_produto;
 
 public class CategoriaProduto {
     private Integer id;
-    private String categoriaProduto;
+    private String nome;
     private String descricao;
+
+    public CategoriaProduto() {
+    }
+
+    public CategoriaProduto(String nome, String descricao) {
+        this.nome = nome;
+        this.descricao = descricao;
+    }
+
+    public CategoriaProduto(Integer id, String nome, String descricao) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+    }
 
     public Integer getId() {
         return id;
@@ -13,12 +27,12 @@ public class CategoriaProduto {
         this.id = id;
     }
 
-    public String getCategoriaProduto() {
-        return categoriaProduto;
+    public String getNome() {
+        return nome;
     }
 
-    public void setCategoriaProduto(String categoriaProduto) {
-        this.categoriaProduto = categoriaProduto;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getDescricao() {

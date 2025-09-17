@@ -13,7 +13,7 @@ public class DeleteIngredienteUseCase {
 
     public void execute(DeleteIngredienteCommand command) {
         if (!gateway.existsById(command.id())) {
-            throw new NotFoundException("Ingrediente com ID [%d] não encontrado".formatted(command.id()));
+            throw new NotFoundException("Ingrediente com ID [%d] não encontrado.".formatted(command.id()));
         }
 
         gateway.delete(command.id());

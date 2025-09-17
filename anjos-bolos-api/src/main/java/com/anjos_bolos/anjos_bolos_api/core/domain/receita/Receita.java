@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Receita {
     private Integer id;
+    private String nome;
     private List<ItemReceita> ingredientes;
     private TipoReceita tipoReceita;
 
@@ -15,9 +16,16 @@ public class Receita {
         this.ingredientes = new ArrayList<>();
     }
 
-    public Receita(Integer id, List<ItemReceita> ingredientes, TipoReceita tipoReceita) {
+    public Receita(String nome, List<ItemReceita> ingredientes, TipoReceita tipoReceita) {
+        this.nome = nome;
+        this.ingredientes = new ArrayList<>(ingredientes);
+        this.tipoReceita = tipoReceita;
+    }
+
+    public Receita(Integer id, String nome, List<ItemReceita> ingredientes, TipoReceita tipoReceita) {
         this.id = id;
-        this.ingredientes = new ArrayList<>();
+        this.nome = nome;
+        this.ingredientes = ingredientes;
         this.tipoReceita = tipoReceita;
     }
 

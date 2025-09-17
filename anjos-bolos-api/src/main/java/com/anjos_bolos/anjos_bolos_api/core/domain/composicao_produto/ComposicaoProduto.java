@@ -1,7 +1,7 @@
 package com.anjos_bolos.anjos_bolos_api.core.domain.composicao_produto;
 
-import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.Produto;
-import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.Receita;
+import com.anjos_bolos.anjos_bolos_api.core.domain.produto.Produto;
+import com.anjos_bolos.anjos_bolos_api.core.domain.receita.Receita;
 
 public class ComposicaoProduto {
     private Integer id;
@@ -11,6 +11,13 @@ public class ComposicaoProduto {
     private String observacao;
 
     public ComposicaoProduto() {
+    }
+
+    public ComposicaoProduto(Produto produto, Receita receita, Integer quantidade, String observacao) {
+        this.produto = produto;
+        this.receita = receita;
+        this.quantidade = quantidade;
+        this.observacao = observacao;
     }
 
     public ComposicaoProduto(Integer id, Produto produto, Receita receita, Integer quantidade, String observacao) {

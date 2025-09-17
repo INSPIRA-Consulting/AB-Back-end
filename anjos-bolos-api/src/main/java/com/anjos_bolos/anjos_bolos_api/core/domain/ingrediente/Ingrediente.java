@@ -8,6 +8,11 @@ public class Ingrediente {
     public Ingrediente() {
     }
 
+    public Ingrediente(String nome, Double valorEmbalagem, Double quantidadeEmbalagem) {
+        this.nome = nome;
+        this.custoMedida = calcularCustoMedida(valorEmbalagem, quantidadeEmbalagem);
+    }
+
     public Ingrediente(Integer id, String nome, Double custoMedida) {
         this.id = id;
         this.nome = nome;
@@ -34,7 +39,11 @@ public class Ingrediente {
         return custoMedida;
     }
 
-    public void calcularCustoMedida(Double valorEmbalagem, Double quantidadeEmbalagem) {
+    public void setCustoMedida(Double custoMedida) {
+        this.custoMedida = custoMedida;
+    }
+
+    public Double calcularCustoMedida(Double valorEmbalagem, Double quantidadeEmbalagem) {
         if (valorEmbalagem == null || valorEmbalagem <= 0.0) {
             throw new IllegalArgumentException("O Valor da embalagem deve ser maior que zero.");
         }
@@ -43,6 +52,6 @@ public class Ingrediente {
             throw new IllegalArgumentException("A Quantidade da embalagem deve ser maior que zero.");
         }
 
-        this.custoMedida = valorEmbalagem / quantidadeEmbalagem;
+        return valorEmbalagem / quantidadeEmbalagem;
     }
 }

@@ -8,7 +8,7 @@ public interface ClienteGateway {
 
     Cliente save(Cliente cliente);
 
-    boolean existsByCpf(String cpf);
+    boolean existsById(Integer id);
 
     List<Cliente> findAll();
 
@@ -18,7 +18,7 @@ public interface ClienteGateway {
 
     List<Cliente> findByNome(String nome);
 
-    void update(Cliente cliente);
+    Cliente update(Cliente cliente);
 
     void delete(Integer id);
 }

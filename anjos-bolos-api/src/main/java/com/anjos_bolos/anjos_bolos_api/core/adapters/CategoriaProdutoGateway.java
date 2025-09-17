@@ -8,15 +8,17 @@ public interface CategoriaProdutoGateway {
 
     CategoriaProduto save(CategoriaProduto categoriaProduto);
 
-    boolean existsByCategoriaProduto(String categoriaProduto);
+    boolean existsById(Integer id);
+
+    boolean existsByNome(String nome);
 
     List<CategoriaProduto> findAll();
 
     CategoriaProduto findById(Integer id);
 
-    CategoriaProduto findByCategoriaProduto(String categoriaProduto);
+    CategoriaProduto findByNome(String nome);
 
-    void update(CategoriaProduto categoriaProduto);
+    CategoriaProduto update(CategoriaProduto categoriaProduto);
 
     void delete(Integer id);
 }

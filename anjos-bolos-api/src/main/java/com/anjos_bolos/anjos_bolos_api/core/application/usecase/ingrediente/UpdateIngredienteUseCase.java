@@ -19,7 +19,9 @@ public class UpdateIngredienteUseCase {
 
         Ingrediente ingrediente = gateway.findById(command.id());
         ingrediente.setNome(command.nome());
-        ingrediente.calcularCustoMedida(command.valorEmbalagem(), command.quantidadeEmbalagem());
+
+        Double custoMedida = ingrediente.calcularCustoMedida(command.valorEmbalagem(), command.quantidadeEmbalagem());
+        ingrediente.setCustoMedida(custoMedida);
 
         return gateway.update(ingrediente);
     }

@@ -8,7 +8,11 @@ public interface ComposicaoProdutoGateway {
 
     ComposicaoProduto save(ComposicaoProduto composicaoProduto);
 
+    boolean existsById(Integer id);
+
     boolean existsByProdutoIdAndReceitaId(Integer produtoId, Integer receitaId);
+
+    boolean existsByProdutoIdAndReceitaIdAndIdNot(Integer produtoId, Integer receitaId, Integer id);
 
     List<ComposicaoProduto> findAll();
 
@@ -18,7 +22,7 @@ public interface ComposicaoProdutoGateway {
 
     ComposicaoProduto findByReceitaId(Integer receitaId);
 
-    void update(ComposicaoProduto composicaoProduto);
+    ComposicaoProduto update(ComposicaoProduto composicaoProduto);
 
     void delete(Integer id);
 }

@@ -6,8 +6,6 @@ import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.ingred
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.ingrediente.IngredienteResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.IngredienteEntity;
 
-import java.util.Objects;
-
 public class IngredienteEntityMapper {
 
     public static IngredienteResponseDTO toDTO(Ingrediente ingrediente) {
@@ -43,8 +41,8 @@ public class IngredienteEntityMapper {
         return new GetIngredienteByIdQuery(id);
     }
 
-    public static GetIngredienteByNomeQuery toQuery(String nome) {
-        return new GetIngredienteByNomeQuery(nome);
+    public static ListIngredientesByNomeQuery toQuery(String nome) {
+        return new ListIngredientesByNomeQuery(nome);
     }
 
     public static IngredienteEntity toEntity(Ingrediente domain) {

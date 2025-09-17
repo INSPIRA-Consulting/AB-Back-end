@@ -2,8 +2,22 @@ package com.anjos_bolos.anjos_bolos_api.core.domain.tipo_receita;
 
 public class TipoReceita {
     private Integer id;
-    private String tipoReceita;
+    private String nome;
     private String descricao;
+
+    public TipoReceita() {
+    }
+
+    public TipoReceita(String nome, String descricao) {
+        this.nome = nome;
+        this.descricao = descricao;
+    }
+
+    public TipoReceita(Integer id, String nome, String descricao) {
+        this.id = id;
+        this.nome = nome;
+        this.descricao = descricao;
+    }
 
     public Integer getId() {
         return id;
@@ -13,12 +27,12 @@ public class TipoReceita {
         this.id = id;
     }
 
-    public String getTipoReceita() {
-        return tipoReceita;
+    public String getNome() {
+        return nome;
     }
 
-    public void setTipoReceita(String tipoReceita) {
-        this.tipoReceita = tipoReceita;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getDescricao() {
