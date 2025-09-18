@@ -8,9 +8,9 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.valueobject.FuncaoUsu
 public record UsuarioResponseDTO(
         Integer id,
         String nome,
-        CPF cpf,
-        Email email,
+        String cpf,
+        String email,
         String senha,
-        Telefone telefone,
-        FuncaoUsuarioEnum funcao
+        String telefone,
+        String funcao
 ) {}

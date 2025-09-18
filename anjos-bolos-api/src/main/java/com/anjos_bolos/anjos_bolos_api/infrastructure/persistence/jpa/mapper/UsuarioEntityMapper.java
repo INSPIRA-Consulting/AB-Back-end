@@ -15,11 +15,11 @@ public class UsuarioEntityMapper {
         return new UsuarioResponseDTO(
                 usuario.getId(),
                 usuario.getNome(),
-                usuario.getCpf(),
-                usuario.getEmail(),
+                usuario.getCpf().toString(),
+                usuario.getEmail().toString(),
                 usuario.getSenha(),
-                usuario.getTelefone(),
-                usuario.getFuncao()
+                usuario.getTelefone().toString(),
+                usuario.getFuncao().getFuncao()
         );
     }
 
@@ -90,7 +90,7 @@ public class UsuarioEntityMapper {
                 Email.of(entity.getEmail()),
                 entity.getSenha(),
                 Telefone.of(entity.getTelefone()),
-                FuncaoUsuarioEnum.valueOf(entity.getFuncao())
+                FuncaoUsuarioEnum.valueOf(entity.getFuncao().toUpperCase())
         );
     }
 }
