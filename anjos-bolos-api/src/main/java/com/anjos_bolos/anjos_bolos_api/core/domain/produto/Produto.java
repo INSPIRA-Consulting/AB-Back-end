@@ -7,6 +7,7 @@ public class Produto {
     private String nome;
     private Double precoFinal;
     private CategoriaProduto categoriaProduto;
+    private String imagemUrl;
 
     public Produto() {
     }
@@ -55,4 +56,8 @@ public class Produto {
     public void setCategoriaProduto(CategoriaProduto categoriaProduto) {
         this.categoriaProduto = categoriaProduto;
     }
+
+    public String getImagemUrl() { return imagemUrl; }
+
+    public void setImagemUrl(String imagemUrl) { this.imagemUrl = imagemUrl; }
 }
