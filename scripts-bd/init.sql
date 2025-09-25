@@ -20,5 +20,21 @@ CREATE TABLE Ingrediente (
     custoMedida DECIMAL(12,10) NOT NULL
 );
 
+CREATE TABLE Categoria_Produto (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(60) NOT NULL UNIQUE,
+    descricao VARCHAR(60) NOT NULL
+);
+
+CREATE TABLE Produto (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(60) NOT NULL UNIQUE,
+    precoFinal DECIMAL(5,2) NOT NULL,
+    fkCategoriaProduto INT,
+    CONSTRAINT fk_categoria_produto FOREIGN KEY (fkCategoriaProduto) REFERENCES Categoria_Produto(id)
+);
+
 SELECT * FROM Ingrediente;
 SELECT * FROM Usuario;
+SELECT * FROM Categoria_Produto;
+SELECT * FROM Produto;
