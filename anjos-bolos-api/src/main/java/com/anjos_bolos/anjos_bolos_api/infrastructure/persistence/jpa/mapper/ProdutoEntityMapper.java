@@ -14,7 +14,8 @@ public class ProdutoEntityMapper {
                 domain.getId(),
                 domain.getNome(),
                 domain.getPrecoFinal(),
-                domain.getCategoriaProduto().getNome()
+                domain.getCategoriaProduto().getNome(),
+                toFileName(domain.getNome())
         );
     }
 
@@ -67,5 +68,24 @@ public class ProdutoEntityMapper {
                 entity.getPrecoFinal(),
                 CategoriaProdutoEntityMapper.toDomain(entity.getCategoriaProduto())
         );
+    }
+
+    public static String toFileName(String nomeProduto) {
+        if (nomeProduto == null || nomeProduto.trim().isEmpty()) {
+            return "";
+        }
+
+        String nomeArquivo = nomeProduto.toLowerCase()
+                .replaceAll("[áàâãä]", "a")
+                .replaceAll("[éèêë]", "e")
+                .replaceAll("[íìîï]", "i")
+                .replaceAll("[óòôõö]", "o")
+                .replaceAll("[úùûü]", "u")
+                .replaceAll("ç", "c")
+                .replaceAll("[^a-z0-9\\s]", "") // Remove caracteres especiais
+                .trim()
+                .replaceAll("\\s+", "_"); // Substitui espaços por underscore
+
+        return nomeArquivo + ".jpg";
     }
 }

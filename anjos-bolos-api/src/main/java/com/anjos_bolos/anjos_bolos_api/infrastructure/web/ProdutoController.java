@@ -55,6 +55,36 @@ public class ProdutoController {
         return ResponseEntity.status(201).body(ProdutoEntityMapper.toDTO(produto));
     }
 
+    @Operation(summary = "Upload de imagem do Produto", description = "Faz upload da imagem de um Produto existente para o S3.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Imagem enviada com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Produto não encontrado")
+    })
+    @PatchMapping("/{id}/imagem")
+    public ResponseEntity<String> uploadImagemProduto(@PathVariable Integer id,
+                                                                   @RequestParam("imagem") MultipartFile imagem) {
+        try {
+            // Buscar o produto para obter o nome
+            GetProdutoByIdQuery query = ProdutoEntityMapper.toGetProdutoByIdQuery(id);
+            Produto produto = getProdutoByIdUseCase.execute(query);
+
+            if (produto == null) {
+                return ResponseEntity.status(404).build();
+            }
+
+            // Gerar nome do arquivo usando o nome do produto
+            String nomeArquivo = ProdutoEntityMapper.toFileName(produto.getNome());
+
+            // Upload para S3
+            String imageUrl = s3UploadService.uploadFile(nomeArquivo, imagem.getBytes());
+
+            return ResponseEntity.status(201).body(imageUrl);
+
+        } catch (IOException e) {
+            return ResponseEntity.status(500).build();
+        }
+    }
+
     @Operation(summary = "Listar todos os Produtos", description = "Retorna uma lista com todos os Produtos cadastrados.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Produtos encontrados"),
