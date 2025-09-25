@@ -43,7 +43,7 @@ public class UsuarioController {
         this.listUsuariosByFuncaoUseCase = listUsuariosByFuncaoUseCase;
     }
 
-    @Operation(summary = "Cadastrar novo Usuário", description = "Cria e salva um novo Usuário no banco de dados.")
+    @Operation(summary = "Cadastrar novo Usuário", description = "Cria e salva um novo Usuário no Banco de Dados.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Usuário cadastrado com sucesso"),
             @ApiResponse(responseCode = "409", description = "Usuário já existe")
@@ -82,7 +82,7 @@ public class UsuarioController {
     })
     @GetMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorId(@PathVariable Integer id) {
-        GetUsuarioByIdQuery query = new GetUsuarioByIdQuery(id);
+        GetUsuarioByIdQuery query = UsuarioEntityMapper.toGetUsuarioByIdQuery(id);
         Usuario usuario = getUsuarioByIdUseCase.execute(query);
 
         if (usuario == null) {
@@ -99,7 +99,7 @@ public class UsuarioController {
     })
     @GetMapping("/filtro-cpf")
     public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorCpf(@RequestParam String cpf) {
-        GetUsuarioByCpfQuery query = new GetUsuarioByCpfQuery(cpf);
+        GetUsuarioByCpfQuery query = UsuarioEntityMapper.toGetUsuarioByCpfQuery(cpf);
         Usuario usuario = getUsuarioByCpfUseCase.execute(query);
 
         if (usuario == null) {
@@ -116,7 +116,7 @@ public class UsuarioController {
     })
     @GetMapping("/filtro-email")
     public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorEmail(@RequestParam String email) {
-        GetUsuarioByEmailQuery query = new GetUsuarioByEmailQuery(email);
+        GetUsuarioByEmailQuery query = UsuarioEntityMapper.toGetUsuarioByEmailQuery(email);
         Usuario usuario = getUsuarioByEmailUseCase.execute(query);
 
         if (usuario == null) {
@@ -133,7 +133,7 @@ public class UsuarioController {
     })
     @GetMapping("/filtro-nome")
     public ResponseEntity<List<UsuarioResponseDTO>> listarUsuariosPorNome(@RequestParam String nome) {
-        ListUsuariosByNomeQuery query = new ListUsuariosByNomeQuery(nome);
+        ListUsuariosByNomeQuery query = UsuarioEntityMapper.toListUsuariosByNomeQuery(nome);
         List<Usuario> usuarios = listUsuariosByNomeUseCase.execute(query);
 
         if (usuarios.isEmpty()) {
@@ -153,7 +153,7 @@ public class UsuarioController {
     })
     @GetMapping("/filtro-funcao")
     public ResponseEntity<List<UsuarioResponseDTO>> listarUsuariosPorFuncao(@RequestParam String funcao) {
-        ListUsuariosByFuncaoQuery query = new ListUsuariosByFuncaoQuery(funcao);
+        ListUsuariosByFuncaoQuery query = UsuarioEntityMapper.toListUsuariosByFuncaoQuery(funcao);
         List<Usuario> usuarios = listUsuariosByFuncaoUseCase.execute(query);
 
         if (usuarios.isEmpty()) {
@@ -192,7 +192,7 @@ public class UsuarioController {
     public ResponseEntity<Void> excluirUsuario(
             @Parameter(description = "ID do Usuário a ser excluído") @PathVariable Integer id
     ) {
-        DeleteUsuarioCommand command = new DeleteUsuarioCommand(id);
+        DeleteUsuarioCommand command = UsuarioEntityMapper.toCommand(id);
         deleteUsuarioUseCase.execute(command);
 
         return ResponseEntity.status(204).build();

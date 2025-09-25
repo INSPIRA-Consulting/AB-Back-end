@@ -11,15 +11,15 @@ import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.usuari
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.UsuarioEntity;
 
 public class UsuarioEntityMapper {
-    public static UsuarioResponseDTO toDTO(Usuario usuario) {
+    public static UsuarioResponseDTO toDTO(Usuario domain) {
         return new UsuarioResponseDTO(
-                usuario.getId(),
-                usuario.getNome(),
-                usuario.getCpf().toString(),
-                usuario.getEmail().toString(),
-                usuario.getSenha(),
-                usuario.getTelefone().toString(),
-                usuario.getFuncao().getFuncao()
+                domain.getId(),
+                domain.getNome(),
+                domain.getCpf().toString(),
+                domain.getEmail().toString(),
+                domain.getSenha(),
+                domain.getTelefone().toString(),
+                domain.getFuncao().getFuncao()
         );
     }
 
@@ -50,7 +50,7 @@ public class UsuarioEntityMapper {
         return new DeleteUsuarioCommand(id);
     }
 
-    public static GetUsuarioByIdQuery toQuery(Integer id) {
+    public static GetUsuarioByIdQuery toGetUsuarioByIdQuery(Integer id) {
         return new GetUsuarioByIdQuery(id);
     }
 

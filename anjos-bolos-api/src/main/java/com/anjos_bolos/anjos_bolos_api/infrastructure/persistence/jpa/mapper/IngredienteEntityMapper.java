@@ -8,11 +8,11 @@ import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.Ing
 
 public class IngredienteEntityMapper {
 
-    public static IngredienteResponseDTO toDTO(Ingrediente ingrediente) {
+    public static IngredienteResponseDTO toDTO(Ingrediente domain) {
         return new IngredienteResponseDTO(
-                ingrediente.getId(),
-                ingrediente.getNome(),
-                ingrediente.getCustoMedida()
+                domain.getId(),
+                domain.getNome(),
+                domain.getCustoMedida()
         );
     }
 
@@ -37,11 +37,11 @@ public class IngredienteEntityMapper {
         return new DeleteIngredienteCommand(id);
     }
 
-    public static GetIngredienteByIdQuery toQuery(Integer id) {
+    public static GetIngredienteByIdQuery toGetIngredienteByIdQuery(Integer id) {
         return new GetIngredienteByIdQuery(id);
     }
 
-    public static ListIngredientesByNomeQuery toQuery(String nome) {
+    public static ListIngredientesByNomeQuery toListIngredientesByNomeQuery(String nome) {
         return new ListIngredientesByNomeQuery(nome);
     }
 

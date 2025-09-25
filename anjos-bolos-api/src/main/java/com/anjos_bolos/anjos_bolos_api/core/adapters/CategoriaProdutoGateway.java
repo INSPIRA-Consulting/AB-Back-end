@@ -16,7 +16,7 @@ public interface CategoriaProdutoGateway {
 
     CategoriaProduto findById(Integer id);
 
-    CategoriaProduto findByNome(String nome);
+    List<CategoriaProduto> findByNome(String nome);
 
     CategoriaProduto update(CategoriaProduto categoriaProduto);
 

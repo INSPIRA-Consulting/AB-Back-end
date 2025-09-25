@@ -42,7 +42,7 @@ public class IngredienteController {
         this.listIngredienteByNomeUseCase = listIngredienteByNomeUseCase;
     }
 
-    @Operation(summary = "Cadastrar novo ingrediente", description = "Cria e salva um novo ingrediente no banco de dados.")
+    @Operation(summary = "Cadastrar novo Ingrediente", description = "Cria e salva um novo Ingrediente no Banco de Dados.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Ingrediente cadastrado com sucesso"),
             @ApiResponse(responseCode = "409", description = "Ingrediente já existe")
@@ -55,10 +55,10 @@ public class IngredienteController {
         return ResponseEntity.status(201).body(IngredienteEntityMapper.toDTO(ingrediente));
     }
 
-    @Operation(summary = "Listar todos os ingredientes", description = "Retorna uma lista com todos os ingredientes cadastrados.")
+    @Operation(summary = "Listar todos os Ingredientes", description = "Retorna uma lista com todos os Ingredientes cadastrados.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Ingredientes encontrados"),
-            @ApiResponse(responseCode = "204", description = "Nenhum ingrediente encontrado")
+            @ApiResponse(responseCode = "204", description = "Nenhum Ingrediente encontrado")
     })
     @GetMapping
     public ResponseEntity<List<IngredienteResponseDTO>> listarIngredientes() {
@@ -74,14 +74,14 @@ public class IngredienteController {
                 .toList());
     }
 
-    @Operation(summary = "Buscar ingredientes por ID", description = "Busca um ingrediente que contenha o ID informado.")
+    @Operation(summary = "Buscar Ingrediente por ID", description = "Busca um Ingrediente que contenha o ID informado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Ingrediente encontrado"),
             @ApiResponse(responseCode = "204", description = "Ingrediente não encontrado")
     })
     @GetMapping("/{id}")
     public ResponseEntity<IngredienteResponseDTO> buscarPorIdIngrediente(@PathVariable Integer id) {
-        GetIngredienteByIdQuery query = new GetIngredienteByIdQuery(id);
+        GetIngredienteByIdQuery query = IngredienteEntityMapper.toGetIngredienteByIdQuery(id);
         Ingrediente ingrediente = getIngredienteByIdUseCase.execute(query);
 
         if (ingrediente == null) {
@@ -91,14 +91,14 @@ public class IngredienteController {
         return ResponseEntity.status(200).body(IngredienteEntityMapper.toDTO(ingrediente));
     }
 
-    @Operation(summary = "Buscar ingredientes por nome", description = "Filtra ingredientes que contenham parte do nome informado (sem case sensitive).")
+    @Operation(summary = "Buscar Ingredientes por nome", description = "Filtra Ingredientes que contenham parte do nome informado (sem case sensitive).")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Ingredientes encontrados"),
-            @ApiResponse(responseCode = "204", description = "Nenhum ingrediente encontrado")
+            @ApiResponse(responseCode = "204", description = "Nenhum Ingrediente encontrado")
     })
     @GetMapping("/filtro-nome")
     public ResponseEntity<List<IngredienteResponseDTO>> listarPorNomeIngrediente(@RequestParam String nome) {
-        ListIngredientesByNomeQuery query = new ListIngredientesByNomeQuery(nome);
+        ListIngredientesByNomeQuery query = IngredienteEntityMapper.toListIngredientesByNomeQuery(nome);
         List<Ingrediente> ingredientes = listIngredienteByNomeUseCase.execute(query);
 
         if (ingredientes.isEmpty()) {
@@ -111,7 +111,7 @@ public class IngredienteController {
                 .toList());
     }
 
-    @Operation(summary = "Atualizar ingrediente", description = "Atualiza um ingrediente existente com base no ID.")
+    @Operation(summary = "Atualizar Ingrediente", description = "Atualiza um Ingrediente existente com base no ID.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Ingrediente atualizado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Ingrediente não encontrado"),
@@ -119,7 +119,7 @@ public class IngredienteController {
     })
     @PutMapping("/{id}")
     public ResponseEntity<IngredienteResponseDTO> atualizarIngrediente(
-            @Parameter(description = "ID do ingrediente a ser atualizado") @PathVariable Integer id,
+            @Parameter(description = "ID do Ingrediente a ser atualizado") @PathVariable Integer id,
             @RequestBody @Valid IngredienteRequestDTO dto
     ) {
         UpdateIngredienteCommand command = IngredienteEntityMapper.toCommand(id, dto);
@@ -128,16 +128,16 @@ public class IngredienteController {
         return ResponseEntity.status(200).body(IngredienteEntityMapper.toDTO(ingrediente));
     }
 
-    @Operation(summary = "Excluir ingrediente", description = "Remove um ingrediente do sistema com base no ID.")
+    @Operation(summary = "Excluir Ingrediente", description = "Remove um Ingrediente do sistema com base no ID.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Ingrediente excluído com sucesso"),
             @ApiResponse(responseCode = "404", description = "Ingrediente não encontrado")
     })
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> excluirIngrediente(
-            @Parameter(description = "ID do ingrediente a ser excluído") @PathVariable Integer id
+            @Parameter(description = "ID do Ingrediente a ser excluído") @PathVariable Integer id
     ) {
-        DeleteIngredienteCommand command = new DeleteIngredienteCommand(id);
+        DeleteIngredienteCommand command = IngredienteEntityMapper.toCommand(id);
         deleteIngredienteUseCase.execute(command);
 
         return ResponseEntity.status(204).build();
