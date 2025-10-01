@@ -16,7 +16,7 @@ public interface TipoReceitaGateway {
 
     TipoReceita findById(Integer id);
 
-    TipoReceita findByNome(String nome);
+    List<TipoReceita> findByNome(String nome);
 
     TipoReceita update(TipoReceita tipoReceita);
 

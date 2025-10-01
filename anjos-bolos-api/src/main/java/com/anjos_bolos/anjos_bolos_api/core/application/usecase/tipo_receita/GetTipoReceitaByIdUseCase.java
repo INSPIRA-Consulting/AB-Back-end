@@ -2,7 +2,6 @@ package com.anjos_bolos.anjos_bolos_api.core.application.usecase.tipo_receita;
 
 import com.anjos_bolos.anjos_bolos_api.core.adapters.TipoReceitaGateway;
 import com.anjos_bolos.anjos_bolos_api.core.application.command.tipo_receita.GetTipoReceitaByIdQuery;
-import com.anjos_bolos.anjos_bolos_api.core.application.command.tipo_receita.GetTipoReceitaByNomeQuery;
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundException;
 import com.anjos_bolos.anjos_bolos_api.core.domain.tipo_receita.TipoReceita;
 

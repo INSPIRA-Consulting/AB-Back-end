@@ -34,7 +34,14 @@ CREATE TABLE Produto (
     CONSTRAINT fk_categoria_produto FOREIGN KEY (fkCategoriaProduto) REFERENCES Categoria_Produto(id)
 );
 
+CREATE TABLE Tipo_Receita (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(60) NOT NULL UNIQUE,
+    descricao VARCHAR(60) NOT NULL
+);
+
 SELECT * FROM Ingrediente;
 SELECT * FROM Usuario;
 SELECT * FROM Categoria_Produto;
 SELECT * FROM Produto;
+SELECT * FROM Tipo_Receita;
