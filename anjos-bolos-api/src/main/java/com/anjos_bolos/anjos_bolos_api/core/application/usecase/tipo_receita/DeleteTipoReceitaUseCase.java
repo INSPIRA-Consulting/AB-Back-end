@@ -5,6 +5,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.command.tipo_receita.Del
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundException;
 
 public class DeleteTipoReceitaUseCase {
+
     private final TipoReceitaGateway gateway;
 
     public DeleteTipoReceitaUseCase(TipoReceitaGateway gateway) {
@@ -18,4 +19,5 @@ public class DeleteTipoReceitaUseCase {
 
         gateway.delete(command.id());
     }
+
 }

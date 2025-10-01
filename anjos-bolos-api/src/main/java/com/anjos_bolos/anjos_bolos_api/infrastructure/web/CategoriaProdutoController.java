@@ -20,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/categorias-produtos")
 public class CategoriaProdutoController {
+
     private final CreateCategoriaProdutoUseCase createCategoriaProdutoUseCase;
     private final UpdateCategoriaProdutoUseCase updateCategoriaProdutoUseCase;
     private final DeleteCategoriaProdutoUseCase deleteCategoriaProdutoUseCase;
@@ -49,7 +50,7 @@ public class CategoriaProdutoController {
         return ResponseEntity.status(201).body(CategoriaProdutoEntityMapper.toDTO(categoriaProduto));
     }
 
-    @Operation(summary = "Listar todos as Categorias de Produto", description = "Retorna uma lista com todas as Categorias de Produtos cadastradas.")
+    @Operation(summary = "Listar todos as Categorias de Produto", description = "Retorna uma lista com todas as Categorias de Produto cadastradas.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Categorias de Produto encontradas"),
             @ApiResponse(responseCode = "204", description = "Nenhuma Categoria de Produto encontrada")
@@ -88,8 +89,8 @@ public class CategoriaProdutoController {
 
     @Operation(summary = "Buscar Categorias de Produto por Nome", description = "Filtra Categorias de Produto que contenham parte do nome informado (sem case sensitive).")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Ingredientes encontrados"),
-            @ApiResponse(responseCode = "204", description = "Nenhum ingrediente encontrado")
+            @ApiResponse(responseCode = "200", description = "Categorias de Produto encontradas"),
+            @ApiResponse(responseCode = "204", description = "Nenhuma Categoria de Produto encontrada")
     })
     @GetMapping("/filtro-nome")
     public ResponseEntity<List<CategoriaProdutoResponseDTO>> listarPorNomeCategoriaProduto(@RequestParam String nome) {
@@ -137,4 +138,5 @@ public class CategoriaProdutoController {
 
         return ResponseEntity.status(204).build();
     }
+
 }

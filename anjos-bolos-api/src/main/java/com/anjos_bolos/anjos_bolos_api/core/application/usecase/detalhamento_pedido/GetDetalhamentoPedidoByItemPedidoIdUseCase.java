@@ -5,6 +5,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.command.detalhamento_ped
 import com.anjos_bolos.anjos_bolos_api.core.domain.detalhamento_pedido.DetalhamentoPedido;
 
 public class GetDetalhamentoPedidoByItemPedidoIdUseCase {
+
     private final DetalhamentoPedidoGateway gateway;
 
     public GetDetalhamentoPedidoByItemPedidoIdUseCase(DetalhamentoPedidoGateway gateway) {
@@ -21,4 +22,5 @@ public class GetDetalhamentoPedidoByItemPedidoIdUseCase {
 
         return detalhamentoPedido;
     }
+
 }

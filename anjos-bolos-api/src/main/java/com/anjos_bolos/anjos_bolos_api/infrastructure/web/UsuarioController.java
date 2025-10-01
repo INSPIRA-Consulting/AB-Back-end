@@ -21,6 +21,7 @@ import java.util.List;
 @RequestMapping("/usuarios")
 @CrossOrigin(origins = "http://localhost:5173")
 public class UsuarioController {
+
     private final CreateUsuarioUseCase createUsuarioUseCase;
     private final UpdateUsuarioUseCase updateUsuarioUseCase;
     private final DeleteUsuarioUseCase deleteUsuarioUseCase;
@@ -197,4 +198,5 @@ public class UsuarioController {
 
         return ResponseEntity.status(204).build();
     }
+
 }

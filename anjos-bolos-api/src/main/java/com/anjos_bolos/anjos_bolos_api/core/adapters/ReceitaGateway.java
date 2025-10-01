@@ -27,4 +27,5 @@ public interface ReceitaGateway {
     Receita update(Receita receita);
 
     void delete(Integer id);
+
 }

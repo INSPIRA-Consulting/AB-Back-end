@@ -5,6 +5,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.command.item_pedido.Dele
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundException;
 
 public class DeleteItemPedidoUseCase {
+
     private final ItemPedidoGateway gateway;
 
     public DeleteItemPedidoUseCase(ItemPedidoGateway gateway) {
@@ -19,4 +20,5 @@ public class DeleteItemPedidoUseCase {
 
         gateway.delete(command.id());
     }
+
 }

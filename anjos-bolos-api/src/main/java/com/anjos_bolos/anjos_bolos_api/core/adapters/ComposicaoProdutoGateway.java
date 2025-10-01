@@ -25,4 +25,5 @@ public interface ComposicaoProdutoGateway {
     ComposicaoProduto update(ComposicaoProduto composicaoProduto);
 
     void delete(Integer id);
+
 }

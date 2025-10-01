@@ -58,4 +58,5 @@ public class TipoReceitaEntityMapper {
                 entity.getDescricao()
         );
     }
+
 }

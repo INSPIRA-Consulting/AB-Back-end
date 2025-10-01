@@ -44,5 +44,5 @@ public class UsuarioUniquenessCheckerJpa implements UsuarioUniquenessChecker {
     public boolean existsByTelefoneAndIdNot(Telefone telefone, Integer id) {
         return existsByTelefoneAndIdNot(telefone, id);
     }
-}
 
+}

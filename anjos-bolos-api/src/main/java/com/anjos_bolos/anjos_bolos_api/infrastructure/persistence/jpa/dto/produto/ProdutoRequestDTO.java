@@ -4,5 +4,4 @@ public record ProdutoRequestDTO(
         String nome,
         Double precoFinal,
         Integer categoriaProdutoId
-) {
-}
+) {}

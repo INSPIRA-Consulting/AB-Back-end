@@ -6,6 +6,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundExcept
 import com.anjos_bolos.anjos_bolos_api.core.domain.tipo_receita.TipoReceita;
 
 public class UpdateTipoReceitaUseCase {
+
     private final TipoReceitaGateway gateway;
 
     public UpdateTipoReceitaUseCase(TipoReceitaGateway gateway) {
@@ -23,4 +24,5 @@ public class UpdateTipoReceitaUseCase {
 
         return gateway.update(tipoReceita);
     }
+
 }

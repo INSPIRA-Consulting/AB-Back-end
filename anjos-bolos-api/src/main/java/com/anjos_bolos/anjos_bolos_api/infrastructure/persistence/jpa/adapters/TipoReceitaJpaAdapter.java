@@ -13,6 +13,7 @@ import java.util.List;
 
 @Service
 public class TipoReceitaJpaAdapter implements TipoReceitaGateway {
+
     private final TipoReceitaRepository repository;
 
     public TipoReceitaJpaAdapter(TipoReceitaRepository repository) {
@@ -83,4 +84,5 @@ public class TipoReceitaJpaAdapter implements TipoReceitaGateway {
 
         repository.deleteById(id);
     }
+
 }

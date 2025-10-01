@@ -32,4 +32,5 @@ public class CategoriaProdutoBeanConfig {
     public ListCategoriasProdutoByNomeUseCase listCategoriasProdutoByNomeUseCase(CategoriaProdutoJpaAdapter adapter) {
         return new ListCategoriasProdutoByNomeUseCase(adapter);
     }
+
 }

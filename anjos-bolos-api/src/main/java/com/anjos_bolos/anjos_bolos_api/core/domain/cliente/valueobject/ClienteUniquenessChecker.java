@@ -12,4 +12,5 @@ public interface ClienteUniquenessChecker {
     boolean existsByCpfExceptId(CPF cpf, Integer id);
 
     boolean existsByTelefoneExcept(Telefone telefone, Integer id);
+
 }

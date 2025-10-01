@@ -7,6 +7,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.CPF;
 import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.Usuario;
 
 public class GetUsuarioByCpfUseCase {
+
     private final UsuarioGateway gateway;
 
     public GetUsuarioByCpfUseCase(UsuarioGateway gateway) {
@@ -23,4 +24,5 @@ public class GetUsuarioByCpfUseCase {
 
         return usuario;
     }
+
 }

@@ -6,6 +6,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundExcept
 import com.anjos_bolos.anjos_bolos_api.core.domain.produto.Produto;
 
 public class GetProdutoByIdUseCase {
+
     private final ProdutoGateway gateway;
 
     public GetProdutoByIdUseCase(ProdutoGateway gateway) {
@@ -21,4 +22,5 @@ public class GetProdutoByIdUseCase {
 
         return produto;
     }
+
 }

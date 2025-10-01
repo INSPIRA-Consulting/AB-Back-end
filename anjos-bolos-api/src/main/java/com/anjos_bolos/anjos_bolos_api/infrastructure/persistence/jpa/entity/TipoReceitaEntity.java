@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "Tipo_Receita")
 public class TipoReceitaEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -44,4 +45,5 @@ public class TipoReceitaEntity {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
 }

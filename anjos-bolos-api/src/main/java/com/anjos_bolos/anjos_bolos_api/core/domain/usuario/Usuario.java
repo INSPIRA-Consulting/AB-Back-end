@@ -6,6 +6,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Telefone;
 import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.valueobject.FuncaoUsuarioEnum;
 
 public class Usuario {
+
     private Integer id;
     private String nome;
     private CPF cpf;
@@ -91,4 +92,5 @@ public class Usuario {
     public void setFuncao(FuncaoUsuarioEnum funcao) {
         this.funcao = funcao;
     }
+
 }

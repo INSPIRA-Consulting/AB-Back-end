@@ -5,5 +5,4 @@ public record UpdateClienteCommand(
         String cpf,
         String nome,
         String telefone
-) {
-}
+) {}

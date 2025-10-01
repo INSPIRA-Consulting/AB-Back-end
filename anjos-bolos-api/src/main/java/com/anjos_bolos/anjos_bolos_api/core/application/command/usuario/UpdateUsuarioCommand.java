@@ -8,5 +8,4 @@ public record UpdateUsuarioCommand(
         String senha,
         String telefone,
         String funcao
-) {
-}
+) {}

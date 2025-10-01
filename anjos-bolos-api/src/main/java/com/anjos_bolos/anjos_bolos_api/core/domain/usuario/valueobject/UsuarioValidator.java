@@ -6,6 +6,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Email;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Telefone;
 
 public class UsuarioValidator {
+
     private final UsuarioUniquenessChecker checker;
 
     public UsuarioValidator(UsuarioUniquenessChecker checker) {
@@ -39,4 +40,5 @@ public class UsuarioValidator {
             throw new EntityAlreadyExistsException("Usuário com Telefone %s já existe.".formatted(telefone));
         }
     }
+
 }

@@ -8,6 +8,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.cliente.Cliente;
 import java.util.List;
 
 public class ListClienteByNomeUseCase {
+
     private final ClienteGateway gateway;
 
     public ListClienteByNomeUseCase(ClienteGateway gateway) {
@@ -23,4 +24,5 @@ public class ListClienteByNomeUseCase {
 
         return clientes;
     }
+
 }

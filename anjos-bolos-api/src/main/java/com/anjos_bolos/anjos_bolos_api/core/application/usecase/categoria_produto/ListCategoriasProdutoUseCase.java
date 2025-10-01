@@ -8,6 +8,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.categoria_produto.CategoriaPr
 import java.util.List;
 
 public class ListCategoriasProdutoUseCase {
+
     private final CategoriaProdutoGateway gateway;
 
     public ListCategoriasProdutoUseCase(CategoriaProdutoGateway gateway) {
@@ -23,4 +24,5 @@ public class ListCategoriasProdutoUseCase {
 
         return categoriasProduto;
     }
+
 }

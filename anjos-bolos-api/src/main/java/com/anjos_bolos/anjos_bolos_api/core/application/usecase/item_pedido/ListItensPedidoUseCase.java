@@ -8,6 +8,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.item_pedido.ItemPedido;
 import java.util.List;
 
 public class ListItensPedidoUseCase {
+
     private final ItemPedidoGateway gateway;
 
     public ListItensPedidoUseCase(ItemPedidoGateway gateway) {
@@ -23,4 +24,5 @@ public class ListItensPedidoUseCase {
 
         return itensPedido;
     }
+
 }

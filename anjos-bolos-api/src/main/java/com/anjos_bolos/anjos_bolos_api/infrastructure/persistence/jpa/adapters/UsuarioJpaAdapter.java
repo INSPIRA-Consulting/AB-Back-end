@@ -21,6 +21,7 @@ import java.util.List;
 
 @Service
 public class UsuarioJpaAdapter implements UsuarioGateway {
+
     private final UsuarioJpaRepository repository;
 
     public UsuarioJpaAdapter(UsuarioJpaRepository repository) {
@@ -132,4 +133,5 @@ public class UsuarioJpaAdapter implements UsuarioGateway {
 
         repository.deleteById(id);
     }
+
 }

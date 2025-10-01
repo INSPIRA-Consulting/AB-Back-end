@@ -5,6 +5,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.detalhamento_pedido.Detalhame
 import java.util.List;
 
 public interface DetalhamentoPedidoGateway {
+
     DetalhamentoPedido save(DetalhamentoPedido usuario);
 
     boolean existsById(Integer id);
@@ -22,4 +23,5 @@ public interface DetalhamentoPedidoGateway {
     DetalhamentoPedido update(DetalhamentoPedido usuario);
 
     void delete(Integer id);
+
 }

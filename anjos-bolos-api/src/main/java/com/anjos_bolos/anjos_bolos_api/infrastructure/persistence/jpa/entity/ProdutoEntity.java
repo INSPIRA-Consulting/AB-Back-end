@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "Produto")
 public class ProdutoEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -23,7 +24,6 @@ public class ProdutoEntity {
         this.id = id;
         this.nome = nome;
         this.precoFinal = precoFinal;
-        this.categoriaProduto = categoriaProduto;
     }
 
     public Integer getId() {
@@ -57,4 +57,5 @@ public class ProdutoEntity {
     public void setCategoriaProduto(CategoriaProdutoEntity categoriaProduto) {
         this.categoriaProduto = categoriaProduto;
     }
+
 }

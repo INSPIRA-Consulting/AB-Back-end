@@ -5,5 +5,4 @@ public record CreateComposicaoProdutoCommand(
         Integer receitaId,
         Integer quantidade,
         String observacao
-) {
-}
+) {}

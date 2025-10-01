@@ -10,6 +10,7 @@ import software.amazon.awssdk.services.s3.model.S3Exception;
 
 @Service
 public class S3UploadService {
+
     private final S3Client s3Client;
 
     @Value("${aws.s3.bucket-name}")
@@ -51,4 +52,5 @@ public class S3UploadService {
                             + exception.getMessage(), exception);
         }
     }
+
 }

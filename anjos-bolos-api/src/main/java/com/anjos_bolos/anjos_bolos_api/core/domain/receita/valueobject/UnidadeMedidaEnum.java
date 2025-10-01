@@ -1,6 +1,7 @@
 package com.anjos_bolos.anjos_bolos_api.core.domain.receita.valueobject;
 
 public enum UnidadeMedidaEnum {
+
     UNIDADE("unidade", "unidades", "un", false),
     GRAMA("grama", "gramas", "g", true),
     QUILOGRAMA("quilograma", "quilogramas", "Kg", true),
@@ -41,4 +42,5 @@ public enum UnidadeMedidaEnum {
     public Boolean getFracionavel() {
         return fracionavel;
     }
+
 }

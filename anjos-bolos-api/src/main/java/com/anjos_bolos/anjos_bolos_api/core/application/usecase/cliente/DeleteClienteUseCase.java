@@ -5,6 +5,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.command.cliente.DeleteCl
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundException;
 
 public class DeleteClienteUseCase {
+
     private final ClienteGateway gateway;
 
     public DeleteClienteUseCase(ClienteGateway gateway) {
@@ -18,4 +19,5 @@ public class DeleteClienteUseCase {
 
         gateway.delete(command.id());
     }
+
 }

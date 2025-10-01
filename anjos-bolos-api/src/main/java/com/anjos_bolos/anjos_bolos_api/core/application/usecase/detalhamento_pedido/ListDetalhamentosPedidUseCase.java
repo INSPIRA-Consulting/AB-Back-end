@@ -8,6 +8,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.detalhamento_pedido.Detalhame
 import java.util.List;
 
 public class ListDetalhamentosPedidUseCase {
+
     private final DetalhamentoPedidoGateway gateway;
 
     public ListDetalhamentosPedidUseCase(DetalhamentoPedidoGateway gateway) {
@@ -23,4 +24,5 @@ public class ListDetalhamentosPedidUseCase {
 
         return detalhamentosPedido;
     }
+
 }

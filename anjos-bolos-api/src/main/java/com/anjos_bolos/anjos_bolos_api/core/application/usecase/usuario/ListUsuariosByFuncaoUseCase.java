@@ -10,6 +10,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.valueobject.FuncaoUsu
 import java.util.List;
 
 public class ListUsuariosByFuncaoUseCase {
+
     private final UsuarioGateway gateway;
 
     public ListUsuariosByFuncaoUseCase(UsuarioGateway gateway) {
@@ -26,4 +27,5 @@ public class ListUsuariosByFuncaoUseCase {
 
         return usuarios;
     }
+
 }

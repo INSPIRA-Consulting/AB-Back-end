@@ -8,6 +8,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.categoria_produto.CategoriaPr
 import com.anjos_bolos.anjos_bolos_api.core.domain.produto.Produto;
 
 public class CreateProdutoUseCase {
+
     private final ProdutoGateway gateway;
     private final CategoriaProdutoGateway categoriaProdutoGateway;
 
@@ -32,4 +33,5 @@ public class CreateProdutoUseCase {
 
         return gateway.save(produto);
     }
+
 }

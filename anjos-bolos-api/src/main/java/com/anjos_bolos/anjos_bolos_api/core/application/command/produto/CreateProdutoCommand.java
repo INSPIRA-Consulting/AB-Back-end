@@ -4,5 +4,4 @@ public record CreateProdutoCommand(
         String nome,
         Double precoFinal,
         Integer categoriaProdutoId
-) {
-}
+) {}

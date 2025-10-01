@@ -3,6 +3,7 @@ package com.anjos_bolos.anjos_bolos_api.core.domain.receita.valueobject;
 import com.anjos_bolos.anjos_bolos_api.core.domain.ingrediente.Ingrediente;
 
 public class ItemReceita {
+
     private Ingrediente ingrediente;
     private Double quantidade;
     private UnidadeMedidaEnum unidadeMedida;
@@ -39,4 +40,5 @@ public class ItemReceita {
     public void setUnidadeMedida(UnidadeMedidaEnum unidadeMedida) {
         this.unidadeMedida = unidadeMedida;
     }
+
 }

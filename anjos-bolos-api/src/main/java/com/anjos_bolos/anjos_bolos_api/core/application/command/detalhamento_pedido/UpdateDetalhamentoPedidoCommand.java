@@ -5,5 +5,4 @@ public record UpdateDetalhamentoPedidoCommand(
         Integer itemPedidoId,
         Integer receitaId,
         String observacao
-) {
-}
+) {}

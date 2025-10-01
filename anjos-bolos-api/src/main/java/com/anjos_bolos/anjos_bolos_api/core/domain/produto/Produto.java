@@ -3,6 +3,7 @@ package com.anjos_bolos.anjos_bolos_api.core.domain.produto;
 import com.anjos_bolos.anjos_bolos_api.core.domain.categoria_produto.CategoriaProduto;
 
 public class Produto {
+
     private Integer id;
     private String nome;
     private Double precoFinal;
@@ -55,4 +56,5 @@ public class Produto {
     public void setCategoriaProduto(CategoriaProduto categoriaProduto) {
         this.categoriaProduto = categoriaProduto;
     }
+
 }

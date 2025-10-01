@@ -21,4 +21,5 @@ public interface CategoriaProdutoGateway {
     CategoriaProduto update(CategoriaProduto categoriaProduto);
 
     void delete(Integer id);
+
 }

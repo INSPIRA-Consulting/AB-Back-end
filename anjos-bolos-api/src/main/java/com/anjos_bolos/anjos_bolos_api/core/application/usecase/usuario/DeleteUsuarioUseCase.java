@@ -5,6 +5,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.command.usuario.DeleteUs
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundException;
 
 public class DeleteUsuarioUseCase {
+
     private final UsuarioGateway gateway;
 
     public DeleteUsuarioUseCase(UsuarioGateway gateway) {
@@ -19,4 +20,5 @@ public class DeleteUsuarioUseCase {
 
         gateway.delete(command.id());
     }
+
 }

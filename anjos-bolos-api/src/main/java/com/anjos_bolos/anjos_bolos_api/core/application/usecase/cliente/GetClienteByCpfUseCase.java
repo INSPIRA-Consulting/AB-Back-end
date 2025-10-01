@@ -6,6 +6,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundExcept
 import com.anjos_bolos.anjos_bolos_api.core.domain.cliente.Cliente;
 
 public class GetClienteByCpfUseCase {
+
     private final ClienteGateway gateway;
 
     public GetClienteByCpfUseCase(ClienteGateway gateway) {
@@ -21,4 +22,5 @@ public class GetClienteByCpfUseCase {
 
         return cliente;
     }
+
 }

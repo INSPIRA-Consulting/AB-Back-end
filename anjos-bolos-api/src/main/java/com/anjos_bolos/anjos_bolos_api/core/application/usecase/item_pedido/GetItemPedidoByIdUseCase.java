@@ -5,6 +5,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.command.item_pedido.GetI
 import com.anjos_bolos.anjos_bolos_api.core.domain.item_pedido.ItemPedido;
 
 public class GetItemPedidoByIdUseCase {
+
     private final ItemPedidoGateway gateway;
 
     public GetItemPedidoByIdUseCase(ItemPedidoGateway gateway) {
@@ -21,4 +22,5 @@ public class GetItemPedidoByIdUseCase {
 
         return itemPedido;
     }
+
 }

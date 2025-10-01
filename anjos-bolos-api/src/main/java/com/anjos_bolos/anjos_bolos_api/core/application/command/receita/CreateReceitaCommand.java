@@ -8,5 +8,4 @@ public record CreateReceitaCommand(
         List<Double> quantidades,
         List<String> unidadesMedida,
         Integer tipoReceitaId
-) {
-}
+) {}

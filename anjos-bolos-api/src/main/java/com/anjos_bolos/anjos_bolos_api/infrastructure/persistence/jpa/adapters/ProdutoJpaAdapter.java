@@ -13,6 +13,7 @@ import java.util.List;
 
 @Service
 public class ProdutoJpaAdapter implements ProdutoGateway {
+
     private final ProdutoRepository repository;
 
     public ProdutoJpaAdapter(ProdutoRepository repository) {
@@ -98,4 +99,5 @@ public class ProdutoJpaAdapter implements ProdutoGateway {
 
         repository.deleteById(id);
     }
+
 }

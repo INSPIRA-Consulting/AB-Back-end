@@ -21,4 +21,5 @@ public interface TipoReceitaGateway {
     TipoReceita update(TipoReceita tipoReceita);
 
     void delete(Integer id);
+
 }

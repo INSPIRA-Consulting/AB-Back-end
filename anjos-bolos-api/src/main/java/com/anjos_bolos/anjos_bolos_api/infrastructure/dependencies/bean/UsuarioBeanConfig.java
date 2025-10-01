@@ -59,4 +59,5 @@ public class UsuarioBeanConfig {
     ListUsuariosByFuncaoUseCase listUsuariosByFuncaoUseCase(UsuarioJpaAdapter adapter) {
         return new ListUsuariosByFuncaoUseCase(adapter);
     }
+
 }

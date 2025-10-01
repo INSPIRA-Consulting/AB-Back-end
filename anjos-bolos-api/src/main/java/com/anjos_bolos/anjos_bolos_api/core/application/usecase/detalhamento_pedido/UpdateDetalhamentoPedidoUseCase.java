@@ -11,6 +11,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.item_pedido.ItemPedido;
 import com.anjos_bolos.anjos_bolos_api.core.domain.receita.Receita;
 
 public class UpdateDetalhamentoPedidoUseCase {
+
     private final DetalhamentoPedidoGateway gateway;
     private final ItemPedidoGateway itemPedidoGateway;
     private final ReceitaGateway receitaGateway;
@@ -43,4 +44,5 @@ public class UpdateDetalhamentoPedidoUseCase {
 
         return gateway.update(detalhamentoPedido);
     }
+
 }

@@ -6,6 +6,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundExcept
 import com.anjos_bolos.anjos_bolos_api.core.domain.detalhamento_pedido.DetalhamentoPedido;
 
 public class GetDetalhamentoPedidoByIdUseCase {
+
     private final DetalhamentoPedidoGateway gateway;
 
     public GetDetalhamentoPedidoByIdUseCase(DetalhamentoPedidoGateway gateway) {
@@ -22,4 +23,5 @@ public class GetDetalhamentoPedidoByIdUseCase {
 
         return detalhamentoPedido;
     }
+
 }

@@ -19,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/tipos-receitas")
 public class TipoReceitaController {
+
     private final CreateTipoReceitaUseCase createTipoReceitaUseCase;
     private final UpdateTipoReceitaUseCase updateTipoReceitaUseCase;
     private final DeleteTipoReceitaUseCase deleteTipoReceitaUseCase;
@@ -136,4 +137,5 @@ public class TipoReceitaController {
 
         return ResponseEntity.status(204).build();
     }
+
 }

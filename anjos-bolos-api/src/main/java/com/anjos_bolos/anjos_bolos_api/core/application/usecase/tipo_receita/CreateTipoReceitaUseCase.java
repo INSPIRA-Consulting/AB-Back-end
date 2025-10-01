@@ -6,6 +6,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.exception.EntityAlreadyE
 import com.anjos_bolos.anjos_bolos_api.core.domain.tipo_receita.TipoReceita;
 
 public class CreateTipoReceitaUseCase {
+
     private final TipoReceitaGateway gateway;
 
     public CreateTipoReceitaUseCase(TipoReceitaGateway gateway) {
@@ -21,4 +22,5 @@ public class CreateTipoReceitaUseCase {
 
         return gateway.save(tipoReceita);
     }
+
 }

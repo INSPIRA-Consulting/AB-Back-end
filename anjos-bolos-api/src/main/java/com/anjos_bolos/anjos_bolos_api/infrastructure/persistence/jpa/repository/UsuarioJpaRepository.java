@@ -31,4 +31,5 @@ public interface UsuarioJpaRepository extends JpaRepository<UsuarioEntity, Integ
     List<UsuarioEntity> findByNomeContainingIgnoreCase(String nome);
 
     List<UsuarioEntity> findByFuncao(String funcao);
+
 }

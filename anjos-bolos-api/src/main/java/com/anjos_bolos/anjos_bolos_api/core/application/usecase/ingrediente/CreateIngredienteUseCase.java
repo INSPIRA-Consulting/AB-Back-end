@@ -6,6 +6,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.exception.EntityAlreadyE
 import com.anjos_bolos.anjos_bolos_api.core.domain.ingrediente.Ingrediente;
 
 public class CreateIngredienteUseCase {
+
     private final IngredienteGateway gateway;
 
     public CreateIngredienteUseCase(IngredienteGateway gateway) {
@@ -21,4 +22,5 @@ public class CreateIngredienteUseCase {
 
         return gateway.save(ingrediente);
     }
+
 }

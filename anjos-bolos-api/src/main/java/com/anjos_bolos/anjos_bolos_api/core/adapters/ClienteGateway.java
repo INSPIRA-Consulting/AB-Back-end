@@ -21,4 +21,5 @@ public interface ClienteGateway {
     Cliente update(Cliente cliente);
 
     void delete(Integer id);
+
 }

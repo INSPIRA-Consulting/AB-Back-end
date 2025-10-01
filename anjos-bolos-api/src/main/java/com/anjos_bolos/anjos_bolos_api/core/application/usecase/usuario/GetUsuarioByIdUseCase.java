@@ -6,6 +6,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundExcept
 import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.Usuario;
 
 public class GetUsuarioByIdUseCase {
+
     private final UsuarioGateway gateway;
 
     public GetUsuarioByIdUseCase(UsuarioGateway gateway) {
@@ -22,4 +23,5 @@ public class GetUsuarioByIdUseCase {
 
         return usuario;
     }
+
 }

@@ -3,5 +3,4 @@ package com.anjos_bolos.anjos_bolos_api.core.application.command.categoria_produ
 public record CreateCategoriaProdutoCommand(
         String nome,
         String descricao
-) {
-}
+) {}

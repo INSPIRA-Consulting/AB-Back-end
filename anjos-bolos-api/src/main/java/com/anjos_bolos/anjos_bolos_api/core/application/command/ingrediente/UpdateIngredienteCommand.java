@@ -5,5 +5,4 @@ public record UpdateIngredienteCommand(
         String nome,
         Double valorEmbalagem,
         Double quantidadeEmbalagem
-) {
-}
+) {}

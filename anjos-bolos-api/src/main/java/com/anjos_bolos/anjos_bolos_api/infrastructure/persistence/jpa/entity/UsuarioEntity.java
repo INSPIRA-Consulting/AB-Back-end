@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 @Entity
 @Table (name = "Usuario")
 public class UsuarioEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -88,4 +89,5 @@ public class UsuarioEntity {
     public void setFuncao(String funcao) {
         this.funcao = funcao;
     }
+
 }

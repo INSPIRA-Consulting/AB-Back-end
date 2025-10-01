@@ -17,4 +17,5 @@ public interface UsuarioUniquenessChecker {
     boolean existsByEmailAndIdNot(Email email, Integer id);
 
     boolean existsByTelefoneAndIdNot(Telefone telefone, Integer id);
+
 }

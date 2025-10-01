@@ -1,6 +1,7 @@
 package com.anjos_bolos.anjos_bolos_api.core.domain.ingrediente;
 
 public class Ingrediente {
+
     private Integer id;
     private String nome;
     private Double custoMedida;
@@ -54,4 +55,5 @@ public class Ingrediente {
 
         return valorEmbalagem / quantidadeEmbalagem;
     }
+
 }

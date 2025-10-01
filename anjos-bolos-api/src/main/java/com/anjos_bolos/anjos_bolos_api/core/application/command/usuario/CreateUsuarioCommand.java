@@ -7,5 +7,4 @@ public record CreateUsuarioCommand(
         String senha,
         String telefone,
         String funcao
-) {
-}
+) {}

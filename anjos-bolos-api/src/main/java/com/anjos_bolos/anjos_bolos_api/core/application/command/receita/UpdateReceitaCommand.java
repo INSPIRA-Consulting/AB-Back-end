@@ -7,5 +7,4 @@ public record UpdateReceitaCommand(
         Double quantidade,
         String unidadeMedida,
         Integer tipoReceitaId
-) {
-}
+) {}

@@ -10,5 +10,4 @@ public record CreatePedidoCommand(
         String observacao,
         Integer usuarioId,
         Integer clienteId
-) {
-}
+) {}

@@ -4,6 +4,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.item_pedido.ItemPedido;
 import com.anjos_bolos.anjos_bolos_api.core.domain.receita.Receita;
 
 public class DetalhamentoPedido {
+
     private Integer id;
     private ItemPedido itemPedido;
     private Receita receita;
@@ -56,4 +57,5 @@ public class DetalhamentoPedido {
     public void setObservacao(String observacao) {
         this.observacao = observacao;
     }
+
 }

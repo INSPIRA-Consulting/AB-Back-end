@@ -4,5 +4,4 @@ public record CreateIngredienteCommand(
         String nome,
         Double valorEmbalagem,
         Double quantidadeEmbalagem
-) {
-}
+) {}

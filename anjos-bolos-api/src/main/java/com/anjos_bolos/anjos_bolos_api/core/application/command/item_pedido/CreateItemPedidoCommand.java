@@ -6,5 +6,4 @@ public record CreateItemPedidoCommand(
         Integer quantidade,
         Double valorFinal,
         Double peso
-) {
-}
+) {}

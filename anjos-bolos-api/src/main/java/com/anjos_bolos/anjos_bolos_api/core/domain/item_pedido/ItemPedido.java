@@ -4,6 +4,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.pedido.Pedido;
 import com.anjos_bolos.anjos_bolos_api.core.domain.produto.Produto;
 
 public class ItemPedido {
+
     private Integer id;
     private Pedido pedido;
     private Produto produto;
@@ -78,4 +79,5 @@ public class ItemPedido {
     public void setPeso(Double peso) {
         this.peso = peso;
     }
+
 }

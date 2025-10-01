@@ -8,6 +8,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Email;
 import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.Usuario;
 
 public class GetUsuarioByEmailUseCase {
+
     private final UsuarioGateway gateway;
 
     public GetUsuarioByEmailUseCase(UsuarioGateway gateway) {
@@ -24,4 +25,5 @@ public class GetUsuarioByEmailUseCase {
 
         return usuario;
     }
+
 }

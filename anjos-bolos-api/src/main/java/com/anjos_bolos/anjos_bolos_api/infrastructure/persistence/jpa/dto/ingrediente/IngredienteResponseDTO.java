@@ -4,5 +4,4 @@ public record IngredienteResponseDTO(
         Integer id,
         String nome,
         Double custoMedida
-) {
-}
+) {}

@@ -8,6 +8,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.composicao_produto.Composicao
 import java.util.List;
 
 public class ListComposicoesProdutoUseCase {
+
     private final ComposicaoProdutoGateway gateway;
 
     public ListComposicoesProdutoUseCase(ComposicaoProdutoGateway gateway) {
@@ -23,4 +24,5 @@ public class ListComposicoesProdutoUseCase {
 
         return composicoesProduto;
     }
+
 }

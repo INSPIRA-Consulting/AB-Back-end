@@ -32,4 +32,5 @@ public class TipoReceitaBeanConfig {
     public ListTiposReceitaByNomeUseCase listTiposReceitaByNomeUseCase(TipoReceitaJpaAdapter adapter) {
         return new ListTiposReceitaByNomeUseCase(adapter);
     }
+
 }

@@ -8,6 +8,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.tipo_receita.TipoReceita;
 import java.util.List;
 
 public class ListTiposReceitaUseCase {
+
     private final TipoReceitaGateway gateway;
 
     public ListTiposReceitaUseCase(TipoReceitaGateway gateway) {
@@ -23,4 +24,5 @@ public class ListTiposReceitaUseCase {
 
         return tiposReceita;
     }
+
 }

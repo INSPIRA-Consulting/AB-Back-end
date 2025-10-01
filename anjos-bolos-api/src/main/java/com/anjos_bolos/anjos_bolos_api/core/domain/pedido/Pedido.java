@@ -7,6 +7,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.Usuario;
 import java.time.LocalDateTime;
 
 public class Pedido {
+
     private Integer id;
     private LocalDateTime dataPedido;
     private LocalDateTime dataEntrega;
@@ -103,4 +104,5 @@ public class Pedido {
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
+
 }

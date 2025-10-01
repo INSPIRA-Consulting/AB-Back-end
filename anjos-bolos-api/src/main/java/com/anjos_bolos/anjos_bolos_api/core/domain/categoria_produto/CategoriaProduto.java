@@ -1,6 +1,7 @@
 package com.anjos_bolos.anjos_bolos_api.core.domain.categoria_produto;
 
 public class CategoriaProduto {
+
     private Integer id;
     private String nome;
     private String descricao;
@@ -42,4 +43,5 @@ public class CategoriaProduto {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
 }

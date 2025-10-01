@@ -4,6 +4,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.CPF;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Telefone;
 
 public class Cliente {
+
     private Integer id;
     private CPF cpf;
     private String nome;
@@ -56,4 +57,5 @@ public class Cliente {
     public void setTelefone(Telefone telefone) {
         this.telefone = telefone;
     }
+
 }

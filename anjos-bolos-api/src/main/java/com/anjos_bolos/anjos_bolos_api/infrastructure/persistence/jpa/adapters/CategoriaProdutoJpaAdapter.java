@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 public class CategoriaProdutoJpaAdapter implements CategoriaProdutoGateway {
+
     private final CategoriaProdutoRepository repository;
 
     public CategoriaProdutoJpaAdapter(CategoriaProdutoRepository repository) {
@@ -79,4 +80,5 @@ public class CategoriaProdutoJpaAdapter implements CategoriaProdutoGateway {
 
         repository.deleteById(id);
     }
+
 }

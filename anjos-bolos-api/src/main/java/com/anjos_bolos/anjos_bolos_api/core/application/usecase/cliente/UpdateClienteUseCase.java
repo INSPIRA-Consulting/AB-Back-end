@@ -9,6 +9,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.CPF;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Telefone;
 
 public class UpdateClienteUseCase {
+
     private final ClienteGateway gateway;
     private final ClienteValidator validator;
 
@@ -34,4 +35,5 @@ public class UpdateClienteUseCase {
 
         return gateway.update(cliente);
     }
+
 }

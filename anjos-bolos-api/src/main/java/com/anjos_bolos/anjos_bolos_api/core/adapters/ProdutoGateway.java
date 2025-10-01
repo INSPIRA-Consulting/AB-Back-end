@@ -25,4 +25,5 @@ public interface ProdutoGateway {
     Produto update(Produto produto);
 
     void delete(Integer id);
+
 }

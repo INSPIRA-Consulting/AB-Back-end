@@ -1,4 +1,3 @@
 package com.anjos_bolos.anjos_bolos_api.core.application.command.composicao_produto;
 
-public record DeleteComposicaoProdutoCommand(Integer id) {
-}
+public record DeleteComposicaoProdutoCommand(Integer id) {}

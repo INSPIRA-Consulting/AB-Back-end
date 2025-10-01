@@ -10,4 +10,5 @@ public interface TipoReceitaRepository extends JpaRepository<TipoReceitaEntity, 
     boolean existsByNome(String nome);
 
     List<TipoReceitaEntity> findByNomeContainingIgnoreCase(String nome);
+
 }

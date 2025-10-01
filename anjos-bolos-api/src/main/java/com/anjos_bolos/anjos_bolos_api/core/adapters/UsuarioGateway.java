@@ -41,4 +41,5 @@ public interface UsuarioGateway {
     Usuario update(Usuario usuario);
 
     void delete(Integer id);
+
 }

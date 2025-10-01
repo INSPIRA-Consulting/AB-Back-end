@@ -10,6 +10,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.valueobject.FuncaoUsu
 import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.valueobject.UsuarioValidator;
 
 public class UpdateUsuarioUseCase {
+
     private final UsuarioGateway gateway;
     private final UsuarioValidator validator;
 
@@ -35,4 +36,5 @@ public class UpdateUsuarioUseCase {
 
         return gateway.update(usuario);
     }
+
 }

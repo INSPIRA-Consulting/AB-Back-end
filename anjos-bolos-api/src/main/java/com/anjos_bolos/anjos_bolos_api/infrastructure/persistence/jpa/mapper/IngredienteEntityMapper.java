@@ -9,6 +9,7 @@ import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.Ing
 public class IngredienteEntityMapper {
 
     public static IngredienteResponseDTO toDTO(Ingrediente domain) {
+
         return new IngredienteResponseDTO(
                 domain.getId(),
                 domain.getNome(),
@@ -60,4 +61,5 @@ public class IngredienteEntityMapper {
                 entity.getCustoMedida()
         );
     }
+
 }

@@ -4,5 +4,4 @@ public record CreateDetalhamentoPedidoCommand(
         Integer itemPedidoId,
         Integer receitaId,
         String observacao
-) {
-}
+) {}

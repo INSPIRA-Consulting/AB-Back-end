@@ -1,6 +1,7 @@
 package com.anjos_bolos.anjos_bolos_api.core.domain.tipo_receita;
 
 public class TipoReceita {
+
     private Integer id;
     private String nome;
     private String descricao;
@@ -42,4 +43,5 @@ public class TipoReceita {
     public void setDescricao(String descricao) {
         this.descricao = descricao;
     }
+
 }

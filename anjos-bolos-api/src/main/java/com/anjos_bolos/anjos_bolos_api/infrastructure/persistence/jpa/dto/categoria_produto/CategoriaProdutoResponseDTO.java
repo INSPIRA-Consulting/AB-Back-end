@@ -4,5 +4,4 @@ public record CategoriaProdutoResponseDTO(
     Integer id,
     String nome,
     String descricao
-) {
-}
+) {}

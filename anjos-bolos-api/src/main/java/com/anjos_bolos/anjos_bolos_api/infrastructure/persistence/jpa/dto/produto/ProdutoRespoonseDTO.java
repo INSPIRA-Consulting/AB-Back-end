@@ -6,5 +6,4 @@ public record ProdutoRespoonseDTO(
         Double precoFinal,
         String categoriaProduto,
         String nomeImagem
-) {
-}
+) {}

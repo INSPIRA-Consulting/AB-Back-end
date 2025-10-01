@@ -1,4 +1,3 @@
 package com.anjos_bolos.anjos_bolos_api.core.application.command.ingrediente;
 
-public record ListIngredientesByNomeQuery(String nome) {
-}
+public record ListIngredientesByNomeQuery(String nome) {}

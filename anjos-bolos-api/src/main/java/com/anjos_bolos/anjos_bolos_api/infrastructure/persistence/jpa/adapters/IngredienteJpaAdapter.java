@@ -12,6 +12,7 @@ import java.util.List;
 
 @Service
 public class IngredienteJpaAdapter implements IngredienteGateway {
+
     private final IngredienteJpaRepository repository;
 
     public IngredienteJpaAdapter(IngredienteJpaRepository repository) {
@@ -76,4 +77,5 @@ public class IngredienteJpaAdapter implements IngredienteGateway {
 
         repository.deleteById(id);
     }
+
 }

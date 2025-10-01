@@ -10,6 +10,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.pedido.Pedido;
 import com.anjos_bolos.anjos_bolos_api.core.domain.produto.Produto;
 
 public class CreateItemPedidoUseCase {
+
     private final ItemPedidoGateway gateway;
     private final PedidoGateway pedidoGateway;
     private final ProdutoGateway produtoGateway;
@@ -40,4 +41,5 @@ public class CreateItemPedidoUseCase {
 
         return gateway.save(itemPedido);
     }
+
 }

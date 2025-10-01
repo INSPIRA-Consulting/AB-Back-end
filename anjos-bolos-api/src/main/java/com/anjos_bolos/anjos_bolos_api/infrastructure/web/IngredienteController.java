@@ -20,6 +20,7 @@ import java.util.List;
 @RequestMapping("/ingredientes")
 @CrossOrigin(origins = "http://localhost:5173")
 public class IngredienteController {
+
     private final CreateIngredienteUseCase createIngredienteUseCase;
     private final UpdateIngredienteUseCase updateIngredienteUseCase;
     private final DeleteIngredienteUseCase deleteIngredienteUseCase;
@@ -142,4 +143,5 @@ public class IngredienteController {
 
         return ResponseEntity.status(204).build();
     }
+
 }

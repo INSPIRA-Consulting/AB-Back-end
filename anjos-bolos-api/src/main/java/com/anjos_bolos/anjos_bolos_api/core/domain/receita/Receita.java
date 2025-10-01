@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Receita {
+
     private Integer id;
     private String nome;
     private List<ItemReceita> ingredientes;
@@ -52,4 +53,5 @@ public class Receita {
     public void setTipoReceita(TipoReceita tipoReceita) {
         this.tipoReceita = tipoReceita;
     }
+
 }

@@ -6,6 +6,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.exception.EntityAlreadyE
 import com.anjos_bolos.anjos_bolos_api.core.domain.categoria_produto.CategoriaProduto;
 
 public class CreateCategoriaProdutoUseCase {
+
     private final CategoriaProdutoGateway gateway;
 
     public CreateCategoriaProdutoUseCase(CategoriaProdutoGateway gateway) {
@@ -21,4 +22,5 @@ public class CreateCategoriaProdutoUseCase {
 
         return gateway.save(categoriaProduto);
     }
+
 }

@@ -4,5 +4,4 @@ public record UpdateTipoReceitaCommand(
         Integer id,
         String nome,
         String descricao
-) {
-}
+) {}

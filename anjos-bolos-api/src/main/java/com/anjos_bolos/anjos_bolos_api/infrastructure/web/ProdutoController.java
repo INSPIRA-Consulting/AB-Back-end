@@ -22,6 +22,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/produtos")
 public class ProdutoController {
+
     private final CreateProdutoUseCase createProdutoUseCase;
     private final UpdateProdutoUseCase updateProdutoUseCase;
     private final DeleteProdutoUseCase deleteProdutoUseCase;
@@ -192,4 +193,5 @@ public class ProdutoController {
 
         return ResponseEntity.status(204).build();
     }
+
 }

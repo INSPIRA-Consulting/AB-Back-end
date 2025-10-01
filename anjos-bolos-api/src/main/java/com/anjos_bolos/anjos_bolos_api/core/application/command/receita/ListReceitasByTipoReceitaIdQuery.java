@@ -1,4 +1,3 @@
 package com.anjos_bolos.anjos_bolos_api.core.application.command.receita;
 
-public record ListReceitasByTipoReceitaIdQuery(Integer tipoReceitaId) {
-}
+public record ListReceitasByTipoReceitaIdQuery(Integer tipoReceitaId) {}

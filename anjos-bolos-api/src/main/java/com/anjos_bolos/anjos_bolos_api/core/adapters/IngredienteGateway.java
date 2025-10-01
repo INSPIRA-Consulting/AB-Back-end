@@ -4,6 +4,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.ingrediente.Ingrediente;
 import java.util.List;
 
 public interface IngredienteGateway {
+
     Ingrediente save(Ingrediente ingrediente);
 
     boolean existsById(Integer id);
@@ -19,4 +20,5 @@ public interface IngredienteGateway {
     Ingrediente update(Ingrediente ingrediente);
 
     void delete(Integer id);
+
 }

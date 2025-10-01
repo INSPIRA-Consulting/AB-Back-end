@@ -4,5 +4,4 @@ public record UpdateCategoriaProdutoCommand(
         Integer id,
         String nome,
         String descricao
-) {
-}
+) {}

@@ -7,5 +7,4 @@ public record UpdateItemPedidoCommand(
         Integer quantidade,
         Double valorFinal,
         Double peso
-) {
-}
+) {}

@@ -10,6 +10,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.produto.Produto;
 import com.anjos_bolos.anjos_bolos_api.core.domain.receita.Receita;
 
 public class CreateComposicaoProdutoUseCase {
+
     private final ComposicaoProdutoGateway gateway;
     private final ProdutoGateway produtoGateway;
     private final ReceitaGateway receitaGateway;
@@ -36,4 +37,5 @@ public class CreateComposicaoProdutoUseCase {
 
         return gateway.save(composicaoProduto);
     }
+
 }

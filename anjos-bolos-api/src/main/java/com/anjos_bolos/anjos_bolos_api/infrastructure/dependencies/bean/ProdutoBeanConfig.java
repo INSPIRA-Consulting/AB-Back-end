@@ -37,4 +37,5 @@ public class ProdutoBeanConfig {
     public ListProdutosByCategoriaProdutoIdUseCase listProdutosByCategoriaProdutoIdUseCase(ProdutoJpaAdapter adapter) {
         return new ListProdutosByCategoriaProdutoIdUseCase(adapter);
     }
+
 }

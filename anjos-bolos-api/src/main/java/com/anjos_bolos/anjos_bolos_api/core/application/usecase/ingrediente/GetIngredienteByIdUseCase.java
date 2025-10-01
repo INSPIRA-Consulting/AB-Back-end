@@ -6,6 +6,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundExcept
 import com.anjos_bolos.anjos_bolos_api.core.domain.ingrediente.Ingrediente;
 
 public class GetIngredienteByIdUseCase {
+
     private final IngredienteGateway gateway;
 
     public GetIngredienteByIdUseCase(IngredienteGateway gateway) {
@@ -21,4 +22,5 @@ public class GetIngredienteByIdUseCase {
 
         return ingrediente;
     }
+
 }

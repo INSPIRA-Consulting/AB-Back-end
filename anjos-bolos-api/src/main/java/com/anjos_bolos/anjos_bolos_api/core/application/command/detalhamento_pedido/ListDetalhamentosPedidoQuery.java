@@ -1,4 +1,3 @@
 package com.anjos_bolos.anjos_bolos_api.core.application.command.detalhamento_pedido;
 
-public record ListDetalhamentosPedidoQuery() {
-}
+public record ListDetalhamentosPedidoQuery() {}

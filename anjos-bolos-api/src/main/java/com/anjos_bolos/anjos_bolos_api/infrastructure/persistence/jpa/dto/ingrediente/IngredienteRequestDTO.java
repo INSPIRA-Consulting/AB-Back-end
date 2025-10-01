@@ -4,5 +4,4 @@ public record IngredienteRequestDTO(
         String nome,
         Double valorEmbalagem,
         Double quantidadeEmbalagem
-) {
-}
+) {}

@@ -6,6 +6,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundExcept
 import com.anjos_bolos.anjos_bolos_api.core.domain.categoria_produto.CategoriaProduto;
 
 public class GetCategoriaProdutoByIdUseCase {
+
     private final CategoriaProdutoGateway gateway;
 
     public GetCategoriaProdutoByIdUseCase(CategoriaProdutoGateway gateway) {
@@ -21,4 +22,5 @@ public class GetCategoriaProdutoByIdUseCase {
 
         return categoriaProduto;
     }
+
 }

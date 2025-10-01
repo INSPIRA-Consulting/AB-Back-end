@@ -8,6 +8,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.ingrediente.Ingrediente;
 import java.util.List;
 
 public class ListIngredienteByNomeUseCase {
+
     private final IngredienteGateway gateway;
 
     public ListIngredienteByNomeUseCase(IngredienteGateway gateway) {
@@ -23,4 +24,5 @@ public class ListIngredienteByNomeUseCase {
 
         return ingredientes;
     }
+
 }

@@ -5,6 +5,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.command.produto.DeletePr
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundException;
 
 public class DeleteProdutoUseCase {
+
     private final ProdutoGateway gateway;
 
     public DeleteProdutoUseCase(ProdutoGateway gateway) {
@@ -18,4 +19,5 @@ public class DeleteProdutoUseCase {
 
         gateway.delete(command.id());
     }
+
 }

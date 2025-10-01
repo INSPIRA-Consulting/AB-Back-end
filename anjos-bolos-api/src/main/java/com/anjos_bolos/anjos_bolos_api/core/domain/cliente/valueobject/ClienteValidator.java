@@ -5,6 +5,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.CPF;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Telefone;
 
 public class ClienteValidator {
+
     private final ClienteUniquenessChecker checker;
 
     public ClienteValidator(ClienteUniquenessChecker checker) {
@@ -28,4 +29,5 @@ public class ClienteValidator {
             throw new EntityAlreadyExistsException("Outro Cliente já está cadastrado com o Telefone %s.".formatted(telefone));
         }
     }
+
 }

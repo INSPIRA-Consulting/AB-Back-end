@@ -37,4 +37,5 @@ public class IngredienteBeanConfig {
     public ListIngredienteByNomeUseCase getIngredienteByNomeUseCase(IngredienteJpaAdapter adapter) {
         return new ListIngredienteByNomeUseCase(adapter);
     }
+
 }

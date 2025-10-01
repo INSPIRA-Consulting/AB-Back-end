@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "Ingrediente")
 public class IngredienteEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -44,4 +45,5 @@ public class IngredienteEntity {
     public void setCustoMedida(Double custoMedida) {
         this.custoMedida = custoMedida;
     }
+
 }

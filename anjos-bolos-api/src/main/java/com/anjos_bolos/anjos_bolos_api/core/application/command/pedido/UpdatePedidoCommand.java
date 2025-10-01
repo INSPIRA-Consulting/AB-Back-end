@@ -11,5 +11,4 @@ public record UpdatePedidoCommand(
         String observacao,
         Integer usuarioId,
         Integer clienteId
-) {
-}
+) {}

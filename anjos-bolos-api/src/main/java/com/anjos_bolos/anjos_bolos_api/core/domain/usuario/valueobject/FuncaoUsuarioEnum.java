@@ -1,6 +1,7 @@
 package com.anjos_bolos.anjos_bolos_api.core.domain.usuario.valueobject;
 
 public enum FuncaoUsuarioEnum {
+
     ADMINISTRADOR("Administrador", 3, true, true),
     GERENTE("Gerente", 2, true, true),
     ATENDENTE("Atendente", 1, false, true);
@@ -32,4 +33,5 @@ public enum FuncaoUsuarioEnum {
     public boolean isAtivo() {
         return ativo;
     }
+
 }

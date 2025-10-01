@@ -6,5 +6,4 @@ public record UpdateComposicaoProdutoCommand(
         Integer receitaId,
         Integer quantidade,
         String observacao
-) {
-}
+) {}

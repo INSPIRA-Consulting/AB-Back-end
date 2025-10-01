@@ -6,6 +6,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundExcept
 import com.anjos_bolos.anjos_bolos_api.core.domain.composicao_produto.ComposicaoProduto;
 
 public class GetComposicaoProdutoByProdutoIdUseCase {
+
     private final ComposicaoProdutoGateway gateway;
 
     public GetComposicaoProdutoByProdutoIdUseCase(ComposicaoProdutoGateway gateway) {
@@ -22,4 +23,5 @@ public class GetComposicaoProdutoByProdutoIdUseCase {
 
         return composicaoProduto;
     }
+
 }

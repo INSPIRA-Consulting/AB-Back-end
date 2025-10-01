@@ -30,4 +30,5 @@ public interface PedidoGateway {
     Pedido update(Pedido pedido);
 
     void delete(Integer id);
+
 }

@@ -23,4 +23,5 @@ public interface ItemPedidoGateway {
     ItemPedido update(ItemPedido itemPedido);
 
     void delete(Integer id);
+
 }

@@ -11,6 +11,7 @@ import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.usuari
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.UsuarioEntity;
 
 public class UsuarioEntityMapper {
+
     public static UsuarioResponseDTO toDTO(Usuario domain) {
         return new UsuarioResponseDTO(
                 domain.getId(),
@@ -93,4 +94,5 @@ public class UsuarioEntityMapper {
                 FuncaoUsuarioEnum.valueOf(entity.getFuncao().toUpperCase())
         );
     }
+
 }

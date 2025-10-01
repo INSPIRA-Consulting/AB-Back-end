@@ -8,6 +8,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.Usuario;
 import java.util.List;
 
 public class ListUsuariosUseCase {
+
     private final UsuarioGateway gateway;
 
     public ListUsuariosUseCase(UsuarioGateway gateway) {
@@ -23,4 +24,5 @@ public class ListUsuariosUseCase {
 
         return usuarios;
     }
+
 }

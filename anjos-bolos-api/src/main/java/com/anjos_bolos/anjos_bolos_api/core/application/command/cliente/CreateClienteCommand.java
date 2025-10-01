@@ -4,5 +4,4 @@ public record CreateClienteCommand(
         String cpf,
         String nome,
         String telefone
-) {
-}
+) {}

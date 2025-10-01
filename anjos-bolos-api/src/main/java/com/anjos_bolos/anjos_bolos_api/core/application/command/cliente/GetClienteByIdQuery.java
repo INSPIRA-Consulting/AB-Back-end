@@ -1,4 +1,3 @@
 package com.anjos_bolos.anjos_bolos_api.core.application.command.cliente;
 
-public record GetClienteByIdQuery(Integer id) {
-}
+public record GetClienteByIdQuery(Integer id) {}

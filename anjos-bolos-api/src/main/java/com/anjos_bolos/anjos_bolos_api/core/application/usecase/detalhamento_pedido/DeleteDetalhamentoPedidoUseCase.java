@@ -5,6 +5,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.command.detalhamento_ped
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundException;
 
 public class DeleteDetalhamentoPedidoUseCase {
+
     private final DetalhamentoPedidoGateway gateway;
 
     public DeleteDetalhamentoPedidoUseCase(DetalhamentoPedidoGateway gateway) {
@@ -19,4 +20,5 @@ public class DeleteDetalhamentoPedidoUseCase {
 
         gateway.delete(command.id());
     }
+
 }
