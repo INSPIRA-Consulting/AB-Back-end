@@ -10,14 +10,20 @@ public class UsuarioEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String nome;
+
     @Column(unique = true)
     private String cpf;
+
     @Column(unique = true)
     private String email;
+
     private String senha;
+
     @Column(unique = true)
     private String telefone;
+
     private String funcao;
 
 

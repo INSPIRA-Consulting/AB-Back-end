@@ -10,7 +10,9 @@ public class TipoReceitaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    @Column(unique = true)
     private String nome;
+
     private String descricao;
 
     public TipoReceitaEntity() {
