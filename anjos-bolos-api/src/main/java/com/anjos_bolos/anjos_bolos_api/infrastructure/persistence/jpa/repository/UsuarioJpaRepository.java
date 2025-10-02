@@ -1,8 +1,5 @@
 package com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.repository;
 
-import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.CPF;
-import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Email;
-import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Telefone;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.UsuarioEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -17,17 +14,17 @@ public interface UsuarioJpaRepository extends JpaRepository<UsuarioEntity, Integ
 
     boolean existsByTelefone(String telefone);
 
-    boolean existsByCpfAndIdNot(CPF cpf, Integer id);
+    boolean existsByCpfAndIdNot(String cpf, Integer id);
 
-    boolean existsByEmailAndIdNot(Email email, Integer id);
+    boolean existsByEmailAndIdNot(String email, Integer id);
 
-    boolean existsByTelefoneAndIdNot(Telefone telefone, Integer id);
+    boolean existsByTelefoneAndIdNot(String telefone, Integer id);
 
     Optional<UsuarioEntity> findByCpf(String cpf);
 
     Optional<UsuarioEntity> findByEmail(String email);
 
-    List<UsuarioEntity> findByNomeContainingIgnoreCase(String nome);
+    List<UsuarioEntity> findByNomeStartingWithIgnoreCase(String nome);
 
     List<UsuarioEntity> findByFuncao(String funcao);
 

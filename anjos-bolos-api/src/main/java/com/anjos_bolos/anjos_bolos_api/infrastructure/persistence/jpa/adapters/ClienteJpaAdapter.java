@@ -45,12 +45,12 @@ public class ClienteJpaAdapter implements ClienteGateway {
 
     @Override
     public boolean existsByCpfAndIdNot(CPF cpf, Integer id) {
-        return repository.existsByCpfAndIdNot(cpf, id);
+        return repository.existsByCpfAndIdNot(cpf.toString(), id);
     }
 
     @Override
     public boolean existsByTelefoneAndIdNot(Telefone telefone, Integer id) {
-        return repository.existsByTelefoneAndIdNot(telefone, id);
+        return repository.existsByTelefoneAndIdNot(telefone.toString(), id);
     }
 
     @Override
@@ -70,7 +70,7 @@ public class ClienteJpaAdapter implements ClienteGateway {
 
     @Override
     public List<Cliente> findByNome(String nome) {
-        return repository.findByNomeContainingIgnoreCase(nome)
+        return repository.findByNomeStartingWithIgnoreCase(nome)
                 .stream()
                 .map(ClienteEntityMapper::toDomain)
                 .toList();

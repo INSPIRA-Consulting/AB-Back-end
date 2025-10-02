@@ -53,7 +53,7 @@ public class CategoriaProdutoJpaAdapter implements CategoriaProdutoGateway {
 
     @Override
     public List<CategoriaProduto> findByNome(String nome) {
-         return repository.findByNomeContainingIgnoreCase(nome)
+         return repository.findByNomeStartingWithIgnoreCase(nome)
                  .stream()
                  .map(CategoriaProdutoEntityMapper::toDomain)
                  .toList();

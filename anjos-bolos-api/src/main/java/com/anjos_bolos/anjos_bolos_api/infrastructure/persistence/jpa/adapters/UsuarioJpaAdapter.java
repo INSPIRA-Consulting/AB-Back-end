@@ -52,17 +52,17 @@ public class UsuarioJpaAdapter implements UsuarioGateway {
 
     @Override
     public boolean existsByCpfAndIdNot(CPF cpf, Integer id) {
-        return repository.existsByCpfAndIdNot(cpf, id);
+        return repository.existsByCpfAndIdNot(cpf.toString(), id);
     }
 
     @Override
     public boolean existsByEmailAndIdNot(Email email, Integer id) {
-        return repository.existsByEmailAndIdNot(email, id);
+        return repository.existsByEmailAndIdNot(email.toString(), id);
     }
 
     @Override
     public boolean existsByTelefoneAndIdNot(Telefone telefone, Integer id) {
-        return repository.existsByTelefoneAndIdNot(telefone, id);
+        return repository.existsByTelefoneAndIdNot(telefone.toString(), id);
     }
 
     @Override
@@ -82,7 +82,7 @@ public class UsuarioJpaAdapter implements UsuarioGateway {
 
     @Override
     public List<Usuario> findByNome(String nome) {
-        return repository.findByNomeContainingIgnoreCase(nome)
+        return repository.findByNomeStartingWithIgnoreCase(nome)
                 .stream()
                 .map(UsuarioEntityMapper::toDomain)
                 .toList();

@@ -19,7 +19,7 @@ public class ListIngredienteByNomeUseCase {
         List<Ingrediente> ingredientes = gateway.findByNome(query.nome());
 
         if (ingredientes.isEmpty()) {
-            throw new NotFoundException("Nenhum Ingrediente encontrado com o nome: '%s'." + query.nome());
+            throw new NotFoundException("Nenhum Ingrediente encontrado com o nome: %s.".formatted(query.nome()));
         }
 
         return ingredientes;

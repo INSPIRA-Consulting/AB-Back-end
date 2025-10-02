@@ -22,10 +22,11 @@ public class ProdutoEntity {
     public ProdutoEntity() {
     }
 
-    public ProdutoEntity(Integer id, String nome, Double precoFinal, CategoriaProdutoEntity categoriaProdutoId) {
+    public ProdutoEntity(Integer id, String nome, Double precoFinal, CategoriaProdutoEntity categoriaProduto) {
         this.id = id;
         this.nome = nome;
         this.precoFinal = precoFinal;
+        this.categoriaProduto = categoriaProduto;
     }
 
     public Integer getId() {

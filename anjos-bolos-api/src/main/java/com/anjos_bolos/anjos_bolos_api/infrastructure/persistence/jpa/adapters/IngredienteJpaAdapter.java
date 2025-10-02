@@ -53,7 +53,7 @@ public class IngredienteJpaAdapter implements IngredienteGateway {
 
     @Override
     public List<Ingrediente> findByNome(String nome) {
-        return repository.findByNomeContainingIgnoreCase(nome)
+        return repository.findByNomeStartingWithIgnoreCase(nome)
                 .stream()
                 .map(IngredienteEntityMapper::toDomain)
                 .toList();

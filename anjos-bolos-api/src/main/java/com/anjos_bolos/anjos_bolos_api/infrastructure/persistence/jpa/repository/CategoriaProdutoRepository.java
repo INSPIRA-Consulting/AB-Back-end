@@ -9,6 +9,6 @@ public interface CategoriaProdutoRepository extends JpaRepository<CategoriaProdu
 
     boolean existsByNome(String nome);
 
-    List<CategoriaProdutoEntity> findByNomeContainingIgnoreCase(String nome);
+    List<CategoriaProdutoEntity> findByNomeStartingWithIgnoreCase(String nome);
 
 }

@@ -9,6 +9,6 @@ public interface IngredienteJpaRepository extends JpaRepository<IngredienteEntit
 
     boolean existsByNome(String nome);
 
-    List<IngredienteEntity> findByNomeContainingIgnoreCase(String nome);
+    List<IngredienteEntity> findByNomeStartingWithIgnoreCase(String nome);
 
 }

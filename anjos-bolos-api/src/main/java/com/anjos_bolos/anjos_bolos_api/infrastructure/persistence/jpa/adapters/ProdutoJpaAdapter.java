@@ -80,7 +80,7 @@ public class ProdutoJpaAdapter implements ProdutoGateway {
                     .formatted(produto.getId()));
         }
 
-        if (!repository.existsByNomeAndIdNot(produto.getNome(), produto.getId())) {
+        if (repository.existsByNomeAndIdNot(produto.getNome(), produto.getId())) {
             throw new EntityAlreadyExistsException("Produto com nome '%s' já existe."
                     .formatted(produto.getNome()));
         }
