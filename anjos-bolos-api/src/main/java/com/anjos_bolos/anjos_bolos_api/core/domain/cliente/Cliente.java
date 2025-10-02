@@ -6,23 +6,23 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Telefone;
 public class Cliente {
 
     private Integer id;
-    private CPF cpf;
     private String nome;
+    private CPF cpf;
     private Telefone telefone;
 
     public Cliente () {
     }
 
-    public Cliente(CPF cpf, String nome, Telefone telefone) {
-        this.cpf = cpf;
+    public Cliente(String nome, CPF cpf, Telefone telefone) {
         this.nome = nome;
+        this.cpf = cpf;
         this.telefone = telefone;
     }
 
-    public Cliente(Integer id, CPF cpf, String nome, Telefone telefone) {
+    public Cliente(Integer id, String nome, CPF cpf, Telefone telefone) {
         this.id = id;
-        this.cpf = cpf;
         this.nome = nome;
+        this.cpf = cpf;
         this.telefone = telefone;
     }
 

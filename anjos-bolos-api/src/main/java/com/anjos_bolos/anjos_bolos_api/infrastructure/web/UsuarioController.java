@@ -1,6 +1,5 @@
 package com.anjos_bolos.anjos_bolos_api.infrastructure.web;
 
-import com.anjos_bolos.anjos_bolos_api.core.application.command.ingrediente.*;
 import com.anjos_bolos.anjos_bolos_api.core.application.command.usuario.*;
 import com.anjos_bolos.anjos_bolos_api.core.application.usecase.usuario.*;
 import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.Usuario;

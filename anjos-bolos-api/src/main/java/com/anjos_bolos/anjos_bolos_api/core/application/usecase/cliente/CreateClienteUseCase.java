@@ -23,7 +23,7 @@ public class CreateClienteUseCase {
 
         validator.validateUniqueness(cpf, telefone);
 
-        Cliente cliente = new Cliente(cpf, command.nome(), telefone);
+        Cliente cliente = new Cliente(command.nome(), cpf, telefone);
 
         return gateway.save(cliente);
     }

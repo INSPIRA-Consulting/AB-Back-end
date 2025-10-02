@@ -4,6 +4,7 @@ import com.anjos_bolos.anjos_bolos_api.core.adapters.ClienteGateway;
 import com.anjos_bolos.anjos_bolos_api.core.application.command.cliente.GetClienteByCpfQuery;
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundException;
 import com.anjos_bolos.anjos_bolos_api.core.domain.cliente.Cliente;
+import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.CPF;
 
 public class GetClienteByCpfUseCase {
 
@@ -14,7 +15,7 @@ public class GetClienteByCpfUseCase {
     }
 
     public Cliente execute(GetClienteByCpfQuery query) {
-        Cliente cliente = gateway.findByCpf(query.cpf());
+        Cliente cliente = gateway.findByCpf(CPF.of(query.cpf()));
 
         if (cliente == null) {
             throw new NotFoundException("Cliente com CPF %s não encontrado.".formatted(query.cpf()));

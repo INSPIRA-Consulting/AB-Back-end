@@ -3,7 +3,6 @@ package com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.repositor
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.CPF;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Email;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Telefone;
-import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.Usuario;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.UsuarioEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 

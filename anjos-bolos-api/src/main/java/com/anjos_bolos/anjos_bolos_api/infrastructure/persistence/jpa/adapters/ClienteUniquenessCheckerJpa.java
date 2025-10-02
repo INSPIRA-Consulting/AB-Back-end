@@ -1,28 +1,22 @@
 package com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.adapters;
 
+import com.anjos_bolos.anjos_bolos_api.core.domain.cliente.valueobject.ClienteUniquenessChecker;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.CPF;
-import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Email;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Telefone;
-import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.valueobject.UsuarioUniquenessChecker;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UsuarioUniquenessCheckerJpa implements UsuarioUniquenessChecker {
+public class ClienteUniquenessCheckerJpa implements ClienteUniquenessChecker {
 
-    private final UsuarioJpaAdapter adapter;
+    private final ClienteJpaAdapter adapter;
 
-    public UsuarioUniquenessCheckerJpa(UsuarioJpaAdapter adapter) {
+    public ClienteUniquenessCheckerJpa(ClienteJpaAdapter adapter) {
         this.adapter = adapter;
     }
 
     @Override
     public boolean existsByCpf(CPF cpf) {
         return adapter.existsByCpf(cpf);
-    }
-
-    @Override
-    public boolean existsByEmail(Email email) {
-        return adapter.existsByEmail(email);
     }
 
     @Override
@@ -33,11 +27,6 @@ public class UsuarioUniquenessCheckerJpa implements UsuarioUniquenessChecker {
     @Override
     public boolean existsByCpfAndIdNot(CPF cpf, Integer id) {
         return adapter.existsByCpfAndIdNot(cpf, id);
-    }
-
-    @Override
-    public boolean existsByEmailAndIdNot(Email email, Integer id) {
-        return adapter.existsByEmailAndIdNot(email, id);
     }
 
     @Override

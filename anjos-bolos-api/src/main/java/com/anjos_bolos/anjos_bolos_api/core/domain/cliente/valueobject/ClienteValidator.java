@@ -22,10 +22,10 @@ public class ClienteValidator {
     }
 
     public void validateUniqueness(Integer id, CPF cpf, Telefone telefone) {
-        if (checker.existsByCpfExceptId(cpf, id)) {
+        if (checker.existsByCpfAndIdNot(cpf, id)) {
             throw new EntityAlreadyExistsException("Outro Cliente já está cadastrado com o CPF %s.".formatted(cpf));
         }
-        if (checker.existsByTelefoneExcept(telefone, id)) {
+        if (checker.existsByTelefoneAndIdNot(telefone, id)) {
             throw new EntityAlreadyExistsException("Outro Cliente já está cadastrado com o Telefone %s.".formatted(telefone));
         }
     }

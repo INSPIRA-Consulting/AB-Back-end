@@ -40,6 +40,13 @@ CREATE TABLE Tipo_Receita (
     descricao VARCHAR(60) NOT NULL
 );
 
+CREATE TABLE Cliente (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(60) NOT NULL,
+    cpf VARCHAR(14) NOT NULL UNIQUE,
+    telefone VARCHAR(15) NOT NULL UNIQUE
+);
+
 SELECT * FROM Ingrediente;
 SELECT * FROM Usuario;
 SELECT * FROM Categoria_Produto;

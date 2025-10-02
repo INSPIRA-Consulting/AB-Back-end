@@ -1,19 +1,14 @@
 package com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.adapters;
 
-import com.anjos_bolos.anjos_bolos_api.core.adapters.IngredienteGateway;
 import com.anjos_bolos.anjos_bolos_api.core.adapters.UsuarioGateway;
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundException;
-import com.anjos_bolos.anjos_bolos_api.core.domain.ingrediente.Ingrediente;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.CPF;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Email;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Telefone;
 import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.Usuario;
 import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.valueobject.FuncaoUsuarioEnum;
-import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.IngredienteEntity;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.UsuarioEntity;
-import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.mapper.IngredienteEntityMapper;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.mapper.UsuarioEntityMapper;
-import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.repository.IngredienteJpaRepository;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.repository.UsuarioJpaRepository;
 import org.springframework.stereotype.Service;
 

@@ -9,8 +9,8 @@ public interface ClienteUniquenessChecker {
 
     boolean existsByTelefone(Telefone telefone);
 
-    boolean existsByCpfExceptId(CPF cpf, Integer id);
+    boolean existsByCpfAndIdNot(CPF cpf, Integer id);
 
-    boolean existsByTelefoneExcept(Telefone telefone, Integer id);
+    boolean existsByTelefoneAndIdNot(Telefone telefone, Integer id);
 
 }
