@@ -34,7 +34,9 @@ public class UpdateComposicaoProdutoUseCase {
         }
 
         Produto produto = produtoGateway.findById(command.produtoId());
-        Receita receita = receitaGateway.findById(command.receitaId());
+        Receita receita = receitaGateway.findById(command.receitaId())
+                .orElseThrow(() -> new NotFoundException("Receita com ID [%d] não encontrada"
+                        .formatted(command.receitaId())));
 
         ComposicaoProduto composicaoProduto = gateway.findById(command.id());
         composicaoProduto.setProduto(produto);
