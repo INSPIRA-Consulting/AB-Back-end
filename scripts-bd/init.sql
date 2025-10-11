@@ -47,8 +47,26 @@ CREATE TABLE Cliente (
     telefone VARCHAR(15) NOT NULL UNIQUE
 );
 
+CREATE TABLE Receita (
+	id INT,
+    nome VARCHAR(60) NOT NULL,
+    fkIngrediente INT,
+    quantidade FLOAT NOT NULL,
+    unidadeMedida VARCHAR(20) NOT NULL,
+    fkTipoReceita INT,
+    CONSTRAINT fk_receita_ingrediente FOREIGN KEY (fkIngrediente) REFERENCES Ingrediente(id),
+    CONSTRAINT fk_tipo_receita FOREIGN KEY (fkTipoReceita) REFERENCES Tipo_Receita(id),
+    CONSTRAINT pk_receita PRIMARY KEY(id, fkIngrediente)
+);
+
+DROP TABLE Receita;
+
 SELECT * FROM Ingrediente;
 SELECT * FROM Usuario;
+SELECT * FROM Cliente;
 SELECT * FROM Categoria_Produto;
 SELECT * FROM Produto;
 SELECT * FROM Tipo_Receita;
+SELECT * FROM Receita;
+
+TRUNCATE Receita;

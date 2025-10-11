@@ -5,6 +5,7 @@ import com.anjos_bolos.anjos_bolos_api.core.adapters.ProdutoGateway;
 import com.anjos_bolos.anjos_bolos_api.core.adapters.ReceitaGateway;
 import com.anjos_bolos.anjos_bolos_api.core.application.command.composicao_produto.CreateComposicaoProdutoCommand;
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.EntityAlreadyExistsException;
+import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundException;
 import com.anjos_bolos.anjos_bolos_api.core.domain.composicao_produto.ComposicaoProduto;
 import com.anjos_bolos.anjos_bolos_api.core.domain.produto.Produto;
 import com.anjos_bolos.anjos_bolos_api.core.domain.receita.Receita;
@@ -30,7 +31,9 @@ public class CreateComposicaoProdutoUseCase {
         }
 
         Produto produto = produtoGateway.findById(command.produtoId());
-        Receita receita = receitaGateway.findById(command.receitaId());
+        Receita receita = receitaGateway.findById(command.receitaId())
+                .orElseThrow(() -> new NotFoundException("Receita com ID [%d] não encontrada"
+                        .formatted(command.receitaId())));
 
         ComposicaoProduto composicaoProduto = new ComposicaoProduto(produto, receita,
                 command.quantidade(), command.observacao());

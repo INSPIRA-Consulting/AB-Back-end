@@ -1,8 +1,10 @@
 package com.anjos_bolos.anjos_bolos_api.core.adapters;
 
 import com.anjos_bolos.anjos_bolos_api.core.domain.receita.Receita;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface ReceitaGateway {
 
@@ -12,15 +14,21 @@ public interface ReceitaGateway {
 
     boolean existsByNome(String nome);
 
-        boolean existsByIngredientesIds(List<Integer> ingredienteIds);
+    boolean existsByNomeAndIdNot(String nome, Integer id);
+
+    boolean existsByIngredientesIds(List<Integer> ingredienteIds);
+
+    boolean existsByIngredientesIdsAndIdNot(List<Integer> ingredienteIds, Integer id);
+
+    Integer findNextId();
 
     List<Receita> findAll();
 
-    Receita findById(Integer id);
+    Optional<Receita> findById(Integer id);
 
     List<Receita> findByNome(String nome);
 
-    List<Receita> finByIngredientesIds(List<Integer> ingredienteIds);
+    List<Receita> findByIngredientesIds(List<Integer> ingredienteIds);
 
     List<Receita> findByTipoReceitaId(Integer tipoReceitaId);
 

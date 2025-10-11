@@ -5,6 +5,7 @@ import com.anjos_bolos.anjos_bolos_api.core.adapters.ItemPedidoGateway;
 import com.anjos_bolos.anjos_bolos_api.core.adapters.ReceitaGateway;
 import com.anjos_bolos.anjos_bolos_api.core.application.command.detalhamento_pedido.CreateDetalhamentoPedidoCommand;
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.EntityAlreadyExistsException;
+import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundException;
 import com.anjos_bolos.anjos_bolos_api.core.domain.detalhamento_pedido.DetalhamentoPedido;
 import com.anjos_bolos.anjos_bolos_api.core.domain.item_pedido.ItemPedido;
 import com.anjos_bolos.anjos_bolos_api.core.domain.receita.Receita;
@@ -29,7 +30,9 @@ public class CreateDetalhamentoPedidoUseCase {
         }
 
         ItemPedido itemPedido = itemPedidoGateway.findById(command.itemPedidoId());
-        Receita receita = receitaGateway.findById(command.receitaId());
+        Receita receita = receitaGateway.findById(command.receitaId())
+                .orElseThrow(() -> new NotFoundException("Receita com ID [%d] não encontrada"
+                        .formatted(command.receitaId())));
 
         DetalhamentoPedido detalhamentoPedido = new DetalhamentoPedido(
                 itemPedido,

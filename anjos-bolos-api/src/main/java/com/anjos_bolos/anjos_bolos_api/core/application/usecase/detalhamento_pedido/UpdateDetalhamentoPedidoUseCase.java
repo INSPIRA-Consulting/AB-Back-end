@@ -35,7 +35,9 @@ public class UpdateDetalhamentoPedidoUseCase {
         }
 
         ItemPedido itemPedido = itemPedidoGateway.findById(command.itemPedidoId());
-        Receita receita = receitaGateway.findById(command.receitaId());
+        Receita receita = receitaGateway.findById(command.receitaId())
+                .orElseThrow(() -> new NotFoundException("Receita com ID [%d] não encontrada"
+                        .formatted(command.receitaId())));
 
         DetalhamentoPedido detalhamentoPedido = gateway.findById(command.id());
         detalhamentoPedido.setItemPedido(itemPedido);

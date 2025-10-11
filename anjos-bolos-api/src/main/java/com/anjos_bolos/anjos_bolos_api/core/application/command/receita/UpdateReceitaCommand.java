@@ -1,10 +1,10 @@
 package com.anjos_bolos.anjos_bolos_api.core.application.command.receita;
 
+import java.util.List;
+
 public record UpdateReceitaCommand(
         Integer id,
         String nome,
-        Integer ingredienteId,
-        Double quantidade,
-        String unidadeMedida,
+        List<ItemReceitaCommand> ingredientes,
         Integer tipoReceitaId
 ) {}

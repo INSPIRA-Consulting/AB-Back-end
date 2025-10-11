@@ -4,8 +4,6 @@ import java.util.List;
 
 public record CreateReceitaCommand(
         String nome,
-        List<Integer> ingredienteIds,
-        List<Double> quantidades,
-        List<String> unidadesMedida,
+        List<ItemReceitaCommand> ingredientes,
         Integer tipoReceitaId
 ) {}
