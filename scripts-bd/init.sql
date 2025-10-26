@@ -20,12 +20,14 @@ CREATE TABLE Ingrediente (
     custoMedida DECIMAL(12,10) NOT NULL
 );
 
+-- Tabela Categoria_Produto
 CREATE TABLE Categoria_Produto (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(60) NOT NULL UNIQUE,
     descricao VARCHAR(60) NOT NULL
 );
 
+-- Tabela Produto
 CREATE TABLE Produto (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(60) NOT NULL UNIQUE,
@@ -34,12 +36,14 @@ CREATE TABLE Produto (
     CONSTRAINT fk_categoria_produto FOREIGN KEY (fkCategoriaProduto) REFERENCES Categoria_Produto(id)
 );
 
+-- Tabela Tipo_Receita
 CREATE TABLE Tipo_Receita (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(60) NOT NULL UNIQUE,
     descricao VARCHAR(60) NOT NULL
 );
 
+-- Tabela Cliente
 CREATE TABLE Cliente (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(60) NOT NULL,
@@ -47,6 +51,7 @@ CREATE TABLE Cliente (
     telefone VARCHAR(15) NOT NULL UNIQUE
 );
 
+-- Tabela Receita
 CREATE TABLE Receita (
 	id INT,
     nome VARCHAR(60) NOT NULL,
@@ -59,7 +64,18 @@ CREATE TABLE Receita (
     CONSTRAINT pk_receita PRIMARY KEY(id, fkIngrediente)
 );
 
-DROP TABLE Receita;
+-- Tabela Composicao_Produto
+CREATE TABLE Composicao_Produto (
+	fkProduto INT,
+    fkReceita INT,
+    quantidade FLOAT,
+    fkIngrediente INT,
+    observacao VARCHAR(255),
+    CONSTRAINT fk_composicao_produto FOREIGN KEY (fkProduto) REFERENCES Produto(id),
+    CONSTRAINT fk_composicao_receita FOREIGN KEY (fkReceita) REFERENCES Receita(id),
+    CONSTRAINT fk_composicao_ingrediente FOREIGN KEY (fkIngrediente) REFERENCES Receita(fkIngrediente),
+    CONSTRAINT pk_composicao_produto PRIMARY KEY(fkProduto, fkReceita, fkIngrediente)
+);
 
 SELECT * FROM Ingrediente;
 SELECT * FROM Usuario;
@@ -68,5 +84,4 @@ SELECT * FROM Categoria_Produto;
 SELECT * FROM Produto;
 SELECT * FROM Tipo_Receita;
 SELECT * FROM Receita;
-
-TRUNCATE Receita;
+SELECT * FROM Composicao_Produto;

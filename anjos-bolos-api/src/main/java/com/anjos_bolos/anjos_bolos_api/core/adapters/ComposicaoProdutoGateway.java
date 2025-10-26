@@ -8,19 +8,11 @@ public interface ComposicaoProdutoGateway {
 
     ComposicaoProduto save(ComposicaoProduto composicaoProduto);
 
-    boolean existsById(Integer id);
+    boolean existsByProdutoId(Integer produtoId);
 
     boolean existsByProdutoIdAndReceitaId(Integer produtoId, Integer receitaId);
 
-    boolean existsByProdutoIdAndReceitaIdAndIdNot(Integer produtoId, Integer receitaId, Integer id);
-
-    List<ComposicaoProduto> findAll();
-
-    ComposicaoProduto findById(Integer id);
-
-    ComposicaoProduto findByProdutoId(Integer produtoId);
-
-    ComposicaoProduto findByReceitaId(Integer receitaId);
+    ComposicaoProduto findAllByProdutoId(Integer produtoId);
 
     ComposicaoProduto update(ComposicaoProduto composicaoProduto);
 

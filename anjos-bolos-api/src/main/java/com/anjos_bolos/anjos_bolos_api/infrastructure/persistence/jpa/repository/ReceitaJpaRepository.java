@@ -23,8 +23,8 @@ public interface ReceitaJpaRepository extends JpaRepository<ReceitaEntity, Recei
     @Query("SELECT COALESCE(MAX(r.id), 0) + 1 FROM ReceitaEntity r")
     Integer findNextId();
 
-    @Query("SELECT r FROM ReceitaEntity r WHERE r.id = :receitaId ORDER BY r.fkIngrediente")
-    List<ReceitaEntity> findAllByIdOrderByIngredienteId(@Param("receitaId") Integer receitaId);
+    @Query("SELECT r FROM ReceitaEntity r WHERE r.id = :id ORDER BY r.fkIngrediente")
+    List<ReceitaEntity> findAllByIdOrderByIngredienteId(@Param("id") Integer id);
 
     @Query("SELECT r FROM ReceitaEntity r WHERE r.nome LIKE %:nome% ORDER BY r.id, r.fkIngrediente")
     List<ReceitaEntity> findByNome(@Param("nome") String nome);

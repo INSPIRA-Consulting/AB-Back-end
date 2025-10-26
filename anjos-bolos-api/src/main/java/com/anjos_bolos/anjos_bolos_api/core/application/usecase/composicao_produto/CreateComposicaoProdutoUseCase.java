@@ -4,11 +4,16 @@ import com.anjos_bolos.anjos_bolos_api.core.adapters.ComposicaoProdutoGateway;
 import com.anjos_bolos.anjos_bolos_api.core.adapters.ProdutoGateway;
 import com.anjos_bolos.anjos_bolos_api.core.adapters.ReceitaGateway;
 import com.anjos_bolos.anjos_bolos_api.core.application.command.composicao_produto.CreateComposicaoProdutoCommand;
+import com.anjos_bolos.anjos_bolos_api.core.application.command.composicao_produto.ItemComposicaoCommand;
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.EntityAlreadyExistsException;
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundException;
 import com.anjos_bolos.anjos_bolos_api.core.domain.composicao_produto.ComposicaoProduto;
+import com.anjos_bolos.anjos_bolos_api.core.domain.composicao_produto.valueobject.ItemComposicao;
 import com.anjos_bolos.anjos_bolos_api.core.domain.produto.Produto;
 import com.anjos_bolos.anjos_bolos_api.core.domain.receita.Receita;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class CreateComposicaoProdutoUseCase {
 
@@ -23,20 +28,26 @@ public class CreateComposicaoProdutoUseCase {
     }
 
     public ComposicaoProduto execute(CreateComposicaoProdutoCommand command) {
-        if (gateway.existsByProdutoIdAndReceitaId(command.produtoId(), command.receitaId())) {
-            throw new EntityAlreadyExistsException("""
-                    Já existe uma Composição de Produto
-                    para o Produto com ID [%d] e Receita com ID [%d]
-                    """.formatted(command.produtoId(), command.receitaId()));
+        Produto produto = produtoGateway.findById(command.produtoId());
+        List<ItemComposicao> receitas = new ArrayList<>();
+
+        for (ItemComposicaoCommand itemCommand : command.receitas()) {
+            if (gateway.existsByProdutoIdAndReceitaId(command.produtoId(), itemCommand.receitaId())) {
+                throw new EntityAlreadyExistsException("""
+                Já existe uma Composição de Produto
+                para o Produto com ID [%d] e Receita com ID [%d]
+                """.formatted(command.produtoId(), itemCommand.receitaId()));
+            }
+
+            Receita receita = receitaGateway.findById(itemCommand.receitaId())
+                    .orElseThrow(() -> new NotFoundException("Receita com ID [%d] não encontrada"
+                            .formatted(itemCommand.receitaId())));
+
+            ItemComposicao itemComposicao = new ItemComposicao(receita, itemCommand.quantidade(), itemCommand.observacao());
+            receitas.add(itemComposicao);
         }
 
-        Produto produto = produtoGateway.findById(command.produtoId());
-        Receita receita = receitaGateway.findById(command.receitaId())
-                .orElseThrow(() -> new NotFoundException("Receita com ID [%d] não encontrada"
-                        .formatted(command.receitaId())));
-
-        ComposicaoProduto composicaoProduto = new ComposicaoProduto(produto, receita,
-                command.quantidade(), command.observacao());
+        ComposicaoProduto composicaoProduto = new ComposicaoProduto(produto, receitas);
 
         return gateway.save(composicaoProduto);
     }

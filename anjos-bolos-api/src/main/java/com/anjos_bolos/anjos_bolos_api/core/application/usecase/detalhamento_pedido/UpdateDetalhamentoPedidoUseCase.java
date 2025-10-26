@@ -10,6 +10,8 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.detalhamento_pedido.Detalhame
 import com.anjos_bolos.anjos_bolos_api.core.domain.item_pedido.ItemPedido;
 import com.anjos_bolos.anjos_bolos_api.core.domain.receita.Receita;
 
+import java.util.List;
+
 public class UpdateDetalhamentoPedidoUseCase {
 
     private final DetalhamentoPedidoGateway gateway;

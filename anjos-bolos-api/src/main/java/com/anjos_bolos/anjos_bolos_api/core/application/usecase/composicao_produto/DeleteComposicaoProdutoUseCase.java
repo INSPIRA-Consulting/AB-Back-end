@@ -13,7 +13,7 @@ public class DeleteComposicaoProdutoUseCase {
     }
 
     public void execute(DeleteComposicaoProdutoCommand command) {
-        if (gateway.existsById(command.id())) {
+        if (!gateway.existsByProdutoId(command.id())) {
             throw new NotFoundException("Composição de Produto com ID [%d] não encontrada.".formatted(command.id()));
         }
 

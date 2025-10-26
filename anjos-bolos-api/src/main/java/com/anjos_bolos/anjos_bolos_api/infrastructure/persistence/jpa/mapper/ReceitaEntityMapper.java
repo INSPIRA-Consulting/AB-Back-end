@@ -97,6 +97,12 @@ public class ReceitaEntityMapper {
                 .toList();
     }
 
+    public static ReceitaEntity toEntity(Receita domain) {
+        List<ReceitaEntity> entities = toEntityList(domain);
+
+        return entities.getFirst();
+    }
+
     public static Receita toDomain(List<ReceitaEntity> entities) {
         ReceitaEntity first = entities.getFirst();
 
@@ -115,6 +121,10 @@ public class ReceitaEntityMapper {
                 ingredientes,
                 TipoReceitaEntityMapper.toDomain(first.getTipoReceita())
         );
+    }
+
+    public static Receita toDomain(ReceitaEntity entity) {
+        return toDomain(List.of(entity));
     }
 
 }

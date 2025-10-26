@@ -74,6 +74,7 @@ public class ReceitaJpaAdapter implements ReceitaGateway {
     @Override
     public Optional<Receita> findById(Integer id) {
         List<ReceitaEntity> entities = repository.findAllByIdOrderByIngredienteId(id);
+
         return entities.isEmpty() ?
                 Optional.empty() :
                 Optional.of(ReceitaEntityMapper.toDomain(entities));

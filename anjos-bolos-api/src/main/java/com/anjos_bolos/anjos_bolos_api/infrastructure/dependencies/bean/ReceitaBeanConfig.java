@@ -52,5 +52,4 @@ public class ReceitaBeanConfig {
         return new ListReceitasByTipoReceitaIdUseCase(adapter);
     }
 
-
 }
