@@ -26,6 +26,10 @@ public class ProdutoBeanConfig {
         return new ListProdutosUseCase(adapter);
     }
     @Bean
+    public ListProdutosPagebleUseCase listProdutosPagebleUseCase(ProdutoJpaAdapter adapter) {
+        return new ListProdutosPagebleUseCase(adapter);
+    }
+    @Bean
     public GetProdutoByIdUseCase getProdutoByIdUseCase(ProdutoJpaAdapter adapter) {
         return new GetProdutoByIdUseCase(adapter);
     }

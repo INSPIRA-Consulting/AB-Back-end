@@ -8,6 +8,8 @@ import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.Pro
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.mapper.ProdutoEntityMapper;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.repository.ProdutoRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -48,6 +50,12 @@ public class ProdutoJpaAdapter implements ProdutoGateway {
                 .stream()
                 .map(ProdutoEntityMapper::toDomain)
                 .toList();
+    }
+
+    @Override
+    public Page<Produto> findAll(Pageable pageable) {
+        return repository.findAll(pageable)
+                .map(ProdutoEntityMapper::toDomain);
     }
 
     @Override

@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping("/produtos")
@@ -27,16 +29,18 @@ public class ProdutoController {
     private final UpdateProdutoUseCase updateProdutoUseCase;
     private final DeleteProdutoUseCase deleteProdutoUseCase;
     private final ListProdutosUseCase listProdutosUseCase;
+    private final ListProdutosPagebleUseCase listProdutosPagebleUseCase;
     private final GetProdutoByIdUseCase getProdutoByIdUseCase;
     private final ListProdutosByNomeUseCase listProdutosByNomeUseCase;
     private final ListProdutosByCategoriaProdutoIdUseCase listProdutosByCategoriaProdutoIdUseCase;
     private final S3UploadService s3UploadService;
 
-    public ProdutoController(CreateProdutoUseCase createProdutoUseCase, UpdateProdutoUseCase updateProdutoUseCase, DeleteProdutoUseCase deleteProdutoUseCase, ListProdutosUseCase listProdutosUseCase, GetProdutoByIdUseCase getProdutoByIdUseCase, ListProdutosByNomeUseCase listProdutosByNomeUseCase, ListProdutosByCategoriaProdutoIdUseCase listProdutosByCategoriaProdutoIdUseCase, S3UploadService s3UploadService) {
+    public ProdutoController(CreateProdutoUseCase createProdutoUseCase, UpdateProdutoUseCase updateProdutoUseCase, DeleteProdutoUseCase deleteProdutoUseCase, ListProdutosUseCase listProdutosUseCase, ListProdutosPagebleUseCase listProdutosPagebleUseCase, GetProdutoByIdUseCase getProdutoByIdUseCase, ListProdutosByNomeUseCase listProdutosByNomeUseCase, ListProdutosByCategoriaProdutoIdUseCase listProdutosByCategoriaProdutoIdUseCase, S3UploadService s3UploadService) {
         this.createProdutoUseCase = createProdutoUseCase;
         this.updateProdutoUseCase = updateProdutoUseCase;
         this.deleteProdutoUseCase = deleteProdutoUseCase;
         this.listProdutosUseCase = listProdutosUseCase;
+        this.listProdutosPagebleUseCase = listProdutosPagebleUseCase;
         this.getProdutoByIdUseCase = getProdutoByIdUseCase;
         this.listProdutosByNomeUseCase = listProdutosByNomeUseCase;
         this.listProdutosByCategoriaProdutoIdUseCase = listProdutosByCategoriaProdutoIdUseCase;
@@ -92,17 +96,15 @@ public class ProdutoController {
             @ApiResponse(responseCode = "204", description = "Nenhum Produto encontrado")
     })
     @GetMapping
-    public ResponseEntity<List<ProdutoRespoonseDTO>> listarProdutos() {
-        ListProdutosQuery query = new ListProdutosQuery();
-        List<Produto> produtos = listProdutosUseCase.execute(query);
+    public ResponseEntity<Page<ProdutoRespoonseDTO>> listarProdutos(Pageable paginacao) {
+        ListProdutosPagebleQuery query = new ListProdutosPagebleQuery(paginacao);
+        Page<Produto> produtos = listProdutosPagebleUseCase.execute(query);
 
         if (produtos.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
         return ResponseEntity.status(200).body(produtos
-                .stream()
-                .map(ProdutoEntityMapper::toDTO)
-                .toList());
+                .map(ProdutoEntityMapper::toDTO));
     }
 
     @Operation(summary = "Buscar Produto por ID", description = "Busca um Produto que contenha o ID informado.")
