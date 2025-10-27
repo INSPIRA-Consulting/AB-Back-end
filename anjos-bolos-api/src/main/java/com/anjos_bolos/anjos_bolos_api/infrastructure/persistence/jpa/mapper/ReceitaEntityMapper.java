@@ -31,6 +31,7 @@ public class ReceitaEntityMapper {
                 domain.getId(),
                 domain.getNome(),
                 ingredientes,
+                domain.getCustoProducao(),
                 domain.getTipoReceita().getNome()
         );
     }

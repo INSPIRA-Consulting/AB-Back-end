@@ -7,21 +7,24 @@ public class Produto {
     private Integer id;
     private String nome;
     private Double precoFinal;
+    private Double custoProducao;
     private CategoriaProduto categoriaProduto;
 
     public Produto() {
     }
 
-    public Produto(String nome, Double precoFinal, CategoriaProduto categoriaProduto) {
+    public Produto(String nome, Double precoFinal, Double custoProducao, CategoriaProduto categoriaProduto) {
         this.nome = nome;
         this.precoFinal = precoFinal;
+        this.custoProducao = custoProducao;
         this.categoriaProduto = categoriaProduto;
     }
 
-    public Produto(Integer id, String nome, Double precoFinal, CategoriaProduto categoriaProduto) {
+    public Produto(Integer id, String nome, Double precoFinal, Double custoProducao, CategoriaProduto categoriaProduto) {
         this.id = id;
         this.nome = nome;
         this.precoFinal = precoFinal;
+        this.custoProducao = custoProducao;
         this.categoriaProduto = categoriaProduto;
     }
 
@@ -47,6 +50,18 @@ public class Produto {
 
     public void setPrecoFinal(double precoFinal) {
         this.precoFinal = precoFinal;
+    }
+
+    public void setPrecoFinal(Double precoFinal) {
+        this.precoFinal = precoFinal;
+    }
+
+    public Double getCustoProducao() {
+        return custoProducao;
+    }
+
+    public void setCustoProducao(Double custoProducao) {
+        this.custoProducao = custoProducao;
     }
 
     public CategoriaProduto getCategoriaProduto() {

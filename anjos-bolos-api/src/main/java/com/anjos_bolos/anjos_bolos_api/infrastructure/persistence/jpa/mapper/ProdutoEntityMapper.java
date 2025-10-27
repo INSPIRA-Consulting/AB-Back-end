@@ -15,6 +15,7 @@ public class ProdutoEntityMapper {
                 domain.getId(),
                 domain.getNome(),
                 domain.getPrecoFinal(),
+                domain.getCustoProducao(),
                 domain.getCategoriaProduto().getNome(),
                 toFileName(domain.getNome())
         );
@@ -24,6 +25,7 @@ public class ProdutoEntityMapper {
         return new CreateProdutoCommand(
                 dto.nome(),
                 dto.precoFinal(),
+                dto.custoProducao(),
                 dto.categoriaProdutoId()
         );
     }
@@ -33,6 +35,7 @@ public class ProdutoEntityMapper {
                 id,
                 dto.nome(),
                 dto.precoFinal(),
+                dto.custoProducao(),
                 dto.categoriaProdutoId()
         );
     }
@@ -58,6 +61,7 @@ public class ProdutoEntityMapper {
                 domain.getId(),
                 domain.getNome(),
                 domain.getPrecoFinal(),
+                domain.getCustoProducao(),
                 CategoriaProdutoEntityMapper.toEntity(domain.getCategoriaProduto())
         );
     }
@@ -67,6 +71,7 @@ public class ProdutoEntityMapper {
                 entity.getId(),
                 entity.getNome(),
                 entity.getPrecoFinal(),
+                entity.getCustoProducao(),
                 CategoriaProdutoEntityMapper.toDomain(entity.getCategoriaProduto())
         );
     }

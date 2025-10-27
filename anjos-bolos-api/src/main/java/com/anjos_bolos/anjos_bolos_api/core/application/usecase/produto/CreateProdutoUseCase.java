@@ -28,6 +28,7 @@ public class CreateProdutoUseCase {
         Produto produto = new Produto(
                 command.nome(),
                 command.precoFinal(),
+                command.custoProducao(),
                 categoriaProduto
         );
 

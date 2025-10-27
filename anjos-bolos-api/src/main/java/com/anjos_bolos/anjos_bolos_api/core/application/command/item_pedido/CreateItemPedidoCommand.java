@@ -4,7 +4,5 @@ public record CreateItemPedidoCommand(
         Integer pedidoId,
         Integer produtoId,
         Integer quantidade,
-        Double valorFinal,
-        Double custoProducao,
         Double peso
 ) {}

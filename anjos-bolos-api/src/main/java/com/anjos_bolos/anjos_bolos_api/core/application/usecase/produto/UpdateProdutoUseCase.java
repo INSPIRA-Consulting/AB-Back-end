@@ -34,6 +34,7 @@ public class UpdateProdutoUseCase {
         Produto produto = gateway.findById(command.id());
         produto.setNome(command.nome());
         produto.setPrecoFinal(command.precoFinal());
+        produto.setCustoProducao(command.custoProducao());
         produto.setCategoriaProduto(categoriaProduto);
 
         return gateway.update(produto);

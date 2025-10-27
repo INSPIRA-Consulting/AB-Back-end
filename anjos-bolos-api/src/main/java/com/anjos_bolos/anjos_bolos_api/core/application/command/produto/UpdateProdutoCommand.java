@@ -4,5 +4,6 @@ public record UpdateProdutoCommand(
         Integer id,
         String nome,
         Double precoFinal,
+        Double custoProducao,
         Integer categoriaProdutoId
 ) {}

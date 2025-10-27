@@ -6,5 +6,6 @@ public record ReceitaResponseDTO(
         Integer id,
         String nome,
         List<ItemReceitaResponseDTO> ingredientes,
+        Double custoProducao,
         String tipoReceita
 ) {}

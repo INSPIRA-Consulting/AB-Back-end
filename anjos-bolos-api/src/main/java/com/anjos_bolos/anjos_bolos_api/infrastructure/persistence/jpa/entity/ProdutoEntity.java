@@ -14,6 +14,7 @@ public class ProdutoEntity {
     private String nome;
 
     private Double precoFinal;
+    private Double custoProducao;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "fkCategoriaProduto")
@@ -22,10 +23,11 @@ public class ProdutoEntity {
     public ProdutoEntity() {
     }
 
-    public ProdutoEntity(Integer id, String nome, Double precoFinal, CategoriaProdutoEntity categoriaProduto) {
+    public ProdutoEntity(Integer id, String nome, Double precoFinal, Double custoProducao, CategoriaProdutoEntity categoriaProduto) {
         this.id = id;
         this.nome = nome;
         this.precoFinal = precoFinal;
+        this.custoProducao = custoProducao;
         this.categoriaProduto = categoriaProduto;
     }
 
@@ -51,6 +53,14 @@ public class ProdutoEntity {
 
     public void setPrecoFinal(Double precoFinal) {
         this.precoFinal = precoFinal;
+    }
+
+    public Double getCustoProducao() {
+        return custoProducao;
+    }
+
+    public void setCustoProducao(Double custoProducao) {
+        this.custoProducao = custoProducao;
     }
 
     public CategoriaProdutoEntity getCategoriaProduto() {

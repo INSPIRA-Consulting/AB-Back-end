@@ -6,8 +6,6 @@ import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.item_p
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.item_pedido.ItemPedidoResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.ItemPedidoEntity;
 
-import java.time.LocalDateTime;
-
 public class ItemPedidoEntityMapper {
 
     public static ItemPedidoResponseDTO toDTO(ItemPedido domain) {
@@ -27,8 +25,6 @@ public class ItemPedidoEntityMapper {
                 dto.pedidoId(),
                 dto.produtoId(),
                 dto.quantidade(),
-                dto.valorFinal(),
-                dto.custoProducao(),
                 dto.peso()
         );
     }
@@ -39,8 +35,6 @@ public class ItemPedidoEntityMapper {
                 dto.pedidoId(),
                 dto.produtoId(),
                 dto.quantidade(),
-                dto.valorFinal(),
-                dto.custoProducao(),
                 dto.peso()
         );
     }

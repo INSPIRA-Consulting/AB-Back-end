@@ -4,6 +4,7 @@ public record ProdutoRespoonseDTO(
         Integer id,
         String nome,
         Double precoFinal,
+        Double custoProducao,
         String categoriaProduto,
         String nomeImagem
 ) {}

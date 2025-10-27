@@ -4,7 +4,5 @@ public record ItemPedidoRequestDTO(
         Integer pedidoId,
         Integer produtoId,
         Integer quantidade,
-        Double valorFinal,
-        Double custoProducao,
         Double peso
 ) {}

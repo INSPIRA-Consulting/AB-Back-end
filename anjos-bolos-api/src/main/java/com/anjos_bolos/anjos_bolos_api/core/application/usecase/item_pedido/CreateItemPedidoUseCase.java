@@ -35,8 +35,8 @@ public class CreateItemPedidoUseCase {
                 pedido,
                 produto,
                 command.quantidade(),
-                command.valorFinal(),
-                command.custoProducao(),
+                produto.getPrecoFinal(),
+                produto.getCustoProducao(),
                 command.peso()
         );
 

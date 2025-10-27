@@ -5,7 +5,5 @@ public record UpdateItemPedidoCommand(
         Integer pedidoId,
         Integer produtoId,
         Integer quantidade,
-        Double valorFinal,
-        Double custoProducao,
         Double peso
 ) {}

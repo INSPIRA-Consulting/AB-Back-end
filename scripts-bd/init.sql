@@ -32,6 +32,7 @@ CREATE TABLE Produto (
 	id INT AUTO_INCREMENT PRIMARY KEY,
     nome VARCHAR(60) NOT NULL UNIQUE,
     precoFinal DECIMAL(5,2) NOT NULL,
+    custoProducao DECIMAL(5,2) NOT NULL,
     fkCategoriaProduto INT,
     CONSTRAINT fk_categoria_produto FOREIGN KEY (fkCategoriaProduto) REFERENCES Categoria_Produto(id)
 );
@@ -97,8 +98,8 @@ CREATE TABLE Item_Pedido (
     fkPedido INT NOT NULL,
     fkProduto INT NOT NULL,
     quantidade FLOAT NOT NULL,
-    valorFinal DECIMAL(5,2),
-    custoProducao DECIMAL(5,2),
+    valorFinal DECIMAL(5,2) NOT NULL,
+    custoProducao DECIMAL(5,2) NOT NULL,
     peso FLOAT,
     CONSTRAINT fk_item_pedido FOREIGN KEY (fkPedido) REFERENCES Pedido(id),
     CONSTRAINT fk_item_produto FOREIGN KEY (fkProduto) REFERENCES Produto(id)
@@ -114,3 +115,6 @@ SELECT * FROM Receita;
 SELECT * FROM Composicao_Produto;
 SELECT * FROM Pedido;
 SELECT * FROM Item_Pedido;
+
+
+TRUNCATE Item_Pedido;
