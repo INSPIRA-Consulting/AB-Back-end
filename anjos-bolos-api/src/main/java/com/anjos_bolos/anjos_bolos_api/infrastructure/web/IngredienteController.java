@@ -10,10 +10,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import jakarta.validation.Valid;
+
 import java.util.List;
 
 @RestController
@@ -24,6 +27,7 @@ public class IngredienteController {
     private final UpdateIngredienteUseCase updateIngredienteUseCase;
     private final DeleteIngredienteUseCase deleteIngredienteUseCase;
     private final ListIngredientesUseCase listIngredientesUseCase;
+    private final ListIngredientesPageableUseCase listIngredientesPageableUseCase;
     private final GetIngredienteByIdUseCase getIngredienteByIdUseCase;
     private final ListIngredienteByNomeUseCase listIngredienteByNomeUseCase;
 
@@ -32,12 +36,14 @@ public class IngredienteController {
             UpdateIngredienteUseCase updateIngredienteUseCase,
             DeleteIngredienteUseCase deleteIngredienteUseCase,
             ListIngredientesUseCase listIngredientesUseCase,
+            ListIngredientesPageableUseCase listIngredientesPageableUseCase,
             GetIngredienteByIdUseCase getIngredienteByIdUseCase,
             ListIngredienteByNomeUseCase listIngredienteByNomeUseCase) {
         this.createIngredienteUseCase = createIngredienteUseCase;
         this.updateIngredienteUseCase = updateIngredienteUseCase;
         this.deleteIngredienteUseCase = deleteIngredienteUseCase;
         this.listIngredientesUseCase = listIngredientesUseCase;
+        this.listIngredientesPageableUseCase = listIngredientesPageableUseCase;
         this.getIngredienteByIdUseCase = getIngredienteByIdUseCase;
         this.listIngredienteByNomeUseCase = listIngredienteByNomeUseCase;
     }
@@ -61,17 +67,15 @@ public class IngredienteController {
             @ApiResponse(responseCode = "204", description = "Nenhum ingrediente encontrado")
     })
     @GetMapping
-    public ResponseEntity<List<IngredienteResponseDTO>> listarIngredientes() {
-        ListIngredientesQuery query = new ListIngredientesQuery();
-        List<Ingrediente> ingredientes = listIngredientesUseCase.execute(query);
+    public ResponseEntity<Page<IngredienteResponseDTO>> listarIngredientes(Pageable paginacao) {
+        ListIngredientesPageableQuery query = new ListIngredientesPageableQuery(paginacao);
+        Page<Ingrediente> ingredientes = listIngredientesPageableUseCase.execute(query);
 
         if (ingredientes.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
         return ResponseEntity.status(200).body(ingredientes
-                .stream()
-                .map(IngredienteEntityMapper::toDTO)
-                .toList());
+                .map(IngredienteEntityMapper::toDTO));
     }
 
     @Operation(summary = "Buscar ingredientes por ID", description = "Busca um ingrediente que contenha o ID informado.")
