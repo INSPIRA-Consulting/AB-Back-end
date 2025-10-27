@@ -17,7 +17,7 @@ public interface PedidoGateway {
 
     List<Pedido> findByClienteId(Integer clienteId);
 
-    List<Pedido> findByClienteNome(String clienteNome);
+    List<Pedido> findByClienteCpf(String clienteCpf);
 
     List<Pedido> findByStatus(String status);
 
@@ -26,6 +26,8 @@ public interface PedidoGateway {
     List<Pedido> findByDataRetirada(LocalDateTime dataRetirada);
 
     List<Pedido> findByDataPagamento(LocalDateTime dataPagamento);
+
+    List<Pedido> findByFormaPagamento(String formaPagamento);
 
     Pedido update(Pedido pedido);
 

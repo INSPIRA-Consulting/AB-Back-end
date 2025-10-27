@@ -5,7 +5,7 @@ public enum FormaPagamentoEnum {
     DINHEIRO("Dinheiro"),
     CARTAO_CREDITO("Cartão de Crédito"),
     CARTAO_DEBITO("Cartão de Débito"),
-    VALE("Vale Alimentação/Refeição"),
+    VOUCHER("Vale Alimentação/Refeição"),
     PIX("PIX");
 
     private final String formaPagamento;

@@ -77,6 +77,21 @@ CREATE TABLE Composicao_Produto (
     CONSTRAINT pk_composicao_produto PRIMARY KEY(fkProduto, fkReceita, fkIngrediente)
 );
 
+-- Tabela Pedido
+CREATE TABLE Pedido (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    dataPedido DATETIME,
+    dataRetirada DATETIME,
+    dataPagamento DATETIME,
+    formaPagamento VARCHAR(255),
+    status VARCHAR(255),
+    observacao VARCHAR(255),
+    fkUsuarioResponsavel INT,
+    fkCliente INT,
+    CONSTRAINT fk_pedido_usuario FOREIGN KEY (fkUsuarioResponsavel) REFERENCES Usuario(id),
+    CONSTRAINT fk_pedido_cliente FOREIGN KEY (fkCliente) REFERENCES Cliente(id)
+);
+
 SELECT * FROM Ingrediente;
 SELECT * FROM Usuario;
 SELECT * FROM Cliente;
@@ -85,3 +100,4 @@ SELECT * FROM Produto;
 SELECT * FROM Tipo_Receita;
 SELECT * FROM Receita;
 SELECT * FROM Composicao_Produto;
+SELECT * FROM Pedido;

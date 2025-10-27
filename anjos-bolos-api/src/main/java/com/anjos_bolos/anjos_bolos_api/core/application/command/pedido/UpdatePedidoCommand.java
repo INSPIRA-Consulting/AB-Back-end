@@ -5,8 +5,9 @@ import java.time.LocalDateTime;
 public record UpdatePedidoCommand(
         Integer id,
         LocalDateTime dataPedido,
-        LocalDateTime dataEntrega,
+        LocalDateTime dataRetirada,
         LocalDateTime dataPagamento,
+        String formaPagamento,
         String status,
         String observacao,
         Integer usuarioId,

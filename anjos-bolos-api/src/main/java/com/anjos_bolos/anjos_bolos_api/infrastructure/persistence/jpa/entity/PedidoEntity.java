@@ -1,39 +1,36 @@
-package com.anjos_bolos.anjos_bolos_api.core.domain.pedido;
+package com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity;
 
-import com.anjos_bolos.anjos_bolos_api.core.domain.cliente.Cliente;
-import com.anjos_bolos.anjos_bolos_api.core.domain.pedido.valueobject.FormaPagamentoEnum;
-import com.anjos_bolos.anjos_bolos_api.core.domain.pedido.valueobject.StatusPedidoEnum;
-import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.Usuario;
+import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 
-public class Pedido {
+@Entity
+@Table(name = "Pedido")
+public class PedidoEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private LocalDateTime dataPedido;
     private LocalDateTime dataRetirada;
     private LocalDateTime dataPagamento;
-    private FormaPagamentoEnum formaPagamento;
-    private StatusPedidoEnum status;
+    private String formaPagamento;
+    private String status;
     private String observacao;
-    private Usuario usuario;
-    private Cliente cliente;
 
-    public Pedido() {
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fkUsuarioResponsavel")
+    private UsuarioEntity usuario;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fkCliente")
+    private ClienteEntity cliente;
+
+    public PedidoEntity() {
     }
 
-    public Pedido(LocalDateTime dataPedido, LocalDateTime dataRetirada, LocalDateTime dataPagamento, FormaPagamentoEnum formaPagamento, StatusPedidoEnum status, String observacao, Usuario usuario, Cliente cliente) {
-        this.dataPedido = dataPedido;
-        this.dataRetirada = dataRetirada;
-        this.dataPagamento = dataPagamento;
-        this.formaPagamento = formaPagamento;
-        this.status = status;
-        this.observacao = observacao;
-        this.usuario = usuario;
-        this.cliente = cliente;
-    }
-
-    public Pedido(Integer id, LocalDateTime dataPedido, LocalDateTime dataRetirada, LocalDateTime dataPagamento, FormaPagamentoEnum formaPagamento, StatusPedidoEnum status, String observacao, Usuario usuario, Cliente cliente) {
+    public PedidoEntity(Integer id, LocalDateTime dataPedido, LocalDateTime dataRetirada, LocalDateTime dataPagamento, String formaPagamento, String status, String observacao, UsuarioEntity usuario, ClienteEntity cliente) {
         this.id = id;
         this.dataPedido = dataPedido;
         this.dataRetirada = dataRetirada;
@@ -77,19 +74,19 @@ public class Pedido {
         this.dataPagamento = dataPagamento;
     }
 
-    public FormaPagamentoEnum getFormaPagamento() {
+    public String getFormaPagamento() {
         return formaPagamento;
     }
 
-    public void setFormaPagamento(FormaPagamentoEnum formaPagamento) {
+    public void setFormaPagamento(String formaPagamento) {
         this.formaPagamento = formaPagamento;
     }
 
-    public StatusPedidoEnum getStatus() {
+    public String getStatus() {
         return status;
     }
 
-    public void setStatus(StatusPedidoEnum status) {
+    public void setStatus(String status) {
         this.status = status;
     }
 
@@ -101,20 +98,19 @@ public class Pedido {
         this.observacao = observacao;
     }
 
-    public Usuario getUsuario() {
+    public UsuarioEntity getUsuario() {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    public void setUsuario(UsuarioEntity usuario) {
         this.usuario = usuario;
     }
 
-    public Cliente getCliente() {
+    public ClienteEntity getCliente() {
         return cliente;
     }
 
-    public void setCliente(Cliente cliente) {
+    public void setCliente(ClienteEntity cliente) {
         this.cliente = cliente;
     }
-
 }

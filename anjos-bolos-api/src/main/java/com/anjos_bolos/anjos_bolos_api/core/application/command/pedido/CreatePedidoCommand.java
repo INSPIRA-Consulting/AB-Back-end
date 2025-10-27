@@ -4,8 +4,9 @@ import java.time.LocalDateTime;
 
 public record CreatePedidoCommand(
         LocalDateTime dataPedido,
-        LocalDateTime dataEntrega,
+        LocalDateTime dataRetirada,
         LocalDateTime dataPagamento,
+        String formaPagamento,
         String status,
         String observacao,
         Integer usuarioId,
