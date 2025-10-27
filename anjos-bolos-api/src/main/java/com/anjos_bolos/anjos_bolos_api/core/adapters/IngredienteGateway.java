@@ -1,6 +1,9 @@
 package com.anjos_bolos.anjos_bolos_api.core.adapters;
 
 import com.anjos_bolos.anjos_bolos_api.core.domain.ingrediente.Ingrediente;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import java.util.List;
 
 public interface IngredienteGateway {
@@ -11,7 +14,9 @@ public interface IngredienteGateway {
 
     boolean existsByNome(String nome);
 
-    List<Ingrediente>findAll();
+    Page<Ingrediente> findAll();
+
+    Page<Ingrediente> findAll(Pageable pageable);
 
     Ingrediente findById(Integer id);
 

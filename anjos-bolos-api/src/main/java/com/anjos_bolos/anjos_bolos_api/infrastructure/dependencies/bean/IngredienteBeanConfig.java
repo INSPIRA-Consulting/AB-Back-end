@@ -29,6 +29,11 @@ public class IngredienteBeanConfig {
     }
 
     @Bean
+    public ListIngredientesPageableUseCase listIngredientesPageableUseCase(IngredienteJpaAdapter adapter) {
+        return new ListIngredientesPageableUseCase(adapter);
+    }
+
+    @Bean
     public GetIngredienteByIdUseCase getIngredienteByIdUseCase(IngredienteJpaAdapter adapter) {
         return new GetIngredienteByIdUseCase(adapter);
     }

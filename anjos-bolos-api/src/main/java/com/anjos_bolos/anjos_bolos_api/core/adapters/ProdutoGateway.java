@@ -1,6 +1,9 @@
 package com.anjos_bolos.anjos_bolos_api.core.adapters;
 
+import com.anjos_bolos.anjos_bolos_api.core.domain.ingrediente.Ingrediente;
 import com.anjos_bolos.anjos_bolos_api.core.domain.produto.Produto;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -15,6 +18,8 @@ public interface ProdutoGateway {
     boolean existsByNomeAndIdNot(String nome, Integer id);
 
     List<Produto> findAll();
+
+    Page<Produto> findAll(Pageable pageable);
 
     Produto findById(Integer id);
 

@@ -6,6 +6,8 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.ingrediente.Ingrediente;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.IngredienteEntity;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.mapper.IngredienteEntityMapper;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.repository.IngredienteJpaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -37,11 +39,15 @@ public class IngredienteJpaAdapter implements IngredienteGateway {
     }
 
     @Override
-    public List<Ingrediente> findAll() {
-        return repository.findAll()
-                .stream()
-                .map(IngredienteEntityMapper::toDomain)
-                .toList();
+    public Page<Ingrediente> findAll() {
+        return repository.findAll(Pageable.unpaged())
+                .map(IngredienteEntityMapper::toDomain);
+    }
+
+    @Override
+    public Page<Ingrediente> findAll(Pageable pageable) {
+        return repository.findAll(pageable)
+                .map(IngredienteEntityMapper::toDomain);
     }
 
     @Override
