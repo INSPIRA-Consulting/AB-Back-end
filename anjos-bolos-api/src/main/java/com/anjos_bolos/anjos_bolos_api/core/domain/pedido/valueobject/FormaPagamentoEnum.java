@@ -14,4 +14,7 @@ public enum FormaPagamentoEnum {
         this.formaPagamento = formaPagamento;
     }
 
+    public String getFormaPagamento() {
+        return formaPagamento;
+    }
 }

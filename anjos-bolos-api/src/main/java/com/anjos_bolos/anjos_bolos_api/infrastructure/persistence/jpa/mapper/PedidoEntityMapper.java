@@ -18,7 +18,7 @@ public class PedidoEntityMapper {
                 domain.getDataPedido(),
                 domain.getDataRetirada(),
                 domain.getDataPagamento(),
-                domain.getFormaPagamento().toString(),
+                domain.getFormaPagamento().getFormaPagamento(),
                 domain.getStatus().toString(),
                 domain.getObservacao(),
                 domain.getUsuario().getNome(),
