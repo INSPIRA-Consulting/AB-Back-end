@@ -47,6 +47,7 @@ public class ProdutoController {
         this.s3UploadService = s3UploadService;
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @Operation(summary = "Cadastrar novo Produto", description = "Cria e salva um novo Produto no Banco de Dados.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Produto cadastrado com sucesso"),
@@ -60,6 +61,7 @@ public class ProdutoController {
         return ResponseEntity.status(201).body(ProdutoEntityMapper.toDTO(produto));
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @Operation(summary = "Upload de imagem do Produto", description = "Faz upload da imagem de um Produto existente para o S3.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Imagem enviada com sucesso"),
