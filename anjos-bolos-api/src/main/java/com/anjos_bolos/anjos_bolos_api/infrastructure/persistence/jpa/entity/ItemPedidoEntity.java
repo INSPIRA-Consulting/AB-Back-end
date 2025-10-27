@@ -1,31 +1,32 @@
-package com.anjos_bolos.anjos_bolos_api.core.domain.item_pedido;
+package com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity;
 
-import com.anjos_bolos.anjos_bolos_api.core.domain.pedido.Pedido;
-import com.anjos_bolos.anjos_bolos_api.core.domain.produto.Produto;
+import jakarta.persistence.*;
 
-public class ItemPedido {
+@Entity
+@Table(name = "Item_Pedido")
+public class ItemPedidoEntity {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private Pedido pedido;
-    private Produto produto;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fkPedido")
+    private PedidoEntity pedido;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "fkProduto")
+    private ProdutoEntity produto;
+
     private Integer quantidade;
     private Double valorFinal;
     private Double custoProducao;
     private Double peso;
 
-    public ItemPedido() {
+    public ItemPedidoEntity() {
     }
 
-    public ItemPedido(Pedido pedido, Produto produto, Integer quantidade, Double valorFinal, Double custoProducao, Double peso) {
-        this.pedido = pedido;
-        this.produto = produto;
-        this.quantidade = quantidade;
-        this.valorFinal = valorFinal;
-        this.custoProducao = custoProducao;
-        this.peso = peso;
-    }
-
-    public ItemPedido(Integer id, Pedido pedido, Produto produto, Integer quantidade, Double valorFinal, Double custoProducao, Double peso) {
+    public ItemPedidoEntity(Integer id, PedidoEntity pedido, ProdutoEntity produto, Integer quantidade, Double valorFinal, Double custoProducao, Double peso) {
         this.id = id;
         this.pedido = pedido;
         this.produto = produto;
@@ -43,19 +44,19 @@ public class ItemPedido {
         this.id = id;
     }
 
-    public Pedido getPedido() {
+    public PedidoEntity getPedido() {
         return pedido;
     }
 
-    public void setPedido(Pedido pedido) {
+    public void setPedido(PedidoEntity pedido) {
         this.pedido = pedido;
     }
 
-    public Produto getProduto() {
+    public ProdutoEntity getProduto() {
         return produto;
     }
 
-    public void setProduto(Produto produto) {
+    public void setProduto(ProdutoEntity produto) {
         this.produto = produto;
     }
 

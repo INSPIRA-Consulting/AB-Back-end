@@ -42,6 +42,7 @@ public class UpdateItemPedidoUseCase {
         itemPedido.setProduto(produto);
         itemPedido.setQuantidade(command.quantidade());
         itemPedido.setValorFinal(command.valorFinal());
+        itemPedido.setCustoProducao(command.custoProducao());
         itemPedido.setPeso(command.peso());
 
         return gateway.update(itemPedido);
