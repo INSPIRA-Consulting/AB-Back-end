@@ -108,4 +108,3 @@ jobs:
             # Limpando o arquivo .pem temporário
             rm $ARQUIVO_PEM -f
             echo "Arquivo .pem temporário removido"
-" 
