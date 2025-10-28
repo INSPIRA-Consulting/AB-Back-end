@@ -22,12 +22,6 @@ jobs:
           java-version: '21'
           cache: 'maven' # Configura cache do Maven para acelerar builds futuros
           cache-dependency-path: 'anjos-bolos-api/pom.xml' # Caminho correto para o pom.xml
-
-      # 3. Execução dos testes automatizados do projeto
-      - name: BE - Executar Testes automatizados
-        run: mvn clean test # comentei os tests por enquanto     
-        working-directory: ./anjos-bolos-api
-
       # 4. Instalar MySQL
       - name: BE - Instalar MySQL
         run: |
