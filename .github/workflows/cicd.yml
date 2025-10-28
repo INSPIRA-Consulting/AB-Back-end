@@ -65,10 +65,11 @@ jobs:
           # ARGS para rsync: -rltgoDzvO para cópia recursiva, compressão e outros
           ARGS: "-rltgoDzvO --delete" 
           # SOURCE: O que será copiado. Pode ser o diretório de build (ex: ./target)
+          SOURCE: "# SOURCE: O que será copiado. Pode ser o diretório de build (ex: ./target)
           SOURCE: "./anjos-bolos-api/target/*.jar" 
           
 
-      # 9. Fazendo o envio do jar da ec2 pública para a privada
+      # 9. Fazendo o envio do jar da EC2 pública para a privada e executando
       - name: BE - Executar Comando Shell na EC2
         uses: appleboy/ssh-action@v1.0.3 # Action popular para SSH
         with:
@@ -104,5 +105,10 @@ jobs:
             echo "Arquivo jar enviado ao ec2 privado"
 
             # reininciando o servico 'api' via docker compose
-            ssh -i $ARQUIVO_PEM $USUARIO_IP 'sudo docker compose restart api'            
+            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /usr/share/api && sudo docker compose restart api'            
             echo "servico reiniciado via docker compose"
+            
+            # Limpando o arquivo .pem temporário
+            rm $ARQUIVO_PEM -f
+            echo "Arquivo .pem temporário removido"
+" 
