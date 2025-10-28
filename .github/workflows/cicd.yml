@@ -33,9 +33,15 @@ jobs:
       # 5. Executar scripts SQL
       - name: BE - Executar Scripts de Banco de Dados
         run: |
-          sudo mysql < scripts-bd/create_user.sql
-          sudo mysql < scripts-bd/init.sql
-
+          # Definir senha temporária para root
+          sudo mysql -e "ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'tempRootPass123';"
+    
+          # Executar scripts com a senha temporária
+          mysql -u root -ptempRootPass123 < scripts-bd/create_user.sql
+          mysql -u root -ptempRootPass123 < scripts-bd/init.sql
+    
+          # Remover senha do root (opcional, para segurança local)
+          mysql -u root -ptempRootPass123 -e "ALTER USER 'root'@'localhost' IDENTIFIED BY '';"
       # 6. Configurar IP_PUBLICO no application.properties
       - name: BE - Configurar IP Público no application.properties
         run: |
