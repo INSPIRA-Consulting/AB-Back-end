@@ -53,7 +53,18 @@ jobs:
           echo "Renomeado para: target/app_loko.jar"
         working-directory: ./anjos-bolos-api
 
-      # 8. Deploy (Transferência de arquivos e execução de comandos remotos)
+      # 8. Criar diretório backend na EC2 pública
+      - name: BE - Criar diretório de deploy na EC2 pública
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            mkdir -p /home/${{ secrets.REMOTE_USER }}/backend
+            echo "Diretório /home/${{ secrets.REMOTE_USER }}/backend criado"
+
+      # 9. Deploy (Transferência de arquivos e execução de comandos remotos)
       - name: BE - Copiar arquivos e Deploy (Usando SSH com rsync)
         uses: easingthemes/ssh-deploy@main
         with:
@@ -66,7 +77,7 @@ jobs:
           # SOURCE: O que será copiado. Pode ser o diretório de build (ex: ./target)
           SOURCE: "./anjos-bolos-api/target/app_loko.jar"
 
-      # 9. Fazendo o envio do jar da EC2 pública para a privada e executando
+      # 10. Fazendo o envio do jar da EC2 pública para a privada e executando
       - name: BE - Executar Comando Shell na EC2
         uses: appleboy/ssh-action@v1.0.3 # Action popular para SSH
         with:
