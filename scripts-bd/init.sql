@@ -115,6 +115,3 @@ SELECT * FROM Receita;
 SELECT * FROM Composicao_Produto;
 SELECT * FROM Pedido;
 SELECT * FROM Item_Pedido;
-
-
-TRUNCATE Item_Pedido;
