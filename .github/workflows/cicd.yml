@@ -22,6 +22,20 @@ jobs:
         run: mvn clean test # comentei os tests por enquanto     
         working-directory: ./backend
 
+      # 6.1 Instalar MySQL
+      - name: BE - Instalar MySQL
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y mysql-server
+          sudo systemctl start mysql
+          sudo systemctl status mysql
+
+      # 6.2 Executar scripts SQL
+      - name: BE - Executar Scripts de Banco de Dados
+        run: |
+          sudo mysql < scripts-bd/create_user.sql
+          sudo mysql < scripts-bd/init.sql
+        working-directory: ./backend
       # 7. Geração do .jar
       - name: BE - Gerar Artefato .JAR
         run: mvn package -DskipTests=true # -DskipTests=true pq os testes foram executados no passo anterior
