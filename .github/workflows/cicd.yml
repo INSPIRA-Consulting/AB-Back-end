@@ -10,19 +10,25 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1. Checkout do repositório
+      - name: BE - Checkout do Código
+        uses: actions/checkout@v4
+
+      # 2. Configurar JDK
       - name: BE - Configurar JDK
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin' # ou a distribuição que preferir
           java-version: '21'
           cache: 'maven' # Configura cache do Maven para acelerar builds futuros
+          cache-dependency-path: 'anjos-bolos-api/pom.xml' # Caminho correto para o pom.xml
 
-      # 6. Execução dos testes automatizados do projeto
+      # 3. Execução dos testes automatizados do projeto
       - name: BE - Executar Testes automatizados
         run: mvn clean test # comentei os tests por enquanto     
-        working-directory: ./backend
+        working-directory: ./anjos-bolos-api
 
-      # 6.1 Instalar MySQL
+      # 4. Instalar MySQL
       - name: BE - Instalar MySQL
         run: |
           sudo apt-get update
@@ -30,18 +36,30 @@ jobs:
           sudo systemctl start mysql
           sudo systemctl status mysql
 
-      # 6.2 Executar scripts SQL
+      # 5. Executar scripts SQL
       - name: BE - Executar Scripts de Banco de Dados
         run: |
           sudo mysql < scripts-bd/create_user.sql
           sudo mysql < scripts-bd/init.sql
-        working-directory: ./backend
+
+      # 6. Configurar IP_PUBLICO no application.properties
+      - name: BE - Configurar IP Público no application.properties
+        run: |
+          # Substitui qualquer valor em cors.allowed.origins pelo IP do REMOTE_HOST na porta 80
+          sed -i "s|^cors.allowed.origins=.*|cors.allowed.origins=http://${{ secrets.REMOTE_HOST }}:80|g" src/main/resources/application.properties
+          
+          echo "IP_PUBLICO configurado para: http://${{ secrets.REMOTE_HOST }}:80"
+          
+          # Mostra a linha modificada para confirmar
+          grep "cors.allowed.origins" src/main/resources/application.properties
+        working-directory: ./anjos-bolos-api
+
       # 7. Geração do .jar
       - name: BE - Gerar Artefato .JAR
         run: mvn package -DskipTests=true # -DskipTests=true pq os testes foram executados no passo anterior
-        working-directory: ./backend
+        working-directory: ./anjos-bolos-api
 
-      # 7. Dando o mesmo nome sempre ao .jar
+      # 8. Dando o mesmo nome sempre ao .jar
       - name: BE - Renomear JAR para app_loko.jar # ou o nome que preferir parta o jar
         run: |
           # Encontra o primeiro (e único) arquivo .jar gerado na pasta 'target'
@@ -54,9 +72,9 @@ jobs:
           mv $JAR_NAME target/app_loko.jar
           
           echo "Renomeado para: target/app_loko.jar"
-        working-directory: ./backend
+        working-directory: ./anjos-bolos-api
 
-      # 7. Deploy (Transferência de arquivos e execução de comandos remotos)
+      # 8. Deploy (Transferência de arquivos e execução de comandos remotos)
       - name: BE - Copiar arquivos e Deploy (Usando SSH com rsync)
         uses: easingthemes/ssh-deploy@main
         with:
@@ -67,10 +85,10 @@ jobs:
           # ARGS para rsync: -rltgoDzvO para cópia recursiva, compressão e outros
           ARGS: "-rltgoDzvO --delete" 
           # SOURCE: O que será copiado. Pode ser o diretório de build (ex: ./target)
-          SOURCE: "./backend/target/*.jar" 
+          SOURCE: "./anjos-bolos-api/target/*.jar" 
           
 
-      # 8. Fazendo o envio do jar da ec2 pública para a privada
+      # 9. Fazendo o envio do jar da ec2 pública para a privada
       - name: BE - Executar Comando Shell na EC2
         uses: appleboy/ssh-action@v1.0.3 # Action popular para SSH
         with:

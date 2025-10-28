@@ -23,7 +23,6 @@ import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping("/produtos")
-@CrossOrigin(origins = "http://localhost:5173")
 public class ProdutoController {
 
     private final CreateProdutoUseCase createProdutoUseCase;

@@ -21,7 +21,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/ingredientes")
-@CrossOrigin(origins = "http://localhost:5173")
 public class IngredienteController {
 
     private final CreateIngredienteUseCase createIngredienteUseCase;
