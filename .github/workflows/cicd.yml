@@ -8,7 +8,6 @@ on:
 jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
-
     steps:
       # 1. Checkout do repositório
       - name: BE - Checkout do Código
@@ -65,9 +64,7 @@ jobs:
           # ARGS para rsync: -rltgoDzvO para cópia recursiva, compressão e outros
           ARGS: "-rltgoDzvO --delete" 
           # SOURCE: O que será copiado. Pode ser o diretório de build (ex: ./target)
-          SOURCE: "# SOURCE: O que será copiado. Pode ser o diretório de build (ex: ./target)
-          SOURCE: "./anjos-bolos-api/target/*.jar" 
-          
+          SOURCE: "./anjos-bolos-api/target/*.jar"
 
       # 9. Fazendo o envio do jar da EC2 pública para a privada e executando
       - name: BE - Executar Comando Shell na EC2
