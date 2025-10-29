@@ -87,17 +87,31 @@ jobs:
             USUARIO_IP="${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST_PRIVADO }}"
             echo "Transferindo para EC2 privada: $USUARIO_IP"
             
+            # Garantir que o diretório existe na EC2 privada
+            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
+              'sudo mkdir -p /usr/share/api'
+            
+            # Copiar o JAR
             scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM \
               /home/${{ secrets.REMOTE_USER }}/app_loko.jar \
-              $USUARIO_IP:/usr/share/api/app_loko.jar
+              $USUARIO_IP:/tmp/app_loko.jar
+            
+            # Mover para o diretório final com sudo e ajustar permissões
+            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
+              'sudo mv /tmp/app_loko.jar /usr/share/api/app_loko.jar && sudo chmod 644 /usr/share/api/app_loko.jar'
             
             echo "Arquivo transferido com sucesso!"
             
             # Reiniciar aplicação via Docker Compose
+            echo "Reiniciando aplicação..."
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
-              'cd /usr/share/api && sudo docker compose restart api'
+              'cd /usr/share/api && sudo docker compose -f compose.yaml down && sudo docker compose -f compose.yaml up -d'
             
             echo "Aplicação reiniciada com sucesso!"
             
-            # Limpar chave temporária
+            # Limpar arquivos temporários na EC2 pública
+            echo "Limpando arquivos temporários..."
             rm -f $ARQUIVO_PEM
+            rm -f /home/${{ secrets.REMOTE_USER }}/app_loko.jar
+            
+            echo "Limpeza concluída!"
