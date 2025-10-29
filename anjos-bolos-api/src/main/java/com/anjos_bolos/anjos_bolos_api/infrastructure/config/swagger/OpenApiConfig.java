@@ -1,4 +1,5 @@
-package com.anjos_bolos.anjos_bolos_api.swagger;
+package com.anjos_bolos.anjos_bolos_api.infrastructure.config.swagger;
+
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;

@@ -1,4 +1,4 @@
-package com.anjos_bolos.anjos_bolos_api.swagger;
+package com.anjos_bolos.anjos_bolos_api.infrastructure.config.swagger;
 
 import jakarta.servlet.http.HttpServletRequest;
 import org.springdoc.core.properties.SwaggerUiConfigParameters;
@@ -23,9 +23,8 @@ public class SwaggerCustomCssInjector extends SwaggerIndexPageTransformer {
             final SwaggerUiConfigProperties swaggerUiConfig,
             final SwaggerUiOAuthProperties swaggerUiOAuthProperties,
             final SwaggerWelcomeCommon swaggerWelcomeCommon,
-            final SwaggerUiConfigParameters swaggerUiConfigParameters,
             final ObjectMapperProvider objectMapperProvider) {
-        super(swaggerUiConfig, swaggerUiOAuthProperties, swaggerUiConfigParameters, swaggerWelcomeCommon, objectMapperProvider);
+        super(swaggerUiConfig, swaggerUiOAuthProperties, swaggerWelcomeCommon, objectMapperProvider);
     }
 
     @Override
