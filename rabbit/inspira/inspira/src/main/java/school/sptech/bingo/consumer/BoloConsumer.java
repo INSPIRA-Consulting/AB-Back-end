@@ -26,12 +26,7 @@ public class BoloConsumer {
             message.setTo("gustavo.spresilli@sptech.school"); // pra onde vai o email
             message.setSubject("Novo pedido de bolo");
             message.setText(
-                    "Detalhes do pedido:\n\n" +
-                            "Peso: " + bolo.getPeso() + " kg\n" +
-                            "Valor: R$ " + bolo.getValor() + "\n" +
-                            "Recheio: " + bolo.getRecheio() + "\n" +
-                            "Massa: " + bolo.getMassa() + "\n" +
-                            "Cobertura: " + bolo.getCobertura()
+                    "Foi feito um pedido de " + bolo.getQtd()
             );
 
             mailSender.send(message);
