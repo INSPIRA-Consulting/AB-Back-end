@@ -108,15 +108,22 @@ jobs:
             
             echo "Arquivo transferido com sucesso!"
             
-            # Reiniciar aplicação via Docker Compose
-                  echo "Iniciando aplicação..."
-                  ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP << 'ENDSSH'
-                    cd /home/ubuntu
-                    sudo docker-compose -f compose.yaml up -d
-                    echo "Containers iniciados!"
+            # Reiniciar aplicação via Docker Compose (força recriação)
+            echo "Reiniciando aplicação..."
+            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP << 'ENDSSH'
+              cd /home/ubuntu
+              echo "Parando containers..."
+              sudo docker-compose -f compose.yaml down
+              echo "Recriando e iniciando containers com novo JAR..."
+              sudo docker-compose -f compose.yaml up -d --force-recreate
+              echo "Aguardando inicialização..."
+              sleep 5
+              echo "Status dos containers:"
+              sudo docker-compose -f compose.yaml ps
+              echo "Containers recriados e iniciados!"
             ENDSSH
-                  
-                  echo "Aplicação iniciada com sucesso!"
+            
+            echo "Aplicação reiniciada com sucesso!"
             
             # Limpar arquivos temporários na EC2 pública
             echo "Limpando arquivos temporários..."
