@@ -92,6 +92,7 @@ public class ProdutoController {
         }
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @Operation(summary = "Listar todos os Produtos", description = "Retorna uma lista com todos os Produtos cadastrados.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Produtos encontrados"),
@@ -109,6 +110,7 @@ public class ProdutoController {
                 .map(ProdutoEntityMapper::toDTO));
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @Operation(summary = "Buscar Produto por ID", description = "Busca um Produto que contenha o ID informado.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Produto encontrado"),
@@ -126,6 +128,7 @@ public class ProdutoController {
         return ResponseEntity.status(200).body(ProdutoEntityMapper.toDTO(produto));
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @Operation(summary = "Buscar Produtos por nome", description = "Filtra Produtos que contenham parte do nome informado (sem case sensitive).")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Produtos encontrados"),
@@ -146,6 +149,7 @@ public class ProdutoController {
                 .toList());
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @Operation(summary = "Buscar Produtos por Categoria de Produto", description = "Filtra Produtos que contenham a Categoria de Produto informada.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Produtos encontrados"),
@@ -166,6 +170,7 @@ public class ProdutoController {
                 .toList());
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @Operation(summary = "Atualizar Produto", description = "Atualiza um Produto existente com base no ID.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Produto atualizado com sucesso"),
@@ -183,6 +188,7 @@ public class ProdutoController {
         return ResponseEntity.status(200).body(ProdutoEntityMapper.toDTO(produto));
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @Operation(summary = "Excluir Produto", description = "Remove um Produto do sistema com base no ID.")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "204", description = "Produto excluído com sucesso"),
