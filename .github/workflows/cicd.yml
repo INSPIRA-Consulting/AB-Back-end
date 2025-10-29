@@ -29,7 +29,7 @@ jobs:
           
           echo "IP_PUBLICO configurado para: http://${{ secrets.REMOTE_HOST }}:80"
 
-          sed -i "s|^spring.datasource.url=.*|spring.datasource.url=jdbc:mysql://${{ secrets.REMOTE_HOST_PRIVADO }}/anjos_bolos?useSSL=false&allowPublicKeyRetrieval=true|g" src/main/resources/application.properties
+          sed -i "s|^spring.datasource.url=.*|spring.datasource.url=jdbc:mysql://${{ secrets.REMOTE_HOST_PRIVADO }}:3306/anjos_bolos?useSSL=false\&allowPublicKeyRetrieval=true|g" src/main/resources/application.properties
 
           # Mostra a linha modificada para confirmar
           grep "cors.allowed.origins" src/main/resources/application.properties
