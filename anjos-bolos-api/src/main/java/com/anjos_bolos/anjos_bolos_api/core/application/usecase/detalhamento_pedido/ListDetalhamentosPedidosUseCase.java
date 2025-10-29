@@ -7,11 +7,11 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.detalhamento_pedido.Detalhame
 
 import java.util.List;
 
-public class ListDetalhamentosPedidUseCase {
+public class ListDetalhamentosPedidosUseCase {
 
     private final DetalhamentoPedidoGateway gateway;
 
-    public ListDetalhamentosPedidUseCase(DetalhamentoPedidoGateway gateway) {
+    public ListDetalhamentosPedidosUseCase(DetalhamentoPedidoGateway gateway) {
         this.gateway = gateway;
     }
 

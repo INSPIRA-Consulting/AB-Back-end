@@ -105,6 +105,17 @@ CREATE TABLE Item_Pedido (
     CONSTRAINT fk_item_produto FOREIGN KEY (fkProduto) REFERENCES Produto(id)
 );
 
+CREATE TABLE Detalhamento_Pedido (
+	id INT PRIMARY KEY AUTO_INCREMENT,
+    fkItemPedido INT NOT NULL,
+    fkReceita INT NOT NULL,
+    fkIngrediente INT NOT NULL,
+    observacao VARCHAR(255),
+    CONSTRAINT fk_detalhamento_item_pedido FOREIGN KEY (fkItemPedido) REFERENCES Item_Pedido(id),
+    CONSTRAINT fk_detalhamento_receita FOREIGN KEY (fkReceita) REFERENCES Receita(id),
+    CONSTRAINT fk_detalhamento_ingrediente FOREIGN KEY (fkIngrediente) REFERENCES Receita(fkIngrediente)
+);
+
 SELECT * FROM Ingrediente;
 SELECT * FROM Usuario;
 SELECT * FROM Cliente;
