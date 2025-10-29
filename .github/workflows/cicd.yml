@@ -22,17 +22,22 @@ jobs:
           cache: 'maven' # Configura cache do Maven para acelerar builds futuros
           cache-dependency-path: 'anjos-bolos-api/pom.xml' # Caminho correto para o pom.xml
       # 6. Configurar IP_PUBLICO no application.properties
-      - name: BE - Configurar IP Público no application.properties
+      - name: BE - Configurar IP Público e Banco de Dados no application.properties
         run: |
-          # Substitui qualquer valor em cors.allowed.origins pelo IP do REMOTE_HOST na porta 80
+          # Substitui CORS origins pelo IP do REMOTE_HOST na porta 80
           sed -i "s|^cors.allowed.origins=.*|cors.allowed.origins=http://${{ secrets.REMOTE_HOST }}:80|g" src/main/resources/application.properties
           
-          echo "IP_PUBLICO configurado para: http://${{ secrets.REMOTE_HOST }}:80"
-
+          echo "✅ IP_PUBLICO configurado para: http://${{ secrets.REMOTE_HOST }}:80"
+          
+          # Substitui URL do banco de dados para apontar para a EC2 privada
           sed -i "s|^spring.datasource.url=.*|spring.datasource.url=jdbc:mysql://${{ secrets.REMOTE_HOST_PRIVADO }}:3306/anjos_bolos?useSSL=false\&allowPublicKeyRetrieval=true|g" src/main/resources/application.properties
-
-          # Mostra a linha modificada para confirmar
+          
+          echo "✅ Database URL configurado para: jdbc:mysql://${{ secrets.REMOTE_HOST_PRIVADO }}:3306/anjos_bolos"
+          
+          # Mostra as linhas modificadas para confirmar
+          echo "Configurações aplicadas:"
           grep "cors.allowed.origins" src/main/resources/application.properties
+          grep "spring.datasource.url" src/main/resources/application.properties
         working-directory: ./anjos-bolos-api
 
       # 7. Geração do .jar
