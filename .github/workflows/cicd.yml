@@ -78,10 +78,9 @@ jobs:
             echo "Verificando arquivo copiado:"
             ls -lh /home/${{ secrets.REMOTE_USER }}/app_loko.jar
             
-            # Criar chave SSH temporária para acessar EC2 privada
-            ARQUIVO_PEM="/tmp/ec2_private_key.pem"
-            echo "${{ secrets.EC2_SSH_KEY }}" > $ARQUIVO_PEM
-            chmod 400 $ARQUIVO_PEM
+            # Usar chave SSH existente para acessar EC2 privada
+            ARQUIVO_PEM="/home/${{ secrets.REMOTE_USER }}/anjos-bolos-low-cost-key.pem"
+            echo "Usando chave SSH existente: $ARQUIVO_PEM"
             
             # Transferir JAR para EC2 privada
             USUARIO_IP="${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST_PRIVADO }}"
@@ -111,7 +110,6 @@ jobs:
             
             # Limpar arquivos temporários na EC2 pública
             echo "Limpando arquivos temporários..."
-            rm -f $ARQUIVO_PEM
             rm -f /home/${{ secrets.REMOTE_USER }}/app_loko.jar
             
             echo "Limpeza concluída!"
