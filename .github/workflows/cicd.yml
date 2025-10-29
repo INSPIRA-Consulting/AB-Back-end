@@ -102,21 +102,14 @@ jobs:
             echo "Arquivo transferido com sucesso!"
             
             # Reiniciar aplicação via Docker Compose
-            echo "Reiniciando aplicação..."
-            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
-              'cd /home/ubuntu && sudo docker-compose -f compose.yaml down && sudo docker-compose -f compose.yaml up -d --build'
-            
-            echo "Aplicação reiniciada!"
-            
-            # Verificar status dos containers
-            echo "Verificando status dos containers..."
-            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
-              'sudo docker-compose -f /home/ubuntu/compose.yaml ps'
-            
-            # Verificar logs recentes da aplicação
-            echo "Logs recentes da aplicação:"
-            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
-              'sudo docker-compose -f /home/ubuntu/compose.yaml logs --tail=50'
+                  echo "Iniciando aplicação..."
+                  ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP << 'ENDSSH'
+                    cd /home/ubuntu
+                    sudo docker-compose -f compose.yaml up -d
+                    echo "Containers iniciados!"
+            ENDSSH
+                  
+                  echo "Aplicação iniciada com sucesso!"
             
             # Limpar arquivos temporários na EC2 pública
             echo "Limpando arquivos temporários..."
