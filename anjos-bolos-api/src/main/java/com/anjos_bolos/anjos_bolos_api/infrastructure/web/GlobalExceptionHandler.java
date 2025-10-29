@@ -1,9 +1,6 @@
 package com.anjos_bolos.anjos_bolos_api.infrastructure.web;
 
-import com.anjos_bolos.anjos_bolos_api.core.application.exception.DuplicateKeyException;
-import com.anjos_bolos.anjos_bolos_api.core.application.exception.EntityAlreadyExistsException;
-import com.anjos_bolos.anjos_bolos_api.core.application.exception.InvalidArgumentException;
-import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundException;
+import com.anjos_bolos.anjos_bolos_api.core.application.exception.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -29,6 +26,11 @@ public class GlobalExceptionHandler {
     @ExceptionHandler (DuplicateKeyException.class)
     public ResponseEntity<String> handleDuplicateKey(DuplicateKeyException ex) {
         return ResponseEntity.status(409).body(ex.getMessage());
+    }
+
+    @ExceptionHandler (UnauthorizedAcessException.class)
+    public ResponseEntity<String> handleUnauthorizedAcess(UnauthorizedAcessException ex) {
+        return ResponseEntity.status(401).body(ex.getMessage());
     }
 
 }

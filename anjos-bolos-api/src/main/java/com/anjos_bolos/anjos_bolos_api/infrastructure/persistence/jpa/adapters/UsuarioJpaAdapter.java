@@ -66,6 +66,11 @@ public class UsuarioJpaAdapter implements UsuarioGateway {
     }
 
     @Override
+    public boolean existsByEmailAndSenha(Email email, String senha) {
+        return repository.existsByEmailAndSenha(email.toString(), senha);
+    }
+
+    @Override
     public List<Usuario> findAll() {
         return repository.findAll()
                 .stream()
@@ -127,6 +132,13 @@ public class UsuarioJpaAdapter implements UsuarioGateway {
         }
 
         repository.deleteById(id);
+    }
+
+    @Override
+    public Usuario login(Email email, String senha) {
+        UsuarioEntity entity = repository.findByEmailAndSenha(email.toString(), senha);
+
+        return UsuarioEntityMapper.toDomain(entity);
     }
 
 }

@@ -20,6 +20,8 @@ public interface UsuarioJpaRepository extends JpaRepository<UsuarioEntity, Integ
 
     boolean existsByTelefoneAndIdNot(String telefone, Integer id);
 
+    boolean existsByEmailAndSenha(String email, String senha);
+
     Optional<UsuarioEntity> findByCpf(String cpf);
 
     Optional<UsuarioEntity> findByEmail(String email);
@@ -27,5 +29,7 @@ public interface UsuarioJpaRepository extends JpaRepository<UsuarioEntity, Integ
     List<UsuarioEntity> findByNomeStartingWithIgnoreCase(String nome);
 
     List<UsuarioEntity> findByFuncao(String funcao);
+
+    UsuarioEntity findByEmailAndSenha(String email, String senha);
 
 }
