@@ -1,6 +1,5 @@
 package com.anjos_bolos.anjos_bolos_api.infrastructure.config.swagger;
 
-import com.anjos_bolos.anjos_bolos_api.swagger.SwaggerCustomCssInjector;
 import org.springdoc.core.properties.SwaggerUiConfigParameters;
 import org.springdoc.core.properties.SwaggerUiConfigProperties;
 import org.springdoc.core.properties.SwaggerUiOAuthProperties;
@@ -18,14 +17,12 @@ public class SwaggerConfig {
             SwaggerUiConfigProperties swaggerUiConfig,
             SwaggerUiOAuthProperties swaggerUiOAuthProperties,
             ObjectMapperProvider objectMapperProvider,
-            SwaggerWelcomeCommon swaggerWelcomeCommon,
-            SwaggerUiConfigParameters swaggerUiConfigParameters) {
+            SwaggerWelcomeCommon swaggerWelcomeCommon) {
 
         return new SwaggerCustomCssInjector(
                 swaggerUiConfig,
                 swaggerUiOAuthProperties,
                 swaggerWelcomeCommon,
-                swaggerUiConfigParameters,
                 objectMapperProvider
         );
     }
