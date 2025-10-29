@@ -104,7 +104,7 @@ jobs:
             # Reiniciar aplicação via Docker Compose
             echo "Reiniciando aplicação..."
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
-              'cd /usr/share/api && sudo docker compose -f compose.yaml down && sudo docker compose -f compose.yaml up -d'
+              'cd /home/${{ secrets.REMOTE_USER }}/backend && sudo docker compose -f compose.yaml down && sudo docker compose -f compose.yaml up -d'
             
             echo "Aplicação reiniciada com sucesso!"
             
