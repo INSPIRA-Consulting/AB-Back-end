@@ -53,81 +53,63 @@ jobs:
           echo "Renomeado para: target/app_loko.jar"
         working-directory: ./anjos-bolos-api
 
-      # 8. Criar diretório backend na EC2 pública
-      - name: BE - Criar diretório de deploy na EC2 pública
-        uses: appleboy/ssh-action@v1.0.3
+      # 8. Copiar JAR para EC2 pública via SCP
+      - name: BE - Copiar JAR para EC2 pública
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.REMOTE_HOST }}
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
-          script: |
-            mkdir -p /home/${{ secrets.REMOTE_USER }}/backend
-            echo "Diretório /home/${{ secrets.REMOTE_USER }}/backend criado"
+          source: "./anjos-bolos-api/target/app_loko.jar"
+          target: "/home/${{ secrets.REMOTE_USER }}/"
+          strip_components: 3
 
-      # 9. Deploy (Transferência de arquivos e execução de comandos remotos)
-      - name: BE - Copiar arquivos e Deploy (Usando SSH com rsync)
-        uses: easingthemes/ssh-deploy@main
-        with:
-          SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
-          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          TARGET: /home/${{ secrets.REMOTE_USER }}/backend/
-          # ARGS para rsync: -rltgoDzvO para cópia recursiva, compressão e outros
-          ARGS: "-rltgoDzvO --delete" 
-          # SOURCE: O que será copiado. Pode ser o diretório de build (ex: ./target)
-          SOURCE: "./anjos-bolos-api/target/app_loko.jar"
-
-      # 10. Fazendo o envio do jar da EC2 pública para a privada e executando
-      - name: BE - Executar Comando Shell na EC2
-        uses: appleboy/ssh-action@v1.0.3 # Action popular para SSH
+      # 9. Transferir JAR da EC2 pública para privada e executar
+      - name: BE - Transferir para EC2 privada e reiniciar aplicação
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.REMOTE_HOST }} 
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}  
-
-          # O Comando ou Script a ser Executado no EC2
-          # Use o pipe '|' para comandos de múltiplas linhas
           script: |
             set -e
             
-            # Verificar se o arquivo existe
-            echo "Listando arquivos em /home/${{ secrets.REMOTE_USER }}/backend/:"
-            ls -lh /home/${{ secrets.REMOTE_USER }}/backend/
+            # Verificar se o arquivo foi copiado
+            echo "Verificando arquivo copiado:"
+            ls -lh /home/${{ secrets.REMOTE_USER }}/app_loko.jar
             
-            if [ ! -f /home/${{ secrets.REMOTE_USER }}/backend/app_loko.jar ]; then
-              echo "ERRO: Arquivo app_loko.jar não encontrado!"
-              exit 1
-            fi
+            # Usar chave SSH existente para acessar EC2 privada
+            ARQUIVO_PEM="/home/${{ secrets.REMOTE_USER }}/anjos-bolos-low-cost-key.pem"
+            echo "Usando chave SSH existente: $ARQUIVO_PEM"
             
-            echo "Arquivo encontrado: /home/${{ secrets.REMOTE_USER }}/backend/app_loko.jar"
+            # Transferir JAR para EC2 privada
+            USUARIO_IP="${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST_PRIVADO }}"
+            echo "Transferindo para EC2 privada: $USUARIO_IP"
             
-            # criando um .pem temporário, baseado no secret do github
-            ARQUIVO_PEM="/home/${{ secrets.REMOTE_USER }}/chavetmp.pem"
-            echo "Arquivo pem que sera criado: $ARQUIVO_PEM"
-
-            # excluindo o arquivo .pem, caso exista
-            rm -f $ARQUIVO_PEM
-            echo "Arquivo .pem excluído"
+            # Garantir que o diretório existe na EC2 privada
+            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
+              'sudo mkdir -p /usr/share/api'
             
-            echo "${{ secrets.EC2_SSH_KEY }}" > $ARQUIVO_PEM
-            echo "Arquivo pem criado"
-            chmod 400 $ARQUIVO_PEM
-            echo "Permissões ao pem concedidas"
-
-            # usuario e ip de destino:
-            USUARIO_IP=${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST_PRIVADO }}
-            echo "usuario@ip configurado: $USUARIO_IP"
-
-                  
-            # enviando o arquivo .jar via scp para o ec2 privado (essa instância precisa ter o diretório /usr/share/api/)
-            echo "Tentando enviar arquivo /home/${{ secrets.REMOTE_USER }}/backend/app_loko.jar"
-            scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM /home/${{ secrets.REMOTE_USER }}/backend/app_loko.jar $USUARIO_IP:/usr/share/api/app_loko.jar
-            echo "Arquivo jar enviado ao ec2 privado"
-
-            # reininciando o servico 'api' via docker compose
-            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP 'cd /usr/share/api && sudo docker compose restart api'            
-            echo "servico reiniciado via docker compose"
+            # Copiar o JAR
+            scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM \
+              /home/${{ secrets.REMOTE_USER }}/app_loko.jar \
+              $USUARIO_IP:/tmp/app_loko.jar
             
-                        # Limpando o arquivo .pem temporário
-            rm -f $ARQUIVO_PEM
-            echo "Arquivo .pem temporário removido"
+            # Mover para o diretório final com sudo e ajustar permissões
+            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
+              'sudo mv /tmp/app_loko.jar /usr/share/api/app_loko.jar && sudo chmod 644 /usr/share/api/app_loko.jar'
+            
+            echo "Arquivo transferido com sucesso!"
+            
+            # Reiniciar aplicação via Docker Compose
+            echo "Reiniciando aplicação..."
+            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
+              'cd /usr/share/api && sudo docker compose -f compose.yaml down && sudo docker compose -f compose.yaml up -d'
+            
+            echo "Aplicação reiniciada com sucesso!"
+            
+            # Limpar arquivos temporários na EC2 pública
+            echo "Limpando arquivos temporários..."
+            rm -f /home/${{ secrets.REMOTE_USER }}/app_loko.jar
+            
+            echo "Limpeza concluída!"
