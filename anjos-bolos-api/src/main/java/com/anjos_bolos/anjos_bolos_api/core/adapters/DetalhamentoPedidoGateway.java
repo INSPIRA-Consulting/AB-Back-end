@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface DetalhamentoPedidoGateway {
 
-    DetalhamentoPedido save(DetalhamentoPedido usuario);
+    DetalhamentoPedido save(DetalhamentoPedido detalhamentoPedido);
 
     boolean existsById(Integer id);
 
@@ -18,9 +18,9 @@ public interface DetalhamentoPedidoGateway {
 
     DetalhamentoPedido findById(Integer id);
 
-    DetalhamentoPedido findByItemPedidoId(Integer id);
+    List<DetalhamentoPedido> findByItemPedidoId(Integer id);
 
-    DetalhamentoPedido update(DetalhamentoPedido usuario);
+    DetalhamentoPedido update(DetalhamentoPedido detalhamentoPedido);
 
     void delete(Integer id);
 
