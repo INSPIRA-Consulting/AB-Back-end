@@ -26,6 +26,8 @@ public interface UsuarioGateway {
 
     boolean existsByTelefoneAndIdNot(Telefone telefone, Integer id);
 
+    boolean existsByEmailAndSenha(Email email, String senha);
+
     List<Usuario> findAll();
 
     Usuario findById(Integer id);
@@ -41,5 +43,7 @@ public interface UsuarioGateway {
     Usuario update(Usuario usuario);
 
     void delete(Integer id);
+
+    Usuario login(Email email, String senha);
 
 }
