@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>school.sptech</groupId>
-	<artifactId>rabbit</artifactId>
+	<artifactId>anjos-bolos-api-email</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>bingo</name>
+	<name>anjos-bolos-api-email</name>
 	<description>Demo project for Spring Boot</description>
 	<url/>
 	<licenses>

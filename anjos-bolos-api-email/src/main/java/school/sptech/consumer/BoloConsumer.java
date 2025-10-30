@@ -1,11 +1,11 @@
-package school.sptech.bingo.consumer;
+package school.sptech.consumer;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
-import school.sptech.bingo.dto.BoloMensagem;
+
+import school.sptech.dto.BoloMensagem;
 
 @Component
 public class BoloConsumer {

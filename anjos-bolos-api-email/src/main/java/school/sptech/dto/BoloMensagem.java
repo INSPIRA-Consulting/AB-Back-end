@@ -1,4 +1,4 @@
-package school.sptech.bingo.dto;
+package school.sptech.dto;
 
 public class BoloMensagem {
 
