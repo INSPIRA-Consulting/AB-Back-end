@@ -3,6 +3,7 @@ package com.anjos_bolos.anjos_bolos_api.core.application.usecase.usuario;
 import com.anjos_bolos.anjos_bolos_api.core.adapters.PasswordEncoderGateway;
 import com.anjos_bolos.anjos_bolos_api.core.adapters.UsuarioGateway;
 import com.anjos_bolos.anjos_bolos_api.core.application.command.usuario.UpdateUsuarioCommand;
+import com.anjos_bolos.anjos_bolos_api.core.application.exception.InvalidArgumentException;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.CPF;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Email;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Telefone;
@@ -30,6 +31,11 @@ public class UpdateUsuarioUseCase {
         validator.validateUniqueness(command.id(),cpf, email, telefone);
 
         String encodedPassword = passwordEncoder.encode(command.senha());
+
+        if (!FuncaoUsuarioEnum.contains(command.funcao())) {
+            throw new InvalidArgumentException("Função de Usuário inválida. Funções válidas: %s"
+                    .formatted(FuncaoUsuarioEnum.names()));
+        }
 
         Usuario usuario = gateway.findById(command.id());
         usuario.setNome(command.nome());

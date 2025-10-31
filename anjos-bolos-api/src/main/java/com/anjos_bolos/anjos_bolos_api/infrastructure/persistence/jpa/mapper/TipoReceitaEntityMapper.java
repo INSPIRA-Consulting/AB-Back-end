@@ -54,7 +54,7 @@ public class TipoReceitaEntityMapper {
     public static TipoReceita toDomain(TipoReceitaEntity entity) {
         return new TipoReceita(
                 entity.getId(),
-                entity.getNome(),
+                entity.getNome()    ,
                 entity.getDescricao()
         );
     }

@@ -1,5 +1,7 @@
 package com.anjos_bolos.anjos_bolos_api.core.domain.usuario.valueobject;
 
+import java.util.List;
+
 public enum FuncaoUsuarioEnum {
 
     ADMINISTRADOR("Administrador", 3, true, true),
@@ -34,4 +36,20 @@ public enum FuncaoUsuarioEnum {
         return ativo;
     }
 
+    public static boolean contains(String funcao) {
+        for (FuncaoUsuarioEnum f : FuncaoUsuarioEnum.values()) {
+            if (f.getFuncao().equalsIgnoreCase(funcao)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static List<String> names() {
+        return List.of(
+                ADMINISTRADOR.name(),
+                GERENTE.name(),
+                ATENDENTE.name()
+        );
+    }
 }
