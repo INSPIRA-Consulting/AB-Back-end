@@ -12,6 +12,7 @@ import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.mapper.Das
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.List;
 
+@Tag(name = "Dashboard", description = "Operações relacionadas à Dashboard")
 @RestController
 @RequestMapping("/dashboards")
 public class DashboardController {

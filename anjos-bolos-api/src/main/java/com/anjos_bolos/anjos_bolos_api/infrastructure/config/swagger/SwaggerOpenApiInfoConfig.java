@@ -14,11 +14,11 @@ public class SwaggerOpenApiInfoConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("API Anjos Bolos")
-                        .description("Documentação oficial da API da doceria Anjos Bolos 🍰")
+                        .title("Anjos-Bolos API 🍰")
+                        .description("Documentação Oficial da API de Registro de Vendas da Anjos Bolos Confeitaria 🍰")
                         .version("1.0.0")
                         .contact(new Contact()
-                                .name("Equipe Anjos Bolos")
-                                .email("vamos ter algum email???")));
+                                .name("INSPIRA-Consulting")
+                                .email("inspira@sptech.school")));
     }
 }

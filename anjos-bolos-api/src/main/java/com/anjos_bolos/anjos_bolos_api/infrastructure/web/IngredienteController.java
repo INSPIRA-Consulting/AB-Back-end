@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import jakarta.validation.Valid;
 
 import java.util.List;
 
+@Tag(name = "Ingredientes", description = "Operações relacionadas à Entidade de Ingredientes")
 @RestController
 @RequestMapping("/ingredientes")
 public class IngredienteController {

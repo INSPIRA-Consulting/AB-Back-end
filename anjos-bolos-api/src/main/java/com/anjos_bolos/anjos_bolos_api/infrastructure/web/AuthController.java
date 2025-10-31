@@ -8,9 +8,11 @@ import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.mapper.Usu
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@Tag(name = "Autenticação", description = "Autenticação de Usuários na API")
 @RestController
 @RequestMapping("/auth")
 public class AuthController {
