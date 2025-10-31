@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +46,7 @@ public class CategoriaProdutoController {
             @ApiResponse(responseCode = "409", description = "Categoria de Produto já existe")
     })
     @PostMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<CategoriaProdutoResponseDTO> cadastrarCategoriaProduto(@RequestBody @Valid CategoriaProdutoRequestDTO dto) {
         CreateCategoriaProdutoCommand command = CategoriaProdutoEntityMapper.toCommand(dto);
         CategoriaProduto categoriaProduto = createCategoriaProdutoUseCase.execute(command);
@@ -58,6 +60,7 @@ public class CategoriaProdutoController {
             @ApiResponse(responseCode = "204", description = "Nenhuma Categoria de Produto encontrada")
     })
     @GetMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<CategoriaProdutoResponseDTO>> listarCategoriasProduto() {
         ListCategoriasProdutoQuery query = new ListCategoriasProdutoQuery();
         List<CategoriaProduto> categoriasProduto = listCategoriasProdutoUseCase.execute(query);
@@ -78,6 +81,7 @@ public class CategoriaProdutoController {
             @ApiResponse(responseCode = "204", description = "Categoria de Produto não encontrada")
     })
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<CategoriaProdutoResponseDTO> buscarPorIdCategoriaProduto(@PathVariable Integer id) {
         GetCategoriaProdutoByIdQuery query = new GetCategoriaProdutoByIdQuery(id);
         CategoriaProduto categoriaProduto = getCategoriaProdutoByIdUseCase.execute(query);
@@ -95,6 +99,7 @@ public class CategoriaProdutoController {
             @ApiResponse(responseCode = "204", description = "Nenhuma Categoria de Produto encontrada")
     })
     @GetMapping("/filtro-nome")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<CategoriaProdutoResponseDTO>> listarPorNomeCategoriaProduto(@RequestParam String nome) {
         ListCategoriasProdutoByNomeQuery query = new ListCategoriasProdutoByNomeQuery(nome);
         List<CategoriaProduto> categoriasProduto = listCategoriasProdutoByNomeUseCase.execute(query);
@@ -116,6 +121,7 @@ public class CategoriaProdutoController {
             @ApiResponse(responseCode = "409", description = "Categoria de Produto com esse nome já existe")
     })
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<CategoriaProdutoResponseDTO> atualizarCategoriaProduto(
             @Parameter(description = "ID da Categoria de Produto a ser atualizada") @PathVariable Integer id,
             @RequestBody @Valid CategoriaProdutoRequestDTO dto
@@ -132,6 +138,7 @@ public class CategoriaProdutoController {
             @ApiResponse(responseCode = "404", description = "Categoria de Produto não encontrado")
     })
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> excluirCategoriaProduto(
             @Parameter(description = "ID da Categoria de Produto a ser excluída") @PathVariable Integer id
     ) {

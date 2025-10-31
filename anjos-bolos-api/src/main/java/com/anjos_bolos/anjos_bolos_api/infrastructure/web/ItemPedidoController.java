@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +45,7 @@ public class ItemPedidoController {
             @ApiResponse(responseCode = "409", description = "Item do Pedido já existe")
     })
     @PostMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<ItemPedidoResponseDTO> cadastrarItemPedido(@RequestBody @Valid ItemPedidoRequestDTO dto) {
         CreateItemPedidoCommand command = ItemPedidoEntityMapper.toCommand(dto);
         ItemPedido itemPedido = createItemPedidoUseCase.execute(command);
@@ -57,6 +59,7 @@ public class ItemPedidoController {
             @ApiResponse(responseCode = "204", description = "Nenhum Item de Pedido encontrado")
     })
     @GetMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<ItemPedidoResponseDTO>> listarItensPedido() {
         ListItensPedidoQuery query = new ListItensPedidoQuery();
         List<ItemPedido> itensPedido = listItensPedidoUseCase.execute(query);
@@ -76,6 +79,7 @@ public class ItemPedidoController {
             @ApiResponse(responseCode = "204", description = "Item de Pedido não encontrado")
     })
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<ItemPedidoResponseDTO> buscarPorIdItemPedido(@PathVariable Integer id) {
         GetItemPedidoByIdQuery query = ItemPedidoEntityMapper.toGetItemPedidoByIdQuery(id);
         ItemPedido itemPedido = getItemPedidoByIdUseCase.execute(query);
@@ -93,6 +97,7 @@ public class ItemPedidoController {
             @ApiResponse(responseCode = "204", description = "Nenhum Item de Pedido encontrado")
     })
     @GetMapping("/filtro-pedido/{pedidoId}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<ItemPedidoResponseDTO>> listarPorIdPedido(@PathVariable Integer pedidoId) {
         ListItensPedidoByPedidoIdQuery query = ItemPedidoEntityMapper.toListItensPedidoByPedidoIdQuery(pedidoId);
         List<ItemPedido> itensPedido = listItensPedidoByPedidoIdUseCase.execute(query);
@@ -114,6 +119,7 @@ public class ItemPedidoController {
             @ApiResponse(responseCode = "409", description = "Item de Pedido já existe")
     })
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<ItemPedidoResponseDTO> atualizarPedido(
             @Parameter(description = "ID do Item de Pedido a ser atualizado") @PathVariable Integer id,
             @RequestBody @Valid ItemPedidoRequestDTO dto
@@ -130,6 +136,7 @@ public class ItemPedidoController {
             @ApiResponse(responseCode = "404", description = "Item de Pedido não encontrado")
     })
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> excluirPedido(
             @Parameter(description = "ID do Pedido a ser excluído") @PathVariable Integer id
     ) {

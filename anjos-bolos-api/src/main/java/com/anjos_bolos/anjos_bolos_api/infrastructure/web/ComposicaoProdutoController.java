@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -40,6 +41,7 @@ public class ComposicaoProdutoController {
             @ApiResponse(responseCode = "409", description = "Composição de Produto já existe")
     })
     @PostMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<ComposicaoProdutoResponseDTO> cadastrarComposicaoProduto(@RequestBody @Valid ComposicaoProdutoRequestDTO dto) {
         CreateComposicaoProdutoCommand command = ComposicaoProdutoEntityMapper.toCommand(dto);
 
@@ -54,6 +56,7 @@ public class ComposicaoProdutoController {
             @ApiResponse(responseCode = "204", description = "Composições de Produto não encontradas")
     })
     @GetMapping("/{produtoId}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<ComposicaoProdutoResponseDTO> buscarPorProdutoId(@PathVariable Integer produtoId) {
         ListComposicoesProdutoByProdutoIdQuery query = ComposicaoProdutoEntityMapper.toListComposicoesProdutoByProdutoIdQuery(produtoId);
         ComposicaoProduto composicaoProduto = listComposicoesProdutoByProdutoIdUseCase.execute(query);
@@ -72,6 +75,7 @@ public class ComposicaoProdutoController {
             @ApiResponse(responseCode = "409", description = "Composição de Produto já existe")
     })
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<ComposicaoProdutoResponseDTO> atualizarComposicaoProduto(
             @Parameter(description = "ID do Produto a ser atualizado") @PathVariable Integer id,
             @RequestBody @Valid ComposicaoProdutoRequestDTO dto
@@ -88,6 +92,7 @@ public class ComposicaoProdutoController {
             @ApiResponse(responseCode = "404", description = "Composição de Produto não encontrada")
     })
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> excluirComposicaoProduto(
             @Parameter(description = "ID do Composição de Produto a ser excluído") @PathVariable Integer id
     ) {

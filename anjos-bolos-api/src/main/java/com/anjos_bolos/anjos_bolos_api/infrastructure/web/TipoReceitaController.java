@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +45,7 @@ public class TipoReceitaController {
             @ApiResponse(responseCode = "409", description = "Tipo de Receita já existe")
     })
     @PostMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<TipoReceitaResponseDTO> cadastrarTipoReceita(@RequestBody @Valid TipoReceitaRequestDTO dto) {
         CreateTipoReceitaCommand command = TipoReceitaEntityMapper.toCommand(dto);
         TipoReceita tipoReceita = createTipoReceitaUseCase.execute(command);
@@ -57,6 +59,7 @@ public class TipoReceitaController {
             @ApiResponse(responseCode = "204", description = "Nenhuma Tipo de Receita encontrado")
     })
     @GetMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<TipoReceitaResponseDTO>> listarTiposReceita() {
         ListTiposReceitaQuery query = new ListTiposReceitaQuery();
         List<TipoReceita> tiposReceita = listTiposReceitaUseCase.execute(query);
@@ -77,6 +80,7 @@ public class TipoReceitaController {
             @ApiResponse(responseCode = "204", description = "Tipo de Receita não encontrado")
     })
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<TipoReceitaResponseDTO> buscarPorIdTipoReceita(@PathVariable Integer id) {
         GetTipoReceitaByIdQuery query = new GetTipoReceitaByIdQuery(id);
         TipoReceita tipoReceita = getTipoReceitaByIdUseCase.execute(query);
@@ -94,6 +98,7 @@ public class TipoReceitaController {
             @ApiResponse(responseCode = "204", description = "Nenhum Tipo de Receita encontrado")
     })
     @GetMapping("/filtro-nome")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<TipoReceitaResponseDTO>> listarPorNomeTipoReceita(@RequestParam String nome) {
         ListTiposReceitaByNomeQuery query = new ListTiposReceitaByNomeQuery(nome);
         List<TipoReceita> tiposReceita = listTiposReceitaByNomeUseCase.execute(query);
@@ -115,6 +120,7 @@ public class TipoReceitaController {
             @ApiResponse(responseCode = "409", description = "Tipo de Receita com esse nome já existe")
     })
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<TipoReceitaResponseDTO> atualizarTipoReceita(
             @Parameter(description = "ID do Tipo de Receita a ser atualizada") @PathVariable Integer id,
             @RequestBody @Valid TipoReceitaRequestDTO dto
@@ -131,6 +137,7 @@ public class TipoReceitaController {
             @ApiResponse(responseCode = "404", description = "Tipo de Receita não encontrado")
     })
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> excluirTipoReceita(
             @Parameter(description = "ID do Tipo de Receita a ser excluída") @PathVariable Integer id
     ) {

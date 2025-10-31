@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -45,6 +46,7 @@ public class DetalhamentoPedidoController {
             @ApiResponse(responseCode = "409", description = "Detalhamento de Pedido já existe")
     })
     @PostMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<DetalhamentoPedidoResponseDTO> cadastrarDetalhamentoPedido(@RequestBody @Valid DetalhamentoPedidoRequestDTO dto) {
         CreateDetalhamentoPedidoCommand command = DetalhamentoPedidoEntityMapper.toCommand(dto);
         DetalhamentoPedido detalhamentoPedido = createDetalhamentoPedidoUseCase.execute(command);
@@ -58,6 +60,7 @@ public class DetalhamentoPedidoController {
             @ApiResponse(responseCode = "204", description = "Nenhum Detalhamento de Pedido encontrado")
     })
     @GetMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<DetalhamentoPedidoResponseDTO>> listarDetalhamentosPedidos() {
         ListDetalhamentosPedidoQuery query = new ListDetalhamentosPedidoQuery();
         List<DetalhamentoPedido> detalhamentosPedidos = listDetalhamentosPedidosUseCase.execute(query);
@@ -77,6 +80,7 @@ public class DetalhamentoPedidoController {
             @ApiResponse(responseCode = "204", description = "Pedido não encontrado")
     })
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<DetalhamentoPedidoResponseDTO> buscarPorIdDetalhamentoPedido(@PathVariable Integer id) {
         GetDetalhamentoPedidoByIdQuery query = DetalhamentoPedidoEntityMapper.toGetDetalhamentoPedidoByIdQuery(id);
         DetalhamentoPedido detalhamentoPedido = getDetalhamentoPedidoByIdUseCase.execute(query);
@@ -94,6 +98,7 @@ public class DetalhamentoPedidoController {
             @ApiResponse(responseCode = "204", description = "Nenhum Pedido encontrado")
     })
     @GetMapping("/filtro-item-pedido/{itemPedidoId}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<DetalhamentoPedidoReceitasResponseDTO> listarPorIdItemPedido(@PathVariable Integer itemPedidoId) {
         ListDetalhamentoPedidoByItemPedidoIdQuery query = DetalhamentoPedidoEntityMapper.toListDetalhamentoPedidoByItemPedidoIdQuery(itemPedidoId);
         List<DetalhamentoPedido> detalhamentosPedido = listDetalhamentoPedidoByItemPedidoIdUseCase.execute(query);
@@ -112,6 +117,7 @@ public class DetalhamentoPedidoController {
             @ApiResponse(responseCode = "409", description = "Detalhamento de Pedido com esse nome já existe")
     })
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<DetalhamentoPedidoResponseDTO> atualizarDetalhamentoPedido(
             @Parameter(description = "ID do Detalhamento de Pedido a ser atualizado") @PathVariable Integer id,
             @RequestBody @Valid DetalhamentoPedidoRequestDTO dto
@@ -128,6 +134,7 @@ public class DetalhamentoPedidoController {
             @ApiResponse(responseCode = "404", description = "Detalhamento de Pedido não encontrado")
     })
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> excluirDetalhamentoPedido(
             @Parameter(description = "ID do Detalhamento de Pedido a ser excluído") @PathVariable Integer id
     ) {

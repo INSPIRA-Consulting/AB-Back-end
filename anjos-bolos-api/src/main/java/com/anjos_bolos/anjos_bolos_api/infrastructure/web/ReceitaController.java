@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -48,6 +49,7 @@ public class ReceitaController {
             @ApiResponse(responseCode = "409", description = "Receita já existe")
     })
     @PostMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<ReceitaResponseDTO> cadastrarReceita(@RequestBody @Valid ReceitaRequestDTO dto) {
         CreateReceitaCommand command = ReceitaEntityMapper.toCommand(dto);
         Receita receita = createReceitaUseCase.execute(command);
@@ -61,6 +63,7 @@ public class ReceitaController {
             @ApiResponse(responseCode = "204", description = "Nenhuma Receita encontrada")
     })
     @GetMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<ReceitaResponseDTO>> listarReceitas() {
         ListReceitasQuery query = new ListReceitasQuery();
         List<Receita> receitas = listReceitasUseCase.execute(query);
@@ -80,6 +83,7 @@ public class ReceitaController {
             @ApiResponse(responseCode = "204", description = "Receita não encontrado")
     })
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<ReceitaResponseDTO> buscarPorIdReceita(@PathVariable Integer id) {
         GetReceitaByIdQuery query = ReceitaEntityMapper.toGetReceitaByIdQuery(id);
         Receita receita = getReceitaByIdUseCase.execute(query);
@@ -97,6 +101,7 @@ public class ReceitaController {
             @ApiResponse(responseCode = "204", description = "Nenhuma Receita encontrada")
     })
     @GetMapping("/filtro-nome")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<ReceitaResponseDTO>> listarPorNomeReceita(@RequestParam String nome) {
         ListReceitasByNomeQuery query = ReceitaEntityMapper.toListReceitasByNomeQuery(nome);
         List<Receita> receitas = listReceitasByNomeUseCase.execute(query);
@@ -117,6 +122,7 @@ public class ReceitaController {
             @ApiResponse(responseCode = "204", description = "Nenhuma Receita encontrada")
     })
     @GetMapping("/filtro-ingredientes")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<ReceitaResponseDTO>> buscarPorIdCategoriaReceita(@RequestBody List<Integer> ingredienteIds) {
         ListReceitasByIngredienteIdsQuery query = ReceitaEntityMapper.toListReceitasByIngredienteIdsQuery(ingredienteIds);
         List<Receita> receitas = listReceitasByIngredienteIdsUseCase.execute(query);
@@ -137,6 +143,7 @@ public class ReceitaController {
             @ApiResponse(responseCode = "204", description = "Nenhuma Receita encontrada")
     })
     @GetMapping("/tipo/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<ReceitaResponseDTO>> listarPorIdTipoReceita(@PathVariable Integer id) {
         ListReceitasByTipoReceitaIdQuery query = ReceitaEntityMapper.toListReceitasByTipoReceitaIdQuery(id);
         List<Receita> receitas = listReceitasByTipoReceitaIdUseCase.execute(query);
@@ -158,6 +165,7 @@ public class ReceitaController {
             @ApiResponse(responseCode = "409", description = "Receita já existe")
     })
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<ReceitaResponseDTO> atualizarReceita(
             @Parameter(description = "ID do Receita a ser atualizado") @PathVariable Integer id,
             @RequestBody @Valid ReceitaRequestDTO dto
@@ -174,6 +182,7 @@ public class ReceitaController {
             @ApiResponse(responseCode = "404", description = "Receita não encontrada")
     })
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> excluirReceita(
             @Parameter(description = "ID do Receita a ser excluído") @PathVariable Integer id
     ) {

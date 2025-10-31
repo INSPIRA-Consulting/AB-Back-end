@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -57,6 +58,7 @@ public class PedidoController {
             @ApiResponse(responseCode = "409", description = "Pedido já existe")
     })
     @PostMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<PedidoResponseDTO> cadastrarPedido(@RequestBody @Valid PedidoRequestDTO dto) {
         CreatePedidoCommand command = PedidoEntityMapper.toCommand(dto);
         Pedido produto = createPedidoUseCase.execute(command);
@@ -70,6 +72,7 @@ public class PedidoController {
             @ApiResponse(responseCode = "204", description = "Nenhum Pedido encontrado")
     })
     @GetMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<PedidoResponseDTO>> listarPedidos() {
         ListPedidosQuery query = new ListPedidosQuery();
         List<Pedido> pedidos = listPedidosUseCase.execute(query);
@@ -89,6 +92,7 @@ public class PedidoController {
             @ApiResponse(responseCode = "204", description = "Pedido não encontrado")
     })
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<PedidoResponseDTO> buscarPorIdPedido(@PathVariable Integer id) {
         GetPedidoByIdQuery query = PedidoEntityMapper.toGetPedidoByIdQuery(id);
         Pedido produto = getPedidoByIdUseCase.execute(query);
@@ -106,6 +110,7 @@ public class PedidoController {
             @ApiResponse(responseCode = "204", description = "Nenhum Pedido encontrado")
     })
     @GetMapping("/filtro-cliente/{clienteId}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<PedidoResponseDTO>> listarPorIdCliente(@PathVariable Integer clienteId) {
         ListPedidosByClienteIdQuery query = PedidoEntityMapper.toListPedidosByClienteIdQuery(clienteId);
         List<Pedido> pedidos = listPedidosByClienteIdUseCase.execute(query);
@@ -126,6 +131,7 @@ public class PedidoController {
             @ApiResponse(responseCode = "204", description = "Nenhum Pedido encontrado")
     })
     @GetMapping("/filtro-cliente")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<PedidoResponseDTO>> listarPorNomePedido(@RequestParam String clienteCpf) {
         ListPedidosByClienteCpfQuery query = PedidoEntityMapper.toListPedidosByClienteCpfQuery(clienteCpf);
         List<Pedido> pedidos = listPedidosByClienteCpfUseCase.execute(query);
@@ -146,6 +152,7 @@ public class PedidoController {
             @ApiResponse(responseCode = "204", description = "Nenhum Pedido encontrado")
     })
     @GetMapping("/filtro-data-pedido")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<PedidoResponseDTO>> buscarPorDataPedido(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime dataPedido) {
         ListPedidosByDataPedidoQuery query = PedidoEntityMapper.toListPedidosByDataPedidoQuery(dataPedido);
         List<Pedido> pedidos = listPedidosByDataPedidoUseCase.execute(query);
@@ -166,6 +173,7 @@ public class PedidoController {
             @ApiResponse(responseCode = "204", description = "Nenhum Pedido encontrado")
     })
     @GetMapping("/filtro-data-retirada")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<PedidoResponseDTO>> buscarPorDataRetirada(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime dataPedido,
                                                                          @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime dataRetirada) {
         ListPedidosByDataRetiradaQuery query = PedidoEntityMapper.toListPedidosByDataRetiradaQuery(dataPedido, dataRetirada);
@@ -187,6 +195,7 @@ public class PedidoController {
             @ApiResponse(responseCode = "204", description = "Nenhum Pedido encontrado")
     })
     @GetMapping("/filtro-data-pagamento")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<PedidoResponseDTO>> buscarPorDataPagamento(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime dataPagamento) {
         ListPedidosByDataPagamentoQuery query = PedidoEntityMapper.toListPedidosByDataPagamentoQuery(dataPagamento);
         List<Pedido> pedidos = listPedidosByDataPagamentoUseCase.execute(query);
@@ -207,6 +216,7 @@ public class PedidoController {
             @ApiResponse(responseCode = "204", description = "Nenhum Pedido encontrado")
     })
     @GetMapping("/filtro-forma-pagamento")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<PedidoResponseDTO>> listarPorFormaPagamento(@RequestParam String formaPagamento) {
         ListPedidosByFormaPagamentoQuery query = PedidoEntityMapper.toListPedidosByFormaPagamentoQuery(formaPagamento);
         List<Pedido> pedidos = listPedidosByFormaPagamentoUseCase.execute(query);
@@ -227,6 +237,7 @@ public class PedidoController {
             @ApiResponse(responseCode = "204", description = "Nenhum Pedido encontrado")
     })
     @GetMapping("/filtro-status")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<PedidoResponseDTO>> listarPorStatus(@RequestParam String status) {
         ListPedidosByStatusQuery query = PedidoEntityMapper.toListPedidosByStatusQuery(status);
         List<Pedido> pedidos = listPedidosByStatusUseCase.execute(query);
@@ -248,6 +259,7 @@ public class PedidoController {
             @ApiResponse(responseCode = "409", description = "Pedido com esse nome já existe")
     })
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<PedidoResponseDTO> atualizarPedido(
             @Parameter(description = "ID do Pedido a ser atualizado") @PathVariable Integer id,
             @RequestBody @Valid PedidoRequestDTO dto
@@ -264,6 +276,7 @@ public class PedidoController {
             @ApiResponse(responseCode = "404", description = "Pedido não encontrado")
     })
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> excluirPedido(
             @Parameter(description = "ID do Pedido a ser excluído") @PathVariable Integer id
     ) {

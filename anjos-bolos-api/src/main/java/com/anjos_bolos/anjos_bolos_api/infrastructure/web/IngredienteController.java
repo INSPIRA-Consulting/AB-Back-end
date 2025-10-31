@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -56,6 +57,7 @@ public class IngredienteController {
             @ApiResponse(responseCode = "409", description = "Ingrediente já existe")
     })
     @PostMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<IngredienteResponseDTO> cadastrarIngrediente(@RequestBody @Valid IngredienteRequestDTO dto) {
         CreateIngredienteCommand command = IngredienteEntityMapper.toCommand(dto);
         Ingrediente ingrediente = createIngredienteUseCase.execute(command);
@@ -69,6 +71,7 @@ public class IngredienteController {
             @ApiResponse(responseCode = "204", description = "Nenhum Ingrediente encontrado")
     })
     @GetMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Page<IngredienteResponseDTO>> listarIngredientes(Pageable paginacao) {
         ListIngredientesPageableQuery query = new ListIngredientesPageableQuery(paginacao);
         Page<Ingrediente> ingredientes = listIngredientesPageableUseCase.execute(query);
@@ -86,6 +89,7 @@ public class IngredienteController {
             @ApiResponse(responseCode = "204", description = "Ingrediente não encontrado")
     })
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<IngredienteResponseDTO> buscarPorIdIngrediente(@PathVariable Integer id) {
         GetIngredienteByIdQuery query = IngredienteEntityMapper.toGetIngredienteByIdQuery(id);
         Ingrediente ingrediente = getIngredienteByIdUseCase.execute(query);
@@ -103,6 +107,7 @@ public class IngredienteController {
             @ApiResponse(responseCode = "204", description = "Nenhum Ingrediente encontrado")
     })
     @GetMapping("/filtro-nome")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<IngredienteResponseDTO>> listarPorNomeIngrediente(@RequestParam String nome) {
         ListIngredientesByNomeQuery query = IngredienteEntityMapper.toListIngredientesByNomeQuery(nome);
         List<Ingrediente> ingredientes = listIngredienteByNomeUseCase.execute(query);
@@ -124,6 +129,7 @@ public class IngredienteController {
             @ApiResponse(responseCode = "409", description = "Ingrediente com esse nome já existe")
     })
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<IngredienteResponseDTO> atualizarIngrediente(
             @Parameter(description = "ID do Ingrediente a ser atualizado") @PathVariable Integer id,
             @RequestBody @Valid IngredienteRequestDTO dto
@@ -140,6 +146,7 @@ public class IngredienteController {
             @ApiResponse(responseCode = "404", description = "Ingrediente não encontrado")
     })
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> excluirIngrediente(
             @Parameter(description = "ID do Ingrediente a ser excluído") @PathVariable Integer id
     ) {

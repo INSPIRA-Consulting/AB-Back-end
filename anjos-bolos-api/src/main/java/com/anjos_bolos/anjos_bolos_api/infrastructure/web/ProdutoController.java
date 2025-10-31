@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -55,6 +56,7 @@ public class ProdutoController {
             @ApiResponse(responseCode = "409", description = "Produto já existe")
     })
     @PostMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<ProdutoRespoonseDTO> cadastrarProduto(@RequestBody @Valid ProdutoRequestDTO dto) {
         CreateProdutoCommand command = ProdutoEntityMapper.toCommand(dto);
         Produto produto = createProdutoUseCase.execute(command);
@@ -68,6 +70,7 @@ public class ProdutoController {
             @ApiResponse(responseCode = "404", description = "Produto não encontrado")
     })
     @PatchMapping("/{id}/imagem")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<String> uploadImagemProduto(@PathVariable Integer id,
                                                                    @RequestParam("imagem") MultipartFile imagem) {
         try {
@@ -98,6 +101,7 @@ public class ProdutoController {
             @ApiResponse(responseCode = "204", description = "Nenhum Produto encontrado")
     })
     @GetMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Page<ProdutoRespoonseDTO>> listarProdutos(Pageable paginacao) {
         ListProdutosPagebleQuery query = new ListProdutosPagebleQuery(paginacao);
         Page<Produto> produtos = listProdutosPagebleUseCase.execute(query);
@@ -115,6 +119,7 @@ public class ProdutoController {
             @ApiResponse(responseCode = "204", description = "Produto não encontrado")
     })
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<ProdutoRespoonseDTO> buscarPorIdProduto(@PathVariable Integer id) {
         GetProdutoByIdQuery query = ProdutoEntityMapper.toGetProdutoByIdQuery(id);
         Produto produto = getProdutoByIdUseCase.execute(query);
@@ -132,6 +137,7 @@ public class ProdutoController {
             @ApiResponse(responseCode = "204", description = "Nenhum Produto encontrado")
     })
     @GetMapping("/filtro-nome")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<ProdutoRespoonseDTO>> listarPorNomeProduto(@RequestParam String nome) {
         ListProdutosByNomeQuery query = ProdutoEntityMapper.toListProdutosByNomeQuery(nome);
         List<Produto> produtos = listProdutosByNomeUseCase.execute(query);
@@ -152,6 +158,7 @@ public class ProdutoController {
             @ApiResponse(responseCode = "204", description = "Nenhum Produto encontrado")
     })
     @GetMapping("/categoria/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<ProdutoRespoonseDTO>> buscarPorIdCategoriaProduto(@PathVariable Integer id) {
         ListProdutosByCategoriaProdutoIdQuery query = ProdutoEntityMapper.toListProdutosByCategoriaProdutoIdQuery(id);
         List<Produto> produtos = listProdutosByCategoriaProdutoIdUseCase.execute(query);
@@ -173,6 +180,7 @@ public class ProdutoController {
             @ApiResponse(responseCode = "409", description = "Produto com esse nome já existe")
     })
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<ProdutoRespoonseDTO> atualizarProduto(
             @Parameter(description = "ID do Produto a ser atualizado") @PathVariable Integer id,
             @RequestBody @Valid ProdutoRequestDTO dto
@@ -189,6 +197,7 @@ public class ProdutoController {
             @ApiResponse(responseCode = "404", description = "Produto não encontrado")
     })
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> excluirProduto(
             @Parameter(description = "ID do Produto a ser excluído") @PathVariable Integer id
     ) {

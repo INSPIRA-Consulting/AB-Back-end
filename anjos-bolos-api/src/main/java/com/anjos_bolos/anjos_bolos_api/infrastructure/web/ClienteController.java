@@ -11,6 +11,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +48,7 @@ public class ClienteController {
             @ApiResponse(responseCode = "409", description = "Cliente já existe")
     })
     @PostMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<ClienteResponseDTO> cadastrarCliente(@RequestBody @Valid ClienteRequestDTO dto) {
         CreateClienteCommand command = ClienteEntityMapper.toCommand(dto);
         Cliente cliente = createClienteUseCase.execute(command);
@@ -60,6 +62,7 @@ public class ClienteController {
             @ApiResponse(responseCode = "204", description = "Nenhum Cliente encontrado")
     })
     @GetMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<ClienteResponseDTO>> listarClientes() {
         ListClientesQuery query = new ListClientesQuery();
         List<Cliente> clientes = listClientesUseCase.execute(query);
@@ -79,6 +82,7 @@ public class ClienteController {
             @ApiResponse(responseCode = "204", description = "Cliente não encontrado")
     })
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<ClienteResponseDTO> buscarClientePorId(@PathVariable Integer id) {
         GetClienteByIdQuery query = ClienteEntityMapper.toGetClienteByIdQuery(id);
         Cliente cliente = getClienteByIdUseCase.execute(query);
@@ -96,6 +100,7 @@ public class ClienteController {
             @ApiResponse(responseCode = "204", description = "Cliente não encontrado")
     })
     @GetMapping("/filtro-cpf")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<ClienteResponseDTO> buscarClientePorCpf(@RequestParam String cpf) {
         GetClienteByCpfQuery query = ClienteEntityMapper.toGetClienteByCpfQuery(cpf);
         Cliente cliente = getClienteByCpfUseCase.execute(query);
@@ -113,6 +118,7 @@ public class ClienteController {
             @ApiResponse(responseCode = "204", description = "Nenhum Cliente encontrado")
     })
     @GetMapping("/filtro-nome")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<ClienteResponseDTO>> listarClientesPorNome(@RequestParam String nome) {
         ListClientesByNomeQuery query = ClienteEntityMapper.toListClientesByNomeQuery(nome);
         List<Cliente> clientes = listClientesByNomeUseCase.execute(query);
@@ -134,6 +140,7 @@ public class ClienteController {
             @ApiResponse(responseCode = "409", description = "Cliente com esse nome já existe")
     })
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<ClienteResponseDTO> atualizarCliente(
             @Parameter(description = "ID do Cliente a ser atualizado") @PathVariable Integer id,
             @RequestBody @Valid ClienteRequestDTO dto
@@ -150,6 +157,7 @@ public class ClienteController {
             @ApiResponse(responseCode = "404", description = "Cliente não encontrado")
     })
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> excluirCliente(
             @Parameter(description = "ID do Cliente a ser excluído") @PathVariable Integer id
     ) {

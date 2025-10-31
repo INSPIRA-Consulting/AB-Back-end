@@ -12,6 +12,7 @@ import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.mapper.Das
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +48,7 @@ public class DashboardController {
             @ApiResponse(responseCode = "404", description = "Nenhum Produto encontrado")
     })
     @GetMapping("/menor-margem-lucro")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<MargemLucroProdutoResponseDTO> buscarProdutoMenorMargemLucro() {
         GetMenorMargemLucroQuery query = DashboardMapper.toGetMenorMargemLucroQuery(1);
         MargemLucroProdutoDTO menorMargemLucro = getMenorMargemLucroUseCase.execute(query);
@@ -60,6 +62,7 @@ public class DashboardController {
             @ApiResponse(responseCode = "404", description = "Nenhum Produto encontrado")
     })
     @GetMapping("/maior-margem-lucro")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<MargemLucroProdutoResponseDTO> buscarProdutoMaiorMargemLucro() {
         GetMaiorMargemLucroQuery query = DashboardMapper.toGetMaiorMargemLucroQuery(1);
         MargemLucroProdutoDTO maiorMargemLucro = getMaiorMargemLucroUseCase.execute(query);
@@ -73,6 +76,7 @@ public class DashboardController {
             @ApiResponse(responseCode = "404", description = "Nenhum Produto encontrado")
     })
     @GetMapping("/produtos-mais-vendidos")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<ProdutoVendidoResponseDTO>> listProdutosMaisVendidos(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate inicio,
                                                                                     @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fim) {
         ListProdutosMaisVendidosQuery query = DashboardMapper.toListProdutosMaisVendidosQuery(inicio, fim, 5);
@@ -87,6 +91,7 @@ public class DashboardController {
             @ApiResponse(responseCode = "404", description = "Nenhum Produto encontrado")
     })
     @GetMapping("/pedidos-faturamento")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<PedidosFaturamentoResponseDTO> buscarFaturamentoPedidos(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate inicio,
                                                                                   @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fim) {
         GetPedidosFaturamentoQuery query = DashboardMapper.toGetPedidosFaturamentoQuery(inicio, fim);
@@ -101,6 +106,7 @@ public class DashboardController {
             @ApiResponse(responseCode = "404", description = "Nenhum Produto encontrado")
     })
     @GetMapping("/produto-mais-vendido")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<String> buscarProdutoMaisVendido(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate inicio,
                                                            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fim) {
         GetProdutoMaisVendidoQuery query = DashboardMapper.toGetProdutoMaisVendidoQuery(inicio, fim, 1);
@@ -115,6 +121,7 @@ public class DashboardController {
             @ApiResponse(responseCode = "404", description = "Nenhum Produto encontrado")
     })
     @GetMapping("/dia-semana-mais-vendas")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<String> buscarDiaSemanaComMaisVendas(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate inicio,
                                                            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fim) {
         GetDiaSemanaComMaisVendasQuery query = DashboardMapper.toGetDiaSemanaComMaisVendasQuery(inicio, fim, 1);
