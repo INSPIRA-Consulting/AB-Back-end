@@ -35,9 +35,12 @@ public class SecurityConfig {
 
     private final AuthEntryPoint authEntryPoint;
 
-    public SecurityConfig(AuthenticationAdapter authenticationAdapter, AuthEntryPoint authEntryPoint) {
+    private final CustomAcessDeniedHandler customAcessDeniedHandler;
+
+    public SecurityConfig(AuthenticationAdapter authenticationAdapter, AuthEntryPoint authEntryPoint, CustomAcessDeniedHandler customAcessDeniedHandler) {
         this.authenticationAdapter = authenticationAdapter;
         this.authEntryPoint = authEntryPoint;
+        this.customAcessDeniedHandler = customAcessDeniedHandler;
     }
 
     private static final AntPathRequestMatcher[] URLS_PERMITIDAS = {
@@ -58,6 +61,27 @@ public class SecurityConfig {
             new AntPathRequestMatcher("/error/**"),
     };
 
+    private static final AntPathRequestMatcher[] URLS_ADMIN = {
+            new AntPathRequestMatcher("/usuarios/**"),
+            new AntPathRequestMatcher("/dashboards/**"),
+    };
+
+    private static final AntPathRequestMatcher[] URLS_GERENTE = {
+            new AntPathRequestMatcher("/ingredientes/**"),
+            new AntPathRequestMatcher("/categorias-produtos/**"),
+            new AntPathRequestMatcher("/composicoes-produto/**"),
+            new AntPathRequestMatcher("/receitas/**"),
+            new AntPathRequestMatcher("/tipos-receitas/**"),
+    };
+
+    private static final AntPathRequestMatcher[] URLS_ATENDENTE = {
+            new AntPathRequestMatcher("/clientes/**"),
+            new AntPathRequestMatcher("/pedidos/**"),
+            new AntPathRequestMatcher("/itens-pedido/**"),
+            new AntPathRequestMatcher("/detalhamentos-pedidos/**"),
+            new AntPathRequestMatcher("/produtos/**"),
+    };
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http)
             throws Exception {
@@ -66,13 +90,19 @@ public class SecurityConfig {
                         .frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .cors(Customizer.withDefaults())
                 .csrf(CsrfConfigurer<HttpSecurity>::disable)
-                .authorizeHttpRequests(authorize -> authorize.requestMatchers(URLS_PERMITIDAS)
-                        .permitAll()
+                .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(URLS_PERMITIDAS).permitAll()
+
+                        .requestMatchers(URLS_ATENDENTE).hasAnyRole("ATENDENTE", "GERENTE", "ADMINISTRADOR")
+                        .requestMatchers(URLS_GERENTE).hasAnyRole("GERENTE", "ADMINISTRADOR")
+                        .requestMatchers(URLS_ADMIN).hasRole("ADMINISTRADOR")
+
                         .anyRequest()
                         .authenticated()
                 )
                 .exceptionHandling(handling -> handling
-                        .authenticationEntryPoint(authEntryPoint))
+                        .authenticationEntryPoint(authEntryPoint)
+                        .accessDeniedHandler(customAcessDeniedHandler))
                 .sessionManagement(management -> management
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 

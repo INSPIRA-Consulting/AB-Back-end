@@ -32,7 +32,7 @@ public class UsuarioEntityMapper {
                 dto.email(),
                 dto.senha(),
                 dto.telefone(),
-                dto.funcao()
+                dto.funcao().toUpperCase()
         );
     }
 
@@ -44,7 +44,7 @@ public class UsuarioEntityMapper {
                 dto.email(),
                 dto.senha(),
                 dto.telefone(),
-                dto.funcao()
+                dto.funcao().toUpperCase()
         );
     }
 
@@ -80,7 +80,7 @@ public class UsuarioEntityMapper {
                 domain.getEmail().toString(),
                 domain.getSenha(),
                 domain.getTelefone().toString(),
-                domain.getFuncao().getFuncao()
+                domain.getFuncao().toString()
         );
     }
 
@@ -92,7 +92,7 @@ public class UsuarioEntityMapper {
                 Email.of(entity.getEmail()),
                 entity.getSenha(),
                 Telefone.of(entity.getTelefone()),
-                FuncaoUsuarioEnum.valueOf(entity.getFuncao().toUpperCase())
+                FuncaoUsuarioEnum.valueOf(entity.getFuncao())
         );
     }
 

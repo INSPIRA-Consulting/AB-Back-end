@@ -11,14 +11,14 @@ public class TipoReceitaEntityMapper {
     public static TipoReceitaResponseDTO toDTO(TipoReceita domain) {
         return new TipoReceitaResponseDTO(
                 domain.getId(),
-                domain.getNome().toUpperCase(),
+                domain.getNome(),
                 domain.getDescricao()
         );
     }
 
     public static CreateTipoReceitaCommand toCommand(TipoReceitaRequestDTO dto) {
         return new CreateTipoReceitaCommand(
-                dto.nome().toUpperCase(),
+                dto.nome(),
                 dto.descricao()
         );
     }
@@ -26,7 +26,7 @@ public class TipoReceitaEntityMapper {
     public static UpdateTipoReceitaCommand toCommand(Integer id, TipoReceitaRequestDTO dto) {
         return new UpdateTipoReceitaCommand(
                 id,
-                dto.nome().toUpperCase(),
+                dto.nome(),
                 dto.descricao()
         );
     }
@@ -46,7 +46,7 @@ public class TipoReceitaEntityMapper {
     public static TipoReceitaEntity toEntity(TipoReceita domain) {
         return new TipoReceitaEntity(
                 domain.getId(),
-                domain.getNome().toUpperCase(),
+                domain.getNome(),
                 domain.getDescricao()
         );
     }
@@ -54,7 +54,7 @@ public class TipoReceitaEntityMapper {
     public static TipoReceita toDomain(TipoReceitaEntity entity) {
         return new TipoReceita(
                 entity.getId(),
-                entity.getNome().toUpperCase(),
+                entity.getNome(),
                 entity.getDescricao()
         );
     }

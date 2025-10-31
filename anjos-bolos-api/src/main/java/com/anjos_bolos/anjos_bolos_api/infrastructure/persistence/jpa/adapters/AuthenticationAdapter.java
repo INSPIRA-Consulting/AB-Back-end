@@ -5,10 +5,14 @@ import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.usuari
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.UsuarioEntity;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.mapper.UsuarioEntityMapper;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.repository.UsuarioJpaRepository;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.Set;
 
 @Service
 public class AuthenticationAdapter implements UserDetailsService {
@@ -29,12 +33,15 @@ public class AuthenticationAdapter implements UserDetailsService {
 
         Usuario usuario = UsuarioEntityMapper.toDomain(entity);
 
+        Set<GrantedAuthority> authorities = Set.of(new SimpleGrantedAuthority("ROLE_" + usuario.getFuncao()));
+
+
         return new UsuarioDetalhesDTO(
                 usuario.getNome(),
                 usuario.getEmail().toString(),
-                usuario.getSenha()
+                usuario.getSenha(),
+                authorities
         );
-
         
     }
 }

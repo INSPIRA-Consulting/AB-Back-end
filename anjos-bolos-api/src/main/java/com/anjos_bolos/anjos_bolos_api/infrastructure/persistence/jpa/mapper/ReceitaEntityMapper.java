@@ -41,7 +41,7 @@ public class ReceitaEntityMapper {
                 .map(item -> new ItemReceitaCommand(
                         item.ingredienteId(),
                         item.quantidade(),
-                        item.unidadeMedida()
+                        item.unidadeMedida().toUpperCase()
                 ))
                 .toList();
     }

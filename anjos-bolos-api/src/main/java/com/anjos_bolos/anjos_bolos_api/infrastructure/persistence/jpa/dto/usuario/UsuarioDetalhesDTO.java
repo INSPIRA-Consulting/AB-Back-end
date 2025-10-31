@@ -8,11 +8,12 @@ import java.util.Collection;
 public record UsuarioDetalhesDTO(
         String nome,
         String email,
-        String senha
+        String senha,
+        Collection<? extends GrantedAuthority> authorities
 ) implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+        return authorities;
     }
 
     @Override

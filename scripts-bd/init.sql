@@ -8,7 +8,7 @@ CREATE TABLE Usuario (
     nome VARCHAR(60) NOT NULL,
     cpf VARCHAR(14) NOT NULL UNIQUE,
     email VARCHAR(50) NOT NULL UNIQUE,
-    senha VARCHAR(25) NOT NULL,
+    senha VARCHAR(60) NOT NULL,
     telefone VARCHAR(15) NOT NULL UNIQUE,
     funcao VARCHAR(50) NOT NULL
 );
@@ -93,6 +93,7 @@ CREATE TABLE Pedido (
     CONSTRAINT fk_pedido_cliente FOREIGN KEY (fkCliente) REFERENCES Cliente(id)
 );
 
+-- Tabela Item_Pedido
 CREATE TABLE Item_Pedido (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     fkPedido INT NOT NULL,
@@ -105,6 +106,7 @@ CREATE TABLE Item_Pedido (
     CONSTRAINT fk_item_produto FOREIGN KEY (fkProduto) REFERENCES Produto(id)
 );
 
+-- Tabela Detalhamento_Pedido
 CREATE TABLE Detalhamento_Pedido (
 	id INT PRIMARY KEY AUTO_INCREMENT,
     fkItemPedido INT NOT NULL,
@@ -116,6 +118,7 @@ CREATE TABLE Detalhamento_Pedido (
     CONSTRAINT fk_detalhamento_ingrediente FOREIGN KEY (fkIngrediente) REFERENCES Receita(fkIngrediente)
 );
 
+-- SELECTS das Tabelas
 SELECT * FROM Ingrediente;
 SELECT * FROM Usuario;
 SELECT * FROM Cliente;
