@@ -6,9 +6,9 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Email;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Telefone;
 import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.Usuario;
 import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.valueobject.FuncaoUsuarioEnum;
-import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.usuario.UsuarioLoginResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.usuario.UsuarioRequestDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.usuario.UsuarioResponseDTO;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.usuario.UsuarioTokenResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.UsuarioEntity;
 
 public class UsuarioEntityMapper {
@@ -96,15 +96,18 @@ public class UsuarioEntityMapper {
         );
     }
 
-    public static UsuarioLoginResponseDTO toLoginDTO(Usuario domain) {
-        return new UsuarioLoginResponseDTO(
-                domain.getNome(),
-                domain.getFuncao().getFuncao()
-        );
-    }
-
     public static LoginUsuarioCommand toCommand(String email, String senha) {
         return new LoginUsuarioCommand(email, senha);
+    }
+
+    public static UsuarioTokenResponseDTO toTokenDTO(Usuario usuario, String token) {
+        return new UsuarioTokenResponseDTO(
+                usuario.getId(),
+                usuario.getNome(),
+                usuario.getEmail().toString(),
+                usuario.getFuncao().getFuncao(),
+                token
+        );
     }
 
 }

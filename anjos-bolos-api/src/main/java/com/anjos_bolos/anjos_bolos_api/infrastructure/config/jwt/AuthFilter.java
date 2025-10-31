@@ -1,0 +1,76 @@
+package com.anjos_bolos.anjos_bolos_api.infrastructure.config.jwt;
+
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.adapters.AuthenticationAdapter;
+import io.jsonwebtoken.ExpiredJwtException;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.web.filter.OncePerRequestFilter;
+
+import java.io.IOException;
+import java.util.Objects;
+
+public class AuthFilter extends OncePerRequestFilter {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(AuthFilter.class);
+
+    private final AuthenticationAdapter adapter;
+
+    private final TokenJWTManager tokenJWTManager;
+
+    public AuthFilter(AuthenticationAdapter adapter, TokenJWTManager tokenJWTManager) {
+        this.adapter = adapter;
+        this.tokenJWTManager = tokenJWTManager;
+    }
+
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+            throws ServletException, IOException {
+        String username = null;
+        String token = null;
+
+        String requestTokenHeader = request.getHeader("Authorization");
+
+        if (Objects.nonNull(requestTokenHeader) && requestTokenHeader.startsWith("Bearer ")) {
+            token = requestTokenHeader.substring(7);
+
+            try {
+                username = tokenJWTManager.getUsernameFromToken(token);
+            } catch (ExpiredJwtException e) {
+                LOGGER.info("[FALHA DE AUTENTICAÇÃO] - Token expirado. Usuário: {} - {} ",
+                        e.getClaims().getSubject(), e.getMessage());
+
+                LOGGER.trace("[FALHA DE AUTENTICAÇÃO] - StackTrace: %s", e);
+
+                response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            }
+        }
+
+        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            addUsernameInContext(request, username, token);
+        }
+
+        filterChain.doFilter(request, response);
+    }
+
+    private void addUsernameInContext(HttpServletRequest request, String username, String token) {
+        UserDetails userDetails = adapter.loadUserByUsername(username);
+
+        if (tokenJWTManager.validateToken(token, userDetails)) {
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+                    new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+
+            usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+
+            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+        }
+        }
+
+}

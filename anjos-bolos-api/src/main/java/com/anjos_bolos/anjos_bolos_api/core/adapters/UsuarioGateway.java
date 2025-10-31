@@ -46,4 +46,8 @@ public interface UsuarioGateway {
 
     Usuario login(Email email, String senha);
 
+    String authenticate(Usuario usuario);
+
+    String findEncodedSenhaByEmail(Email email);
+
 }

@@ -1,5 +1,6 @@
 package com.anjos_bolos.anjos_bolos_api.core.application.usecase.usuario;
 
+import com.anjos_bolos.anjos_bolos_api.core.adapters.PasswordEncoderGateway;
 import com.anjos_bolos.anjos_bolos_api.core.adapters.UsuarioGateway;
 import com.anjos_bolos.anjos_bolos_api.core.application.command.usuario.UpdateUsuarioCommand;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.CPF;
@@ -13,10 +14,12 @@ public class UpdateUsuarioUseCase {
 
     private final UsuarioGateway gateway;
     private final UsuarioValidator validator;
+    private final PasswordEncoderGateway passwordEncoder;
 
-    public UpdateUsuarioUseCase(UsuarioGateway gateway, UsuarioValidator validator) {
+    public UpdateUsuarioUseCase(UsuarioGateway gateway, UsuarioValidator validator, PasswordEncoderGateway passwordEncoder) {
         this.gateway = gateway;
         this.validator = validator;
+        this.passwordEncoder = passwordEncoder;
     }
 
     public Usuario execute(UpdateUsuarioCommand command) {
@@ -26,11 +29,13 @@ public class UpdateUsuarioUseCase {
 
         validator.validateUniqueness(command.id(),cpf, email, telefone);
 
+        String encodedPassword = passwordEncoder.encode(command.senha());
+
         Usuario usuario = gateway.findById(command.id());
         usuario.setNome(command.nome());
         usuario.setCpf(cpf);
         usuario.setEmail(email);
-        usuario.setSenha(command.senha());
+        usuario.setSenha(encodedPassword);
         usuario.setTelefone(telefone);
         usuario.setFuncao(FuncaoUsuarioEnum.valueOf(command.funcao()));
 

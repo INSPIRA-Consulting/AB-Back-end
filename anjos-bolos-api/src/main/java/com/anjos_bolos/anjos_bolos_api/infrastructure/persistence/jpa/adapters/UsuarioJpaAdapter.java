@@ -7,9 +7,15 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Email;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Telefone;
 import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.Usuario;
 import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.valueobject.FuncaoUsuarioEnum;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.config.jwt.TokenJWTManager;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.UsuarioEntity;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.mapper.UsuarioEntityMapper;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.repository.UsuarioJpaRepository;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,8 +25,17 @@ public class UsuarioJpaAdapter implements UsuarioGateway {
 
     private final UsuarioJpaRepository repository;
 
-    public UsuarioJpaAdapter(UsuarioJpaRepository repository) {
+    private final PasswordEncoder passwordEncoder;
+
+    private final TokenJWTManager tokenJWTManager;
+
+    private final AuthenticationManager  authenticationManager;
+
+    public UsuarioJpaAdapter(UsuarioJpaRepository repository, PasswordEncoder passwordEncoder, TokenJWTManager tokenJWTManager, AuthenticationManager authenticationManager) {
         this.repository = repository;
+        this.passwordEncoder = passwordEncoder;
+        this.tokenJWTManager = tokenJWTManager;
+        this.authenticationManager = authenticationManager;
     }
 
     @Override
@@ -67,7 +82,9 @@ public class UsuarioJpaAdapter implements UsuarioGateway {
 
     @Override
     public boolean existsByEmailAndSenha(Email email, String senha) {
-        return repository.existsByEmailAndSenha(email.toString(), senha);
+        UsuarioEntity entity = repository.findByEmail(email.toString());
+
+        return passwordEncoder.matches(senha, entity.getSenha());
     }
 
     @Override
@@ -95,16 +112,16 @@ public class UsuarioJpaAdapter implements UsuarioGateway {
 
     @Override
     public Usuario findByCpf(CPF cpf) {
-        return repository.findByCpf(cpf.toString())
-                .map(UsuarioEntityMapper::toDomain)
-                .orElseThrow(() -> new NotFoundException("Usuário com CPF [%s] não encontrado.".formatted(cpf)));
+        UsuarioEntity entity = repository.findByCpf(cpf.toString());
+
+        return UsuarioEntityMapper.toDomain(entity);
     }
 
     @Override
     public Usuario findByEmail(Email email) {
-        return repository.findByEmail(email.toString())
-                .map(UsuarioEntityMapper::toDomain)
-                .orElseThrow(() -> new NotFoundException("Usuário com Email [%s] não encontrado.".formatted(email)));
+        UsuarioEntity entity = repository.findByEmail(email.toString());
+
+        return UsuarioEntityMapper.toDomain(entity);
     }
 
     @Override
@@ -136,9 +153,30 @@ public class UsuarioJpaAdapter implements UsuarioGateway {
 
     @Override
     public Usuario login(Email email, String senha) {
-        UsuarioEntity entity = repository.findByEmailAndSenha(email.toString(), senha);
+        UsuarioEntity entity = repository.findByEmail(email.toString());
 
-        return UsuarioEntityMapper.toDomain(entity);
+        Usuario usuario = UsuarioEntityMapper.toDomain(entity);
+
+        return usuario;
+    }
+
+    @Override
+    public String authenticate(Usuario usuario) {
+        final UsernamePasswordAuthenticationToken credentials =
+                new UsernamePasswordAuthenticationToken(usuario.getEmail().toString(), usuario.getSenha());
+
+        final Authentication authentication = authenticationManager.authenticate(credentials);
+
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return tokenJWTManager.generateToken(authentication);
+    }
+
+    @Override
+    public String findEncodedSenhaByEmail(Email email) {
+        UsuarioEntity entity = repository.findByEmail(email.toString());
+
+        return entity.getSenha();
     }
 
 }

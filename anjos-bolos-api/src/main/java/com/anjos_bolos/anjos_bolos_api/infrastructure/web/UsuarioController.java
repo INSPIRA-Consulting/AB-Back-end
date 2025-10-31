@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,6 +49,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "409", description = "Usuário já existe")
     })
     @PostMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<UsuarioResponseDTO> cadastrarUsuario(@RequestBody @Valid UsuarioRequestDTO dto) {
         CreateUsuarioCommand command = UsuarioEntityMapper.toCommand(dto);
         Usuario usuario = createUsuarioUseCase.execute(command);
@@ -61,6 +63,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "204", description = "Nenhum Usuário encontrado")
     })
     @GetMapping
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<UsuarioResponseDTO>> listarUsuarios() {
         ListUsuariosQuery query = new ListUsuariosQuery();
         List<Usuario> usuarios = listUsuariosUseCase.execute(query);
@@ -80,6 +83,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "204", description = "Usuário não encontrado")
     })
     @GetMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorId(@PathVariable Integer id) {
         GetUsuarioByIdQuery query = UsuarioEntityMapper.toGetUsuarioByIdQuery(id);
         Usuario usuario = getUsuarioByIdUseCase.execute(query);
@@ -97,6 +101,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "204", description = "Usuário não encontrado")
     })
     @GetMapping("/filtro-cpf")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorCpf(@RequestParam String cpf) {
         GetUsuarioByCpfQuery query = UsuarioEntityMapper.toGetUsuarioByCpfQuery(cpf);
         Usuario usuario = getUsuarioByCpfUseCase.execute(query);
@@ -114,6 +119,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "204", description = "Usuário não encontrado")
     })
     @GetMapping("/filtro-email")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<UsuarioResponseDTO> buscarUsuarioPorEmail(@RequestParam String email) {
         GetUsuarioByEmailQuery query = UsuarioEntityMapper.toGetUsuarioByEmailQuery(email);
         Usuario usuario = getUsuarioByEmailUseCase.execute(query);
@@ -131,6 +137,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "204", description = "Nenhum Usuário encontrado")
     })
     @GetMapping("/filtro-nome")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<UsuarioResponseDTO>> listarUsuariosPorNome(@RequestParam String nome) {
         ListUsuariosByNomeQuery query = UsuarioEntityMapper.toListUsuariosByNomeQuery(nome);
         List<Usuario> usuarios = listUsuariosByNomeUseCase.execute(query);
@@ -151,6 +158,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "204", description = "Nenhum Usuário encontrado")
     })
     @GetMapping("/filtro-funcao")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<List<UsuarioResponseDTO>> listarUsuariosPorFuncao(@RequestParam String funcao) {
         ListUsuariosByFuncaoQuery query = UsuarioEntityMapper.toListUsuariosByFuncaoQuery(funcao);
         List<Usuario> usuarios = listUsuariosByFuncaoUseCase.execute(query);
@@ -172,6 +180,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "409", description = "Usuário com esse nome já existe")
     })
     @PutMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(
             @Parameter(description = "ID do Usuário a ser atualizado") @PathVariable Integer id,
             @RequestBody @Valid UsuarioRequestDTO dto
@@ -188,6 +197,7 @@ public class UsuarioController {
             @ApiResponse(responseCode = "404", description = "Usuário não encontrado")
     })
     @DeleteMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
     public ResponseEntity<Void> excluirUsuario(
             @Parameter(description = "ID do Usuário a ser excluído") @PathVariable Integer id
     ) {

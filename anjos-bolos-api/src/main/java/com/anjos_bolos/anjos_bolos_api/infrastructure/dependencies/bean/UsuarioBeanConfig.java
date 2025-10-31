@@ -3,6 +3,7 @@ package com.anjos_bolos.anjos_bolos_api.infrastructure.dependencies.bean;
 import com.anjos_bolos.anjos_bolos_api.core.application.usecase.usuario.*;
 import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.valueobject.UsuarioUniquenessChecker;
 import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.valueobject.UsuarioValidator;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.config.jwt.PasswordEncoderAdapter;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.adapters.UsuarioJpaAdapter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,13 +17,17 @@ public class UsuarioBeanConfig {
     }
 
     @Bean
-    CreateUsuarioUseCase createUsuarioUseCase(UsuarioJpaAdapter adapter, UsuarioValidator validator) {
-        return new CreateUsuarioUseCase(adapter, validator);
+    CreateUsuarioUseCase createUsuarioUseCase(UsuarioJpaAdapter adapter,
+                                              UsuarioValidator validator,
+                                              PasswordEncoderAdapter passwordEncoder) {
+        return new CreateUsuarioUseCase(adapter, validator, passwordEncoder);
     }
 
     @Bean
-    UpdateUsuarioUseCase updateUsuarioUseCase(UsuarioJpaAdapter adapter, UsuarioValidator validator) {
-        return new UpdateUsuarioUseCase(adapter, validator);
+    UpdateUsuarioUseCase updateUsuarioUseCase(UsuarioJpaAdapter adapter,
+                                              UsuarioValidator validator,
+                                              PasswordEncoderAdapter passwordEncoder) {
+        return new UpdateUsuarioUseCase(adapter, validator, passwordEncoder);
     }
 
     @Bean
