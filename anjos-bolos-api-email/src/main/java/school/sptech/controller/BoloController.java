@@ -1,11 +1,13 @@
-package school.sptech.bingo.controller;
+package school.sptech.controller;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.*;
-import school.sptech.bingo.dto.BoloMensagem;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import school.sptech.dto.BoloMensagem;
 
 @RestController
 @RequestMapping("/bolos")

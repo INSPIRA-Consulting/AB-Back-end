@@ -1,23 +1,61 @@
+# ============================================
+# GITIGNORE CONSOLIDADO - AB-Back-end
+# ============================================
+
+# Maven
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
 
-### STS ###
+# Gradle
+.gradle
+**/build/
+!src/**/build/
+gradle-app.setting
+!gradle-wrapper.jar
+!gradle-wrapper.properties
+.gradletasknamecache
+
+# ============================================
+# IDEs
+# ============================================
+
+### IntelliJ IDEA ###
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+.idea_modules/
+
+### Eclipse / STS ###
 .apt_generated
 .classpath
 .factorypath
 .project
-.settings
+.settings/
 .springBeans
 .sts4-cache
-
-### IntelliJ IDEA ###
-.idea
-*.iws
-*.iml
-*.ipr
+bin/
+tmp/
+*.tmp
+*.bak
+*.swp
+*~.nib
+local.properties
+.loadpath
+.recommenders
 
 ### NetBeans ###
 /nbproject/private/
@@ -25,9 +63,125 @@ target/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
+nbactions.xml
+nb-configuration.xml
 
 ### VS Code ###
 .vscode/
+*.code-workspace
+.history/
+
+# ============================================
+# Environment Variables & Secrets
+# ============================================
+.env
+.env.*
+!.env.example
+*.env
+.env.local
+.env.*.local
+secrets/
+*.pem
+*.key
+
+# ============================================
+# OS Files
+# ============================================
+
+### macOS ###
+.DS_Store
+.AppleDouble
+.LSOverride
+Icon
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+### Windows ###
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+*.lnk
+
+### Linux ###
+*~
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# ============================================
+# Logs & Databases
+# ============================================
+*.log
+*.log.*
+logs/
+*.sql
+*.sqlite
+*.db
+
+# ============================================
+# Docker
+# ============================================
+.dockerignore
+docker-compose.override.yml
+
+# ============================================
+# Backup files
+# ============================================
+*.bak
+*.backup
+*.old
+*.orig
+
+# ============================================
+# Compiled files
+# ============================================
+*.class
+*.jar
+!**/wrapper/*.jar
+*.war
+*.ear
+*.nar
+
+# ============================================
+# Package Files
+# ============================================
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# ============================================
+# Node (se usar frontend)
+# ============================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+

@@ -1,11 +1,11 @@
-package school.sptech.bingo.consumer;
+package school.sptech.consumer;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Component;
-import school.sptech.bingo.dto.BoloMensagem;
+
+import school.sptech.dto.BoloMensagem;
 
 @Component
 public class BoloConsumer {
@@ -26,12 +26,7 @@ public class BoloConsumer {
             message.setTo("gustavo.spresilli@sptech.school"); // pra onde vai o email
             message.setSubject("Novo pedido de bolo");
             message.setText(
-                    "Detalhes do pedido:\n\n" +
-                            "Peso: " + bolo.getPeso() + " kg\n" +
-                            "Valor: R$ " + bolo.getValor() + "\n" +
-                            "Recheio: " + bolo.getRecheio() + "\n" +
-                            "Massa: " + bolo.getMassa() + "\n" +
-                            "Cobertura: " + bolo.getCobertura()
+                    "Foi feito um pedido de " + bolo.getQtd()
             );
 
             mailSender.send(message);
