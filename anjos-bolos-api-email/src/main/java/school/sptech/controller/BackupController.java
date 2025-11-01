@@ -7,25 +7,25 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import school.sptech.dto.BoloDTO;
+import school.sptech.dto.BackupDTO;
 
 @RestController
-@RequestMapping("/bolos")
-public class BoloController {
+@RequestMapping("/backups")
+public class BackupController {
 
     private final RabbitTemplate rabbitTemplate;
 
-    @Value("${broker.encomenda.exchange.name}")
+    @Value("${broker.backup.exchange.name}")
     private String exchangeName;
 
-    public BoloController(@Qualifier("encomendaRabbitTemplate")RabbitTemplate rabbitTemplate) {
+    public BackupController(@Qualifier("backupRabbitTemplate")RabbitTemplate rabbitTemplate) {
         this.rabbitTemplate = rabbitTemplate;
     }
 
     @PostMapping
-    public String registrarVenda(@RequestBody BoloDTO bolo) {
-        rabbitTemplate.convertAndSend(exchangeName, "", bolo);
-        return "Bolo enviado para a fila com sucesso!";
+    public String registrarBackup(@RequestBody BackupDTO backup) {
+        rabbitTemplate.convertAndSend(exchangeName, "", backup);
+        return "Backup enviado para a fila com sucesso!";
     }
+
 }

@@ -1,4 +1,4 @@
-package school.sptech;
+package school.sptech.config;
 
 import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
@@ -7,56 +7,58 @@ import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class RabbitTemplateConfiguration {
+public class RabbitBackupTemplateConfiguration {
 
     private final ConnectionFactory connectionFactory;
 
-    @Value("${broker.exchange.name}")
-    private String exchangeName;
+    @Value("${broker.backup.exchange.name}")
+    private String backupExchangeName;
 
-    @Value("${broker.queue.name}")
-    private String queueName;
+    @Value("${broker.backup.queue.name}")
+    private String backupQueueName;
 
     // Construtor manual para injetar a ConnectionFactory
-    public RabbitTemplateConfiguration(ConnectionFactory connectionFactory) {
+    public RabbitBackupTemplateConfiguration(ConnectionFactory connectionFactory) {
         this.connectionFactory = connectionFactory;
     }
 
     // Define a fila
     @Bean
-    public Queue queue() {
-        return new Queue(queueName, true); // durable = true
+    public Queue backupQueue() {
+        return new Queue(backupQueueName, true); // durable = true
     }
 
     // Define o Fanout Exchange
     @Bean
-    public FanoutExchange exchange() {
-        return new FanoutExchange(exchangeName);
+    public FanoutExchange backupFanoutExchange() {
+        return new FanoutExchange(backupExchangeName);
     }
 
     // Faz o binding da fila com o exchange
     @Bean
-    public Binding binding(Queue queue, FanoutExchange exchange) {
+    public Binding backupBinding(@Qualifier("backupQueue")Queue queue, @Qualifier("backupFanoutExchange")FanoutExchange exchange) {
         return BindingBuilder.bind(queue).to(exchange);
     }
 
     // Configura o RabbitTemplate para usar JSON
     @Bean
-    public RabbitTemplate rabbitTemplate() {
+    public RabbitTemplate backupRabbitTemplate() {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory);
-        rabbitTemplate.setExchange(exchangeName);
-        rabbitTemplate.setMessageConverter(jackson2JsonMessageConverter());
+        rabbitTemplate.setExchange(backupExchangeName);
+        rabbitTemplate.setMessageConverter(jackson2BackuoJsonMessageConverter());
         return rabbitTemplate;
     }
 
     // Bean para converter mensagens para JSON
     @Bean
-    public Jackson2JsonMessageConverter jackson2JsonMessageConverter() {
+    public Jackson2JsonMessageConverter jackson2BackuoJsonMessageConverter() {
         return new Jackson2JsonMessageConverter();
     }
+
 }
