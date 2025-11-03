@@ -39,8 +39,8 @@ public class CreatePedidoUseCase {
                 command.dataPedido(),
                 command.dataRetirada(),
                 command.dataPagamento(),
-                FormaPagamentoEnum.valueOf(command.formaPagamento()),
-                StatusPedidoEnum.valueOf(command.status()),
+                FormaPagamentoEnum.from(command.formaPagamento()),
+                StatusPedidoEnum.from(command.status()),
                 command.observacao(),
                 usuario,
                 cliente

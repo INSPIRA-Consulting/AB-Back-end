@@ -1,39 +1,25 @@
 package com.anjos_bolos.anjos_bolos_api.core.domain.usuario.valueobject;
 
+import com.anjos_bolos.anjos_bolos_api.core.application.exception.InvalidArgumentException;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
+
 import java.util.List;
 
 public enum FuncaoUsuarioEnum {
 
-    ADMINISTRADOR("Administrador", 3, true, true),
-    GERENTE("Gerente", 2, true, true),
-    ATENDENTE("Atendente", 1, false, true);
+    ADMINISTRADOR("Administrador"),
+    GERENTE("Gerente"),
+    ATENDENTE("Atendente");
 
-    private String funcao;
-    private Integer nivelAcesso;
-    private boolean acessoCritico;
-    private boolean ativo;
+    private final String funcao;
 
-    FuncaoUsuarioEnum(String funcao, Integer nivelAcesso, boolean acessoCritico, boolean ativo) {
+    FuncaoUsuarioEnum(String funcao) {
         this.funcao = funcao;
-        this.nivelAcesso = nivelAcesso;
-        this.acessoCritico = acessoCritico;
-        this.ativo = ativo;
     }
 
     public String getFuncao() {
         return funcao;
-    }
-
-    public Integer getNivelAcesso() {
-        return nivelAcesso;
-    }
-
-    public boolean isAcessoCritico() {
-        return acessoCritico;
-    }
-
-    public boolean isAtivo() {
-        return ativo;
     }
 
     public static boolean contains(String funcao) {
@@ -47,9 +33,21 @@ public enum FuncaoUsuarioEnum {
 
     public static List<String> names() {
         return List.of(
-                ADMINISTRADOR.name(),
-                GERENTE.name(),
-                ATENDENTE.name()
+                ADMINISTRADOR.funcao,
+                GERENTE.funcao,
+                ATENDENTE.funcao
         );
+    }
+
+    public static FuncaoUsuarioEnum from(String funcao) {
+        if (funcao == null) {
+            throw new InvalidArgumentException("Função de Usuário não pode ser nula.");
+        }
+        for (FuncaoUsuarioEnum f : FuncaoUsuarioEnum.values()) {
+            if (f.name().equalsIgnoreCase(funcao) || f.getFuncao().equalsIgnoreCase(funcao)) {
+                return f;
+            }
+        }
+        throw new InvalidArgumentException("Função de Usuário Inválida: " + funcao + ". Funções de Usuário válidas: " + names());
     }
 }

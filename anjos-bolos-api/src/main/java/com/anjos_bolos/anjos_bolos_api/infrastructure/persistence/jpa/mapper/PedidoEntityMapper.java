@@ -19,7 +19,7 @@ public class PedidoEntityMapper {
                 domain.getDataRetirada(),
                 domain.getDataPagamento(),
                 domain.getFormaPagamento().getFormaPagamento(),
-                domain.getStatus().toString(),
+                domain.getStatus().getStatus(),
                 domain.getObservacao(),
                 domain.getUsuario().getNome(),
                 domain.getCliente().getNome()
@@ -96,8 +96,8 @@ public class PedidoEntityMapper {
                 domain.getDataPedido(),
                 domain.getDataRetirada(),
                 domain.getDataPagamento(),
-                domain.getFormaPagamento().toString(),
-                domain.getStatus().toString(),
+                domain.getFormaPagamento().name(),
+                domain.getStatus().name(),
                 domain.getObservacao(),
                 UsuarioEntityMapper.toEntity(domain.getUsuario()),
                 ClienteEntityMapper.toEntity(domain.getCliente())
@@ -110,8 +110,8 @@ public class PedidoEntityMapper {
                 entity.getDataPedido(),
                 entity.getDataRetirada(),
                 entity.getDataPagamento(),
-                FormaPagamentoEnum.valueOf(entity.getFormaPagamento()),
-                StatusPedidoEnum.valueOf(entity.getStatus()),
+                FormaPagamentoEnum.from(entity.getFormaPagamento()),
+                StatusPedidoEnum.from(entity.getStatus()),
                 entity.getObservacao(),
                 UsuarioEntityMapper.toDomain(entity.getUsuario()),
                 ClienteEntityMapper.toDomain(entity.getCliente())

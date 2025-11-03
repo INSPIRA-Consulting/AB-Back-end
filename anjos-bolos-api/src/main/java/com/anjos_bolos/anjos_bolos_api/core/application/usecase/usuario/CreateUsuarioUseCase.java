@@ -3,15 +3,12 @@ package com.anjos_bolos.anjos_bolos_api.core.application.usecase.usuario;
 import com.anjos_bolos.anjos_bolos_api.core.adapters.PasswordEncoderGateway;
 import com.anjos_bolos.anjos_bolos_api.core.adapters.UsuarioGateway;
 import com.anjos_bolos.anjos_bolos_api.core.application.command.usuario.CreateUsuarioCommand;
-import com.anjos_bolos.anjos_bolos_api.core.application.exception.InvalidArgumentException;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.CPF;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Email;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Telefone;
 import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.Usuario;
 import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.valueobject.FuncaoUsuarioEnum;
 import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.valueobject.UsuarioValidator;
-
-import java.util.Arrays;
 
 public class CreateUsuarioUseCase {
 
@@ -34,18 +31,13 @@ public class CreateUsuarioUseCase {
 
         String encodedPassword = passwordEncoder.encode(command.senha());
 
-        if (!FuncaoUsuarioEnum.contains(command.funcao())) {
-            throw new InvalidArgumentException("Função de Usuário inválida. Funções válidas: %s"
-                    .formatted(FuncaoUsuarioEnum.names()));
-        }
-
         Usuario usuario = new Usuario(
                 command.nome(),
                 cpf,
                 email,
                 encodedPassword,
                 telefone,
-                FuncaoUsuarioEnum.valueOf(command.funcao()));
+                FuncaoUsuarioEnum.from(command.funcao()));
 
         return gateway.save(usuario);
     }

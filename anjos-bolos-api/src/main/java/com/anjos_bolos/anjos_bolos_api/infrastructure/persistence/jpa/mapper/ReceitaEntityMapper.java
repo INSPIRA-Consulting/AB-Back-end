@@ -41,7 +41,7 @@ public class ReceitaEntityMapper {
                 .map(item -> new ItemReceitaCommand(
                         item.ingredienteId(),
                         item.quantidade(),
-                        item.unidadeMedida().toUpperCase()
+                        item.unidadeMedida()
                 ))
                 .toList();
     }
@@ -112,7 +112,7 @@ public class ReceitaEntityMapper {
                 .map(entity -> new ItemReceita(
                         IngredienteEntityMapper.toDomain(entity.getIngrediente()),
                         entity.getQuantidade(),
-                        UnidadeMedidaEnum.valueOf(entity.getUnidadeMedida())
+                        UnidadeMedidaEnum.from(entity.getUnidadeMedida())
                 ))
                 .toList();
 

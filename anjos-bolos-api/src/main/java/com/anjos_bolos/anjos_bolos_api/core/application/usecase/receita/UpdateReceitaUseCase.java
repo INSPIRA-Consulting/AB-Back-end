@@ -7,6 +7,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.command.receita.ItemRece
 import com.anjos_bolos.anjos_bolos_api.core.application.command.receita.UpdateReceitaCommand;
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.DuplicateKeyException;
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.EntityAlreadyExistsException;
+import com.anjos_bolos.anjos_bolos_api.core.application.exception.InvalidArgumentException;
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundException;
 import com.anjos_bolos.anjos_bolos_api.core.domain.ingrediente.Ingrediente;
 import com.anjos_bolos.anjos_bolos_api.core.domain.receita.Receita;
@@ -64,7 +65,7 @@ public class UpdateReceitaUseCase {
                     return new ItemReceita(
                             ingrediente,
                             command.ingredientes().get(i).quantidade(),
-                            UnidadeMedidaEnum.valueOf(command.ingredientes().get(i).unidadeMedida())
+                            UnidadeMedidaEnum.from(command.ingredientes().get(i).unidadeMedida())
                     );
                 })
                 .toList();

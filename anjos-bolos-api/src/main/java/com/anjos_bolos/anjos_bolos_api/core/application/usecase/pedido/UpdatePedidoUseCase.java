@@ -3,7 +3,6 @@ package com.anjos_bolos.anjos_bolos_api.core.application.usecase.pedido;
 import com.anjos_bolos.anjos_bolos_api.core.adapters.ClienteGateway;
 import com.anjos_bolos.anjos_bolos_api.core.adapters.PedidoGateway;
 import com.anjos_bolos.anjos_bolos_api.core.adapters.UsuarioGateway;
-import com.anjos_bolos.anjos_bolos_api.core.application.command.pedido.CreatePedidoCommand;
 import com.anjos_bolos.anjos_bolos_api.core.application.command.pedido.UpdatePedidoCommand;
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundException;
 import com.anjos_bolos.anjos_bolos_api.core.domain.cliente.Cliente;
@@ -11,8 +10,6 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.pedido.Pedido;
 import com.anjos_bolos.anjos_bolos_api.core.domain.pedido.valueobject.FormaPagamentoEnum;
 import com.anjos_bolos.anjos_bolos_api.core.domain.pedido.valueobject.StatusPedidoEnum;
 import com.anjos_bolos.anjos_bolos_api.core.domain.usuario.Usuario;
-
-import java.time.LocalDateTime;
 
 public class UpdatePedidoUseCase {
 
@@ -46,8 +43,8 @@ public class UpdatePedidoUseCase {
         pedido.setDataPedido(command.dataPedido());
         pedido.setDataRetirada(command.dataRetirada());
         pedido.setDataPagamento(command.dataPagamento());
-        pedido.setFormaPagamento(FormaPagamentoEnum.valueOf(command.formaPagamento()));
-        pedido.setStatus(StatusPedidoEnum.valueOf(command.status()));
+        pedido.setFormaPagamento(FormaPagamentoEnum.from(command.formaPagamento()));
+        pedido.setStatus(StatusPedidoEnum.from(command.status()));
         pedido.setObservacao(command.observacao());
         pedido.setUsuario(usuario);
         pedido.setCliente(cliente);
