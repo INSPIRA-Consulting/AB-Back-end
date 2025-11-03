@@ -171,6 +171,7 @@ CREATE TABLE Detalhamento_Pedido (
 -- Usuários
 -- =======================
 INSERT INTO Usuario (nome, cpf, email, senha, telefone, funcao) VALUES
+('root', '999.999.999-99', 'inspira@gmail.com', '$2a$10$P42PeHwYl2WTPhqC.8PMt.xdO8p18rG5VuEp2OiPzKOqFO0KYFjKu', '(11)99999-9999', 'ADMINISTRADOR'),
 ('Ana Souza', '123.456.789-00', 'ana@anjosbolos.com', 'senha123', '(11)90000-0001', 'ATENDENTE'),
 ('Carla Mendes', '123.123.123-12', 'carla@anjosbolos.com', 'senha123', '(11)90000-0003', 'GERENTE');
 
