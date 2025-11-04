@@ -130,3 +130,157 @@ jobs:
             rm -f /home/${{ secrets.REMOTE_USER }}/app_loko.jar
             
             echo "Limpeza concluída!"
+
+      # 10. Criar arquivo .env do Email Service com secrets
+      - name: EMAIL - Criar arquivo .env com secrets
+        run: |
+          echo "EMAIL_SECRET=${{ secrets.EMAIL_SECRET }}" > .env-email
+          echo "BACKUP_EMAIL_SECRET=${{ secrets.BACKUP_EMAIL_SECRET }}" >> .env-email
+          echo "✅ Arquivo .env-email criado com secrets do GitHub"
+          echo "Conteúdo do arquivo .env-email:"
+          cat .env-email
+
+      # 11. Gerar JAR do Email Service
+      - name: EMAIL - Gerar Artefato .JAR
+        run: mvn package -DskipTests=true
+        working-directory: ./anjos-bolos-api-email
+
+      # 12. Renomear JAR do Email Service
+      - name: EMAIL - Renomear JAR para email_service.jar
+        run: |
+          JAR_NAME=$(ls target/*.jar)
+          mv $JAR_NAME target/email_service.jar
+          echo "Renomeado para: target/email_service.jar"
+        working-directory: ./anjos-bolos-api-email
+
+      # 13. Copiar JAR do Email Service para EC2
+      - name: EMAIL - Copiar JAR para EC2 pública
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "./anjos-bolos-api-email/target/email_service.jar"
+          target: "/home/${{ secrets.REMOTE_USER }}/"
+          strip_components: 3
+
+      # 14. Copiar arquivo .env do Email Service
+      - name: EMAIL - Copiar .env com secrets
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          source: "./.env-email"
+          target: "/home/${{ secrets.REMOTE_USER }}/"
+
+      # 15. Configurar e executar Email Service na EC2 privada
+      - name: EMAIL - Configurar e executar Email Service
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            set -e
+            
+            # Verificar arquivo do email service
+            echo "Verificando arquivo email_service.jar:"
+            ls -lh /home/${{ secrets.REMOTE_USER }}/email_service.jar
+            
+            # Configurar chave SSH
+            ARQUIVO_PEM="/home/${{ secrets.REMOTE_USER }}/anjos-bolos-low-cost-key.pem"
+            USUARIO_IP="${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST_PRIVADO }}"
+            
+            # Criar diretórios na EC2 privada
+            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
+              'sudo mkdir -p /usr/share/api-email /home/ubuntu/email-service'
+            
+            # Transferir JAR do email service
+            scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM \
+              /home/${{ secrets.REMOTE_USER }}/email_service.jar \
+              $USUARIO_IP:/tmp/email_service.jar
+            
+            # Transferir arquivo .env
+            scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM \
+              /home/${{ secrets.REMOTE_USER }}/.env-email \
+              $USUARIO_IP:/home/ubuntu/.env-email
+            
+            # Mover JAR para o diretório final
+            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
+              'sudo mv /tmp/email_service.jar /usr/share/api-email/email_service.jar && sudo chmod 644 /usr/share/api-email/email_service.jar'
+            
+            # Criar Docker Compose para Email Service na EC2 privada
+            echo "Criando compose-rabbit.yaml para Email Service..."
+            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP << 'ENDSSH'
+              cd /home/ubuntu/email-service
+              
+              # Criar compose-rabbit.yaml
+              cat > compose-rabbit.yaml << 'EOF'
+            version: '3.8'
+            
+            services:
+              anjos-bolos-email-app:
+                image: openjdk:21-jdk-slim
+                container_name: anjos-bolos-email-app
+                ports:
+                  - "8081:8081"
+                volumes:
+                  - /usr/share/api-email:/app
+                  - /home/ubuntu/.env-email:/app/.env
+                working_dir: /app
+                command: java -jar email_service.jar
+                environment:
+                  - SPRING_PROFILES_ACTIVE=prod
+                depends_on:
+                  - rabbitmq-email
+                networks:
+                  - email-network
+                restart: unless-stopped
+            
+              rabbitmq-email:
+                image: 'rabbitmq:3.13-management'
+                container_name: anjos-bolos-rabbitmq-email
+                environment:
+                  - 'RABBITMQ_DEFAULT_PASS=secret'
+                  - 'RABBITMQ_DEFAULT_USER=myuser'
+                ports:
+                  - '5673:5672'
+                  - '15673:15672'
+                volumes:
+                  - rabbitmq_email_data:/var/lib/rabbitmq
+                networks:
+                  - email-network
+                restart: unless-stopped
+            
+            volumes:
+              rabbitmq_email_data:
+            
+            networks:
+              email-network:
+                driver: bridge
+            EOF
+              
+              echo "Parando containers do email service se estiverem rodando..."
+              sudo docker-compose -f compose-rabbit.yaml down 2>/dev/null || true
+              
+              echo "Iniciando Email Service com compose-rabbit.yaml..."
+              sudo docker-compose -f compose-rabbit.yaml up -d --force-recreate
+              
+              echo "Aguardando inicialização do Email Service..."
+              sleep 15
+              
+              echo "Status dos containers do Email Service:"
+              sudo docker-compose -f compose-rabbit.yaml ps
+              
+              echo "Email Service iniciado!"
+            ENDSSH
+            
+            echo "Email Service configurado e iniciado com sucesso!"
+            
+            # Limpar arquivos temporários
+            echo "Limpando arquivos temporários do email service..."
+            rm -f /home/${{ secrets.REMOTE_USER }}/email_service.jar
+            rm -f /home/${{ secrets.REMOTE_USER }}/.env-email
+            
+            echo "Limpeza do email service concluída!"
