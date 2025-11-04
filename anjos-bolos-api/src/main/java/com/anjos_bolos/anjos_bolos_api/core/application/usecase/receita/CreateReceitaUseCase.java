@@ -34,8 +34,6 @@ public class CreateReceitaUseCase {
                     .formatted(command.nome()));
         }
 
-        System.out.println("Ingredientes: " + command.ingredientes());
-
         List<Integer> ingredienteIds = command.ingredientes()
                 .stream()
                 .map(ItemReceitaCommand::ingredienteId)
@@ -56,7 +54,7 @@ public class CreateReceitaUseCase {
                     return new ItemReceita(
                             ingrediente,
                             command.ingredientes().get(i).quantidade(),
-                            UnidadeMedidaEnum.valueOf(command.ingredientes().get(i).unidadeMedida())
+                            UnidadeMedidaEnum.from(command.ingredientes().get(i).unidadeMedida())
                     );
                 })
                 .toList();

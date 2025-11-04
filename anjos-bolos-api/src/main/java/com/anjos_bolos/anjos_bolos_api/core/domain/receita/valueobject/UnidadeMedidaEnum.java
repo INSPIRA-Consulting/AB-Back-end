@@ -1,5 +1,9 @@
 package com.anjos_bolos.anjos_bolos_api.core.domain.receita.valueobject;
 
+import com.anjos_bolos.anjos_bolos_api.core.application.exception.InvalidArgumentException;
+
+import java.util.List;
+
 public enum UnidadeMedidaEnum {
 
     UNIDADE("unidade", "unidades", "un", false),
@@ -41,6 +45,44 @@ public enum UnidadeMedidaEnum {
 
     public Boolean getFracionavel() {
         return fracionavel;
+    }
+
+    public static boolean contains(String unidadeMedida) {
+        for (UnidadeMedidaEnum un : UnidadeMedidaEnum.values()) {
+            if (un.getUnidadeMedida().equalsIgnoreCase(unidadeMedida)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public static List<String> names() {
+        return List.of(
+                UNIDADE.name(),
+                GRAMA.name(),
+                QUILOGRAMA.name(),
+                LITRO.name(),
+                MILILITRO.name(),
+                XICARA_CHA.name(),
+                COLHER_SOPA.name(),
+                COLHER_CHA.name(),
+                COLHER_CAFE.name(),
+                COLHER_SOBREMESA.name(),
+                PITADA.name(),
+                COPO_AMERICANO.name()
+        );
+    }
+
+    public static UnidadeMedidaEnum from(String unidadeMedida) {
+        if (unidadeMedida == null) {
+            throw new InvalidArgumentException("Status de Pedido pode ser nulo.");
+        }
+        for (UnidadeMedidaEnum s : UnidadeMedidaEnum.values()) {
+            if (s.name().equalsIgnoreCase(unidadeMedida) || s.getUnidadeMedida().equalsIgnoreCase(unidadeMedida)) {
+                return s;
+            }
+        }
+        throw new InvalidArgumentException("Status de Pedido inválido: " + unidadeMedida + ". Status de Pedido válidos: " + names());
     }
 
 }

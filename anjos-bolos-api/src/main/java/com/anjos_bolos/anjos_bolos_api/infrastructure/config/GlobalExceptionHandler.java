@@ -1,4 +1,4 @@
-package com.anjos_bolos.anjos_bolos_api.infrastructure.web;
+package com.anjos_bolos.anjos_bolos_api.infrastructure.config;
 
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.*;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +10,11 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler (InvalidArgumentException.class)
     public ResponseEntity<String> handleInvalidArgument(InvalidArgumentException ex) {
+        return ResponseEntity.status(400).body(ex.getMessage());
+    }
+
+    @ExceptionHandler (IllegalArgumentException.class)
+    public ResponseEntity<String> handleInvalidArgument(IllegalArgumentException ex) {
         return ResponseEntity.status(400).body(ex.getMessage());
     }
 
