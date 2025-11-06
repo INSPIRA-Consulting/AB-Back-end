@@ -204,7 +204,11 @@ jobs:
             # Transferir arquivo .env
             scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM \
               /home/${{ secrets.REMOTE_USER }}/.env-email \
-              $USUARIO_IP:/home/ubuntu/.env-email
+              $USUARIO_IP:/tmp/.env-email
+            
+            # Mover .env para o local correto
+            ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
+              'mv /tmp/.env-email /home/ubuntu/.env-email'
             
             # Mover JAR para o diretório final
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
