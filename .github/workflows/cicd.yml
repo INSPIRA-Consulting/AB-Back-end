@@ -192,9 +192,9 @@ jobs:
             ARQUIVO_PEM="/home/${{ secrets.REMOTE_USER }}/anjos-bolos-low-cost-key.pem"
             USUARIO_IP="${{ secrets.REMOTE_USER }}@${{ secrets.REMOTE_HOST_PRIVADO }}"
             
-            # Criar diretórios na EC2 privada
+            # Criar diretórios na EC2 privada (se não existirem)
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
-              'sudo mkdir -p /usr/share/api-email /home/ubuntu/email-service'
+              'sudo mkdir -p /usr/share/api-email'
             
             # Transferir JAR do email service
             scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM \
@@ -210,69 +210,17 @@ jobs:
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
               'sudo mv /tmp/email_service.jar /usr/share/api-email/email_service.jar && sudo chmod 644 /usr/share/api-email/email_service.jar'
             
-            # Criar Docker Compose para Email Service na EC2 privada
-            echo "Criando compose-rabbit.yaml para Email Service..."
+            # Iniciar o Email Service com o compose-rabbit.yaml existente
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP << 'ENDSSH'
-              cd /home/ubuntu/email-service
-              
-              # Criar compose-rabbit.yaml
-              cat > compose-rabbit.yaml << 'EOF'
-            version: '3.8'
-            
-            services:
-              anjos-bolos-email-app:
-                image: openjdk:21-jdk-slim
-                container_name: anjos-bolos-email-app
-                ports:
-                  - "8081:8081"
-                volumes:
-                  - /usr/share/api-email:/app
-                  - /home/ubuntu/.env-email:/app/.env
-                working_dir: /app
-                command: java -jar email_service.jar
-                environment:
-                  - SPRING_PROFILES_ACTIVE=prod
-                depends_on:
-                  - rabbitmq-email
-                networks:
-                  - email-network
-                restart: unless-stopped
-            
-              rabbitmq-email:
-                image: 'rabbitmq:3.13-management'
-                container_name: anjos-bolos-rabbitmq-email
-                environment:
-                  - 'RABBITMQ_DEFAULT_PASS=secret'
-                  - 'RABBITMQ_DEFAULT_USER=myuser'
-                ports:
-                  - '5673:5672'
-                  - '15673:15672'
-                volumes:
-                  - rabbitmq_email_data:/var/lib/rabbitmq
-                networks:
-                  - email-network
-                restart: unless-stopped
-            
-            volumes:
-              rabbitmq_email_data:
-            
-            networks:
-              email-network:
-                driver: bridge
-            EOF
-              
+              cd /home/ubuntu
               echo "Parando containers do email service se estiverem rodando..."
               sudo docker-compose -f compose-rabbit.yaml down 2>/dev/null || true
-              
               echo "Iniciando Email Service com compose-rabbit.yaml..."
               sudo docker-compose -f compose-rabbit.yaml up -d --force-recreate
-              
               echo "Aguardando inicialização do Email Service..."
               sleep 15
-              
               echo "Status dos containers do Email Service:"
               sudo docker-compose -f compose-rabbit.yaml ps
-              
               echo "Email Service iniciado!"
             ENDSSH
             
