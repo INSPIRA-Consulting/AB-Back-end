@@ -206,7 +206,7 @@ jobs:
             
             # Garantir que não existe diretório com o mesmo nome e mover .env
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
-              'sudo rm -rf /home/ubuntu/.env-email && mv /tmp/.env-email /home/ubuntu/.env-email && chmod 644 /home/ubuntu/.env-email'
+              'sudo rm -rf /home/ubuntu/.env-email && mv /tmp/.env-email /home/ubuntu/.env-email && sudo chmod 644 /home/ubuntu/.env-email && sudo chown ubuntu:ubuntu /home/ubuntu/.env-email'
             
             # Mover JAR para o diretório final
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
