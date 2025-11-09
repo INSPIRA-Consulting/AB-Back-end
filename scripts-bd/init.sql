@@ -247,9 +247,9 @@ INSERT INTO Produto (nome, precoFinal, custoProducao, fkCategoriaProduto) VALUES
 ('Chocolate Quente', 10.00, 4.00, 2);
 
 -- Produto placeholder para bolo de festa personalizado
-INSERT INTO Produto (id, nome, descricao, valorBase, unidadeMedida, ativo)
+INSERT INTO Produto (id, nome, precoFinal, custoProducao, fkCategoriaProduto)
 VALUES 
-(99, 'Bolo de Festa Personalizado', 'Bolo sob encomenda com massa, recheio e cobertura a escolher', 0.00, 'UNIDADE', 1);
+(99, 'Bolo de Festa Personalizado', 0.00, 0.00, 1);
 
 
 -- =======================
