@@ -5,9 +5,11 @@ import com.anjos_bolos.anjos_bolos_api.core.application.usecase.dashboard.*;
 import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.MargemLucroProdutoDTO;
 import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.PedidosFaturamentoDTO;
 import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.ProdutoVendidoDTO;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.config.aws.s3.S3Adapter;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.MargemLucroProdutoResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.PedidosFaturamentoResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.ProdutoVendidoResponseDTO;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.feriados.FeriadosResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.mapper.DashboardMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -33,13 +35,16 @@ public class DashboardController {
     private final GetProdutoMaisVendidoUseCase getProdutoMaisVendidoUseCase;
     private final GetDiaSemanaComMaisVendasUseCase getDiaSemanaComMaisVendasUseCase;
 
-    public DashboardController(GetMenorMargemLucroUseCase getMenorMargemLucroUseCase, GetMaiorMargemLucroUseCase getMaiorMargemLucroUseCase, ListProdutosMaisVendidosUseCase listProdutosMaisVendidosUseCase, GetPedidosFaturamentoUseCase getPedidosFaturamentoUseCase, GetProdutoMaisVendidoUseCase getProdutoMaisVendidoUseCase, GetDiaSemanaComMaisVendasUseCase getDiaSemanaComMaisVendasUseCase) {
+    private final S3Adapter s3Adapter;
+
+    public DashboardController(GetMenorMargemLucroUseCase getMenorMargemLucroUseCase, GetMaiorMargemLucroUseCase getMaiorMargemLucroUseCase, ListProdutosMaisVendidosUseCase listProdutosMaisVendidosUseCase, GetPedidosFaturamentoUseCase getPedidosFaturamentoUseCase, GetProdutoMaisVendidoUseCase getProdutoMaisVendidoUseCase, GetDiaSemanaComMaisVendasUseCase getDiaSemanaComMaisVendasUseCase, S3Adapter s3Adapter) {
         this.getMenorMargemLucroUseCase = getMenorMargemLucroUseCase;
         this.getMaiorMargemLucroUseCase = getMaiorMargemLucroUseCase;
         this.listProdutosMaisVendidosUseCase = listProdutosMaisVendidosUseCase;
         this.getPedidosFaturamentoUseCase = getPedidosFaturamentoUseCase;
         this.getProdutoMaisVendidoUseCase = getProdutoMaisVendidoUseCase;
         this.getDiaSemanaComMaisVendasUseCase = getDiaSemanaComMaisVendasUseCase;
+        this.s3Adapter = s3Adapter;
     }
 
     @Operation(summary = "Buscar Produto com Menor Margem de Lucro (%)", description = "Busca o Produto com Menor Margem de Lucro (%) no Banco de Dados.")
@@ -128,6 +133,19 @@ public class DashboardController {
         String diaSemana = getDiaSemanaComMaisVendasUseCase.execute(query);
 
         return ResponseEntity.status(200).body(diaSemana);
+    }
+
+    @Operation(summary = "Buscar Feriados", description = "Busca os Feriados Nacionais armazenados no S3.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Feriados encontrados"),
+            @ApiResponse(responseCode = "404", description = "Nenhum Feriado encontrado")
+    })
+    @GetMapping("/feriados-nacionais")
+    @SecurityRequirement(name = "Bearer")
+    public ResponseEntity<List<FeriadosResponseDTO>> buscarFeriadosNacionais(@RequestParam Integer ano) {
+        List<FeriadosResponseDTO> feriados = s3Adapter.listFeriadosNacionais(ano);
+
+        return ResponseEntity.status(200).body(feriados);
     }
 
 }

@@ -3,7 +3,7 @@ package com.anjos_bolos.anjos_bolos_api.infrastructure.web;
 import com.anjos_bolos.anjos_bolos_api.core.application.command.produto.*;
 import com.anjos_bolos.anjos_bolos_api.core.application.usecase.produto.*;
 import com.anjos_bolos.anjos_bolos_api.core.domain.produto.Produto;
-import com.anjos_bolos.anjos_bolos_api.infrastructure.config.aws.s3.S3UploadService;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.config.aws.s3.S3Adapter;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.produto.ProdutoRequestDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.produto.ProdutoRespoonseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.mapper.ProdutoEntityMapper;
@@ -36,9 +36,10 @@ public class ProdutoController {
     private final GetProdutoByIdUseCase getProdutoByIdUseCase;
     private final ListProdutosByNomeUseCase listProdutosByNomeUseCase;
     private final ListProdutosByCategoriaProdutoIdUseCase listProdutosByCategoriaProdutoIdUseCase;
-    private final S3UploadService s3UploadService;
 
-    public ProdutoController(CreateProdutoUseCase createProdutoUseCase, UpdateProdutoUseCase updateProdutoUseCase, DeleteProdutoUseCase deleteProdutoUseCase, ListProdutosUseCase listProdutosUseCase, ListProdutosPagebleUseCase listProdutosPagebleUseCase, GetProdutoByIdUseCase getProdutoByIdUseCase, ListProdutosByNomeUseCase listProdutosByNomeUseCase, ListProdutosByCategoriaProdutoIdUseCase listProdutosByCategoriaProdutoIdUseCase, S3UploadService s3UploadService) {
+    private final S3Adapter s3Adapter;
+
+    public ProdutoController(CreateProdutoUseCase createProdutoUseCase, UpdateProdutoUseCase updateProdutoUseCase, DeleteProdutoUseCase deleteProdutoUseCase, ListProdutosUseCase listProdutosUseCase, ListProdutosPagebleUseCase listProdutosPagebleUseCase, GetProdutoByIdUseCase getProdutoByIdUseCase, ListProdutosByNomeUseCase listProdutosByNomeUseCase, ListProdutosByCategoriaProdutoIdUseCase listProdutosByCategoriaProdutoIdUseCase, S3Adapter s3Adapter) {
         this.createProdutoUseCase = createProdutoUseCase;
         this.updateProdutoUseCase = updateProdutoUseCase;
         this.deleteProdutoUseCase = deleteProdutoUseCase;
@@ -47,7 +48,7 @@ public class ProdutoController {
         this.getProdutoByIdUseCase = getProdutoByIdUseCase;
         this.listProdutosByNomeUseCase = listProdutosByNomeUseCase;
         this.listProdutosByCategoriaProdutoIdUseCase = listProdutosByCategoriaProdutoIdUseCase;
-        this.s3UploadService = s3UploadService;
+        this.s3Adapter = s3Adapter;
     }
 
     @Operation(summary = "Cadastrar novo Produto", description = "Cria e salva um novo Produto no Banco de Dados.")
@@ -86,7 +87,7 @@ public class ProdutoController {
             String nomeArquivo = ProdutoEntityMapper.toFileName(produto.getNome());
 
             // Upload para S3
-            String imageUrl = s3UploadService.uploadFile(nomeArquivo, imagem.getBytes());
+            String imageUrl = s3Adapter.uploadFile(nomeArquivo, imagem.getBytes());
 
             return ResponseEntity.status(201).body(imageUrl);
 
