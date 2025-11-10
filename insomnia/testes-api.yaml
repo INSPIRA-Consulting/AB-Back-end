@@ -1,0 +1,2748 @@
+_type: export
+__export_format: 4
+__export_date: 2025-11-10T20:50:51.948Z
+__export_source: insomnia.desktop.app:v10.3.1
+resources:
+  - _id: req_ce9051e1cfca4f93b75a3a030b51a26d
+    parentId: fld_bb0a126e3b304ff7a8680b59b5e0bf39
+    modified: 1761886552918
+    created: 1761741435148
+    url: localhost:8080/auth
+    name: Login Usuário
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_2fa8d12e0b414872af790729ec10d13a
+        name: email
+        value: murillo@email.com
+        description: ""
+        disabled: false
+      - id: pair_14d636922ac441a7898d54ad03a9a1c7
+        name: senha
+        value: "1234"
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+        id: pair_5a2d56eb23cf47e38b3db51803b38cfa
+    authentication: {}
+    metaSortKey: -1761741454332
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_bb0a126e3b304ff7a8680b59b5e0bf39
+    parentId: wrk_9d5e9159513043dcace9674ba6f98d92
+    modified: 1761741427034
+    created: 1761741427034
+    name: Auth
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1761741427034
+    environmentType: kv
+    _type: request_group
+  - _id: wrk_9d5e9159513043dcace9674ba6f98d92
+    parentId: null
+    modified: 1742086242202
+    created: 1742086167294
+    name: Testes - API
+    description: ""
+    scope: collection
+    _type: workspace
+  - _id: req_3e342c83aad140738e7777ced36576fb
+    parentId: fld_6e15c59178584c6fae69a0089f37b522
+    modified: 1761653465065
+    created: 1761653428731
+    url: http://localhost:8080/dashboards/menor-margem-lucro
+    name: Buscar Menor Margem Lucro (%)
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1761653433500
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_6e15c59178584c6fae69a0089f37b522
+    parentId: wrk_9d5e9159513043dcace9674ba6f98d92
+    modified: 1761653397195
+    created: 1761653397195
+    name: Dashboard
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1761653397195
+    environmentType: kv
+    _type: request_group
+  - _id: req_265030604904472dadb12e8d4d81680c
+    parentId: fld_6e15c59178584c6fae69a0089f37b522
+    modified: 1761653837542
+    created: 1761653832500
+    url: http://localhost:8080/dashboards/maior-margem-lucro
+    name: Buscar Maior Margem Lucro (%)
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1755017414857.5
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_ba47a3983ebb4d90aae93539a9026712
+    parentId: fld_6e15c59178584c6fae69a0089f37b522
+    modified: 1761656881240
+    created: 1761653857612
+    url: http://localhost:8080/dashboards/produtos-mais-vendidos
+    name: Buscar Produtos mais vendidos
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_551a40c05a91406dbf612fdb5c62224d
+        name: inicio
+        value: 2025-10-28
+        description: ""
+        disabled: false
+      - id: pair_9bb8ce91094541d4a25a5f4f1636387a
+        name: fim
+        value: 2025-10-28
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1751699405536.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_bebb07b85f8b420f893b43ebd7d2b3f2
+    parentId: fld_6e15c59178584c6fae69a0089f37b522
+    modified: 1761656888240
+    created: 1761653975328
+    url: http://localhost:8080/dashboards/pedidos-faturamento
+    name: Buscar Faturamento e Custos dos Pedidos
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_551a40c05a91406dbf612fdb5c62224d
+        name: inicio
+        value: 2025-10-28
+        description: ""
+        disabled: false
+      - id: pair_9bb8ce91094541d4a25a5f4f1636387a
+        name: fim
+        value: 2025-10-28
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1750040400875.625
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c87bc33a742e425db978bbbac6e7d715
+    parentId: fld_6e15c59178584c6fae69a0089f37b522
+    modified: 1761656900521
+    created: 1761654015472
+    url: http://localhost:8080/dashboards/produto-mais-vendido
+    name: Buscar Produto mais vendido no Período
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_551a40c05a91406dbf612fdb5c62224d
+        name: inicio
+        value: 2025-10-28
+        description: ""
+        disabled: false
+      - id: pair_9bb8ce91094541d4a25a5f4f1636387a
+        name: fim
+        value: 2025-10-28
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1749210898545.3125
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_eb69f798ba1544d6a0dfb8d0a83d5535
+    parentId: fld_6e15c59178584c6fae69a0089f37b522
+    modified: 1761656907457
+    created: 1761654040230
+    url: http://localhost:8080/dashboards/dia-semana-mais-vendas
+    name: Buscar Dia da Semana com mais Vendas no Período
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_551a40c05a91406dbf612fdb5c62224d
+        name: inicio
+        value: 2025-10-28
+        description: ""
+        disabled: false
+      - id: pair_9bb8ce91094541d4a25a5f4f1636387a
+        name: fim
+        value: 2025-10-28
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1748796147380.1562
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_f2b2d19790ae447a8f353eb44d2c34b7
+    parentId: fld_6e15c59178584c6fae69a0089f37b522
+    modified: 1762807685025
+    created: 1762806095506
+    url: http://localhost:8080/dashboards/feriados-nacionais
+    name: Buscar Feriados Nacionais
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_193a7aa3529d4f7ca45ef6d5ca08121e
+        name: ano
+        value: "2025"
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication:
+      type: bearer
+      token: ""
+    metaSortKey: -1748588771797.5781
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_73cd5bff6b27413ca9a7ff6229ca7f01
+    parentId: fld_7a07b89760d94f72a9462701cde76084
+    modified: 1761657172563
+    created: 1742086334338
+    url: http://localhost:8080/ingredientes
+    name: Cadastrar Ingrediente
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        { 
+        	"nome": "Cenoura", 
+        	"valorEmbalagem": 4, 
+        	"quantidadeEmbalagem": 4 
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086334338
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_7a07b89760d94f72a9462701cde76084
+    parentId: wrk_9d5e9159513043dcace9674ba6f98d92
+    modified: 1761682828774
+    created: 1742086254378
+    name: Ingrediente
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1742086254378
+    environmentType: kv
+    _type: request_group
+  - _id: req_dc822095dff84d5cb9e8b2a300aaed48
+    parentId: fld_7a07b89760d94f72a9462701cde76084
+    modified: 1742086315636
+    created: 1742086261145
+    url: localhost:8080/ingredientes
+    name: Listar Ingredientes
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086261145
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c242324f84394960bd5ccc381a59773a
+    parentId: fld_7a07b89760d94f72a9462701cde76084
+    modified: 1759440161883
+    created: 1759439668663
+    url: localhost:8080/ingredientes/4
+    name: Listar Ingredientes por ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1741814528993.375
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_0533e03894a64204bb4348bf6e573072
+    parentId: fld_7a07b89760d94f72a9462701cde76084
+    modified: 1759439972528
+    created: 1742089120723
+    url: localhost:8080/ingredientes/filtro-nome
+    name: Listar Ingredientes Por Nome
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_7c67931ae6a043eda703e7a838163f55
+        name: nome
+        value: i
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740999332538.5
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_8c7dcd0aa5b74dde926fe38c44198f19
+    parentId: fld_7a07b89760d94f72a9462701cde76084
+    modified: 1759440137899
+    created: 1742089566336
+    url: http://localhost:8080/ingredientes/3
+    name: Atualizar Ingrediente
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nome": "Farinha de Trigo",
+          "valorEmbalagem": 12.00,
+          "quantidadeEmbalagem": 1000.00
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868185.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_fc31ac1b8e7e4afb9299797d3d5408fc
+    parentId: fld_7a07b89760d94f72a9462701cde76084
+    modified: 1759440152170
+    created: 1742091133664
+    url: http://localhost:8080/ingredientes/4
+    name: Excluir Ingrediente
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868085.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_e90ed50b14a14faeb48f4f6dbf8c0e2a
+    parentId: fld_9e373e548c1c4ba0af89dfe2330e5e23
+    modified: 1761711875276
+    created: 1761710843185
+    url: http://localhost:8080/detalhamentos-pedidos
+    name: Cadastrar Detalhamento de Pedido
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "fkItemPedido": 1,
+          "fkReceita": 2,
+          "observacao": "Massa de Cenoura"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086334338
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_9e373e548c1c4ba0af89dfe2330e5e23
+    parentId: wrk_9d5e9159513043dcace9674ba6f98d92
+    modified: 1761710843182
+    created: 1761710843182
+    name: DetalhamentoPedido
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1742086254371.75
+    environmentType: kv
+    _type: request_group
+  - _id: req_a274694d075a41ae9d9714351eaa1016
+    parentId: fld_9e373e548c1c4ba0af89dfe2330e5e23
+    modified: 1761710955006
+    created: 1761710843184
+    url: localhost:8080/detalhamentos-pedidos
+    name: Listar Detalhamentos  dos Pedidos
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086261145
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a21bfd425aff4efd85a7515a3d79c333
+    parentId: fld_9e373e548c1c4ba0af89dfe2330e5e23
+    modified: 1761711888881
+    created: 1761710843188
+    url: localhost:8080/detalhamentos-pedidos/2
+    name: Listar Detalhamento de Pedido  por ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1741814528993.375
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_31ec0ea396b6499ba66cb3b063d8f943
+    parentId: fld_9e373e548c1c4ba0af89dfe2330e5e23
+    modified: 1761711782891
+    created: 1761710843186
+    url: localhost:8080/detalhamentos-pedidos/filtro-item-pedido/1
+    name: Listar Detalhamentos de Pedido por ID ItemPedido
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_7c67931ae6a043eda703e7a838163f55
+        name: nome
+        value: i
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740999332538.5
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_d238059c732140e495e75a9d74d79d26
+    parentId: fld_9e373e548c1c4ba0af89dfe2330e5e23
+    modified: 1761711957716
+    created: 1761710843187
+    url: http://localhost:8080/detalhamentos-pedidos/1
+    name: Atualizar Detalhamento de Pedido
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "fkItemPedido": 1,
+          "fkReceita": 2,
+          "observacao": "Massa de Cenoura"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868185.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_69a6e406e2fe452ca10c1af7120bde9d
+    parentId: fld_9e373e548c1c4ba0af89dfe2330e5e23
+    modified: 1761711906752
+    created: 1761710843188
+    url: http://localhost:8080/detalhamentos-pedidos/2
+    name: Excluir Detalhamento de Pedido
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868085.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_70d2f798e73c4ca5816e6d21b83ab273
+    parentId: fld_cbe2ff8683dd46a687c19d204a003c4b
+    modified: 1761657231880
+    created: 1759896814820
+    url: http://localhost:8080/receitas
+    name: Cadastrar Receita
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nome": "Massa de Cenoura",
+          "ingredientes": [
+            {
+              "ingredienteId": 1,
+              "quantidade": 4,
+              "unidadeMedida": "UNIDADE"
+            },
+        		{
+        			"ingredienteId": 2,
+              "quantidade": 400,
+              "unidadeMedida": "GRAMA"
+        		},
+        		{
+              "ingredienteId": 3,
+              "quantidade": 50,
+              "unidadeMedida": "GRAMA"
+            },
+        		{
+              "ingredienteId": 4,
+              "quantidade": 200,
+              "unidadeMedida": "MILILITRO"
+            },
+        		{
+              "ingredienteId": 5,
+              "quantidade": 100,
+              "unidadeMedida": "GRAMA"
+            },
+        		{
+              "ingredienteId": 6,
+              "quantidade": 20,
+              "unidadeMedida": "GRAMA"
+            },
+        		{
+              "ingredienteId": 11,
+              "quantidade": 4,
+              "unidadeMedida": "UNIDADE"
+            }
+          ],
+          "tipoReceitaId": 1
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086334338
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_cbe2ff8683dd46a687c19d204a003c4b
+    parentId: wrk_9d5e9159513043dcace9674ba6f98d92
+    modified: 1761657204062
+    created: 1759896814814
+    name: Receita
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1742086254365.5
+    environmentType: kv
+    _type: request_group
+  - _id: req_0c7c936b4e794c1eb738f94c0b434711
+    parentId: fld_cbe2ff8683dd46a687c19d204a003c4b
+    modified: 1759897263027
+    created: 1759896814817
+    url: localhost:8080/receitas
+    name: Listar Receita
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086261145
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_11eff8d34d5a4f798773e40d16ad690d
+    parentId: fld_cbe2ff8683dd46a687c19d204a003c4b
+    modified: 1760203208231
+    created: 1759896814826
+    url: localhost:8080/receitas/1
+    name: Buscar Receita por ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1741950395069.1875
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_71f79aa21d144709b83b1bc244509534
+    parentId: fld_cbe2ff8683dd46a687c19d204a003c4b
+    modified: 1760203242493
+    created: 1759896814822
+    url: localhost:8080/receitas/filtro-nome
+    name: Listar Receita Por Nome
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_06857727359643d089cb0aeccd0afca6
+        name: nome
+        value: Bolo
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1741474863803.8438
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_abf836778b104c83aaed240ef6abc3fa
+    parentId: fld_cbe2ff8683dd46a687c19d204a003c4b
+    modified: 1760203267904
+    created: 1759955637753
+    url: localhost:8080/receitas/filtro-ingredientes
+    name: Listar Receita Por Ingredientes
+    description: ""
+    method: GET
+    body:
+      mimeType: application/json
+      text: "[3]"
+    parameters:
+      - id: pair_a7a175eb45194634b0c9d8f3feb5598a
+        name: ""
+        value: ""
+        description: ""
+        disabled: false
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1741237098171.1719
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_cacb0d8343cc42d5b6101d4cca4b423f
+    parentId: fld_cbe2ff8683dd46a687c19d204a003c4b
+    modified: 1760203280661
+    created: 1759958428311
+    url: localhost:8080/receitas/tipo/1
+    name: Listar Receita Por TipoReceita
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_ce203349a61041e98f4bf66a68065fab
+        name: ""
+        value: ""
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1741118215354.836
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_f65b0ad874aa46249181db47b3e6aa8b
+    parentId: fld_cbe2ff8683dd46a687c19d204a003c4b
+    modified: 1760204256507
+    created: 1759896814824
+    url: http://localhost:8080/receitas/2
+    name: Atualizar Receita
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nome": "Bolo de Chocolate",
+          "ingredientes": [
+        		{
+        			"ingredienteId": 3,
+        			"nome": "Farinha de Trigo",
+        			"quantidade": 200.0,
+        			"unidadeMedida": "GRAMA"
+        		},
+        		{
+        			"ingredienteId": 7,
+        			"nome": "Ovo",
+        			"quantidade": 4.0,
+        			"unidadeMedida": "UNIDADE"
+        		},
+        		{
+        		"ingredienteId": 6,
+        		"quantidade": 200,
+        		"unidadeMedida": "GRAMA"
+        		}
+          ],
+          "tipoReceitaId": 1
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868185.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_8cd42a40622646f4b68556be328e2b9f
+    parentId: fld_cbe2ff8683dd46a687c19d204a003c4b
+    modified: 1761535500774
+    created: 1759896814825
+    url: http://localhost:8080/receitas/1
+    name: Excluir Receita
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868085.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c653b909c722455e8d0b0c2ef451b083
+    parentId: fld_bfda214d129149bcbe76c812fff00e00
+    modified: 1761535301393
+    created: 1758780079785
+    url: http://localhost:8080/categorias-produtos
+    name: Cadastrar CategoriaProduto
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nome": "Bolos Tradicionais",
+          "descricao": "Bolos Tradicionais que todos conhecem"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086334338
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_bfda214d129149bcbe76c812fff00e00
+    parentId: wrk_9d5e9159513043dcace9674ba6f98d92
+    modified: 1759446563827
+    created: 1758780079777
+    name: CategoriaProduto
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1742086254353
+    environmentType: kv
+    _type: request_group
+  - _id: req_132358bb9cb947c7891c984e5da885be
+    parentId: fld_bfda214d129149bcbe76c812fff00e00
+    modified: 1759439194438
+    created: 1758780079780
+    url: localhost:8080/categorias-produtos
+    name: Listar CategoriasProduto
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086261145
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_8bb47d4f1bd64fe39f6861c8e47875c3
+    parentId: fld_bfda214d129149bcbe76c812fff00e00
+    modified: 1759439401945
+    created: 1758780079788
+    url: localhost:8080/categorias-produtos/1
+    name: Buscar CategoriaProduto por ID
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_7c67931ae6a043eda703e7a838163f55
+        name: ""
+        value: ""
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740999332538.5
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_e103620ebf0d481ca115dced812adaf9
+    parentId: fld_bfda214d129149bcbe76c812fff00e00
+    modified: 1759439454382
+    created: 1759439250385
+    url: localhost:8080/categorias-produtos/filtro-nome
+    name: Buscar CategoriaProduto por Nome
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_7c67931ae6a043eda703e7a838163f55
+        name: nome
+        value: s
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740727600361.875
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_01951ccb5c0a4dacb511ef4595efb5e5
+    parentId: fld_bfda214d129149bcbe76c812fff00e00
+    modified: 1759439583489
+    created: 1758780079791
+    url: http://localhost:8080/categorias-produtos/2
+    name: Atualizar CategoriaProduto
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nome": "Bolos de Pote",
+          "descricao": "Bolos gelados de pote"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868185.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_319c6479e7774f929b22a08f1a5243b2
+    parentId: fld_bfda214d129149bcbe76c812fff00e00
+    modified: 1759439590262
+    created: 1758780079793
+    url: http://localhost:8080/categorias-produtos/3
+    name: Excluir CategoriaProduto
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868085.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_563d7ff5ec164fd5b98e2fdf1befd007
+    parentId: fld_1db654f986c24daa977f1882487be563
+    modified: 1761535258268
+    created: 1759351794758
+    url: http://localhost:8080/tipos-receitas
+    name: Cadastrar TipoReceita
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nome": "Massa",
+          "descricao": "Massa dos Bolos/Produtos"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086334338
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_1db654f986c24daa977f1882487be563
+    parentId: wrk_9d5e9159513043dcace9674ba6f98d92
+    modified: 1761437132552
+    created: 1759351794754
+    name: TipoReceita
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1742086254346.75
+    environmentType: kv
+    _type: request_group
+  - _id: req_49e62d5d0a78439cbeb9a57fd635c7b3
+    parentId: fld_1db654f986c24daa977f1882487be563
+    modified: 1759440610444
+    created: 1759351794755
+    url: localhost:8080/tipos-receitas
+    name: Listar TiposReceita
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086261145
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_8eae6ce7ad304a9d948238a4a5f2fa71
+    parentId: fld_1db654f986c24daa977f1882487be563
+    modified: 1759440539015
+    created: 1759440328089
+    url: localhost:8080/tipos-receitas/3
+    name: Buscar TipoReceita por ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1741950395069.1875
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_4541a2ca9d9d462395e1bb7df2f92068
+    parentId: fld_1db654f986c24daa977f1882487be563
+    modified: 1759440383876
+    created: 1759351794760
+    url: localhost:8080/tipos-receitas/filtro-nome
+    name: Listar TipoReceita Por Nome
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_7c67931ae6a043eda703e7a838163f55
+        name: nome
+        value: m
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740999332538.5
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_4d6d349673c74a1ba9915538ea48a9b8
+    parentId: fld_1db654f986c24daa977f1882487be563
+    modified: 1759440385811
+    created: 1759351794761
+    url: http://localhost:8080/tipos-receitas/2
+    name: Atualizar TipoReceita
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nome": "Farinha",
+          "valorEmbalagem": 12.00,
+          "quantidadeEmbalagem": 1000.00
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868185.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_6a4baf4c2633446d8bfd68c03c9ed280
+    parentId: fld_1db654f986c24daa977f1882487be563
+    modified: 1759440387965
+    created: 1759351794764
+    url: http://localhost:8080/tipos-receitas/2
+    name: Excluir TipoReceita
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868085.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_5c77a16de06d4bd9975cfce9e714aa7d
+    parentId: fld_5306ed0bb9484666ac298d10ecc19c29
+    modified: 1761657282694
+    created: 1758780088835
+    url: http://localhost:8080/produtos
+    name: Cadastrar Produto
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nome": "Bolo de Cenoura",
+          "precoFinal": 19.90,
+          "custoProducao": 13.3,
+          "categoriaProdutoId": 1
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086334338
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_5306ed0bb9484666ac298d10ecc19c29
+    parentId: wrk_9d5e9159513043dcace9674ba6f98d92
+    modified: 1761528679136
+    created: 1758780088832
+    name: Produto
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1742086254340.5
+    environmentType: kv
+    _type: request_group
+  - _id: req_fc9c06509af540dba877e9cd36bdfce0
+    parentId: fld_5306ed0bb9484666ac298d10ecc19c29
+    modified: 1759440620728
+    created: 1758780461074
+    url: localhost:8080/produtos/1/imagem
+    name: Upload Imagem S3
+    description: ""
+    method: PATCH
+    body:
+      mimeType: multipart/form-data
+      params:
+        - id: pair_5bae2ac8136c499abfc55c650c9a0891
+          name: imagem
+          value: ""
+          description: ""
+          disabled: false
+          type: file
+          fileName: /home/murillo/Downloads/bolo.jpeg
+    parameters:
+      - id: pair_f9cf8923c53c49c0872fe6daa49c2a13
+        name: ""
+        value: ""
+        description: ""
+        disabled: false
+    headers:
+      - name: Content-Type
+        value: multipart/form-data
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086297741.5
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_b7f664245b6b469c9c1dc212a4a16294
+    parentId: fld_5306ed0bb9484666ac298d10ecc19c29
+    modified: 1759440604707
+    created: 1758780088833
+    url: localhost:8080/produtos
+    name: Listar Produtos
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086261145
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_07b574f973844f8ab27ea1e86256dab7
+    parentId: fld_5306ed0bb9484666ac298d10ecc19c29
+    modified: 1759441778185
+    created: 1759440631463
+    url: localhost:8080/produtos/3
+    name: Buscar Produto por ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742018328107.0938
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_ddf90d359d8e47cab90937f93312e283
+    parentId: fld_5306ed0bb9484666ac298d10ecc19c29
+    modified: 1759441789788
+    created: 1758780088836
+    url: localhost:8080/produtos/filtro-nome
+    name: Listar Produtos Por Nome
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_7c67931ae6a043eda703e7a838163f55
+        name: nome
+        value: m
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740999332538.5
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_4b4f54e2092649c4892221651f190ffc
+    parentId: fld_5306ed0bb9484666ac298d10ecc19c29
+    modified: 1759441799519
+    created: 1759440670783
+    url: localhost:8080/produtos/categoria/1
+    name: Listar Produtos Por CategoriaProduto
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_d0bd28f43f8d4dc8841bc12800d03e1e
+        name: ""
+        value: ""
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740863466450.1875
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_778e31ca3c18451db7cd8d61526675af
+    parentId: fld_5306ed0bb9484666ac298d10ecc19c29
+    modified: 1759441816975
+    created: 1758780088838
+    url: http://localhost:8080/produtos/3
+    name: Atualizar Produto
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nome": "Bolo de Fubá",
+          "precoFinal": 14.90,
+          "categoriaProdutoId": 1
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868185.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a74ae23f8e5f47bf804ab0266dd6bcfb
+    parentId: fld_5306ed0bb9484666ac298d10ecc19c29
+    modified: 1759441760733
+    created: 1758780088839
+    url: http://localhost:8080/produtos/2
+    name: Excluir Produto
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868085.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_5b121c73bebb4dd7b32debe2a3b891e5
+    parentId: fld_bb9353660a85450db30e151cdddc5f76
+    modified: 1761656793545
+    created: 1761522069903
+    url: http://localhost:8080/pedidos
+    name: Cadastrar Pedido
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "dataPedido": "2025-10-28 10:20:00",
+          "dataRetirada": "2025-10-28 10:20:00",
+          "dataPagamento": "2025-10-28 10:20:00",
+          "formaPagamento": "VOUCHER",
+          "status": "FINALIZADO",
+          "observacao": "Pedido Realizado e Pago",
+          "usuarioId": 1,
+          "clienteId": 1
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086334338
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_bb9353660a85450db30e151cdddc5f76
+    parentId: wrk_9d5e9159513043dcace9674ba6f98d92
+    modified: 1761525542277
+    created: 1761522069901
+    name: Pedido
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1742086254337.375
+    environmentType: kv
+    _type: request_group
+  - _id: req_f732689c8ad748ec8a6a9ffbc3fb77c4
+    parentId: fld_bb9353660a85450db30e151cdddc5f76
+    modified: 1761522167581
+    created: 1761522069902
+    url: localhost:8080/pedidos
+    name: Listar Pedidos
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086261145
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a1986f79be9745569d6eefa2c54aa955
+    parentId: fld_bb9353660a85450db30e151cdddc5f76
+    modified: 1761528676410
+    created: 1761522069907
+    url: localhost:8080/pedidos/1
+    name: Buscar Pedido por ID
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_2455e1157a054a86a4c209ffcdaefd34
+        name: ""
+        value: ""
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742018328107.0938
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_d2699b93fcb94b0881c0c241098a5904
+    parentId: fld_bb9353660a85450db30e151cdddc5f76
+    modified: 1761524088526
+    created: 1761522069903
+    url: localhost:8080/pedidos/filtro-cliente/2
+    name: Listar Pedidos por ID Cliente
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_14a7c44160ec44429ed8fbf9dfa8aca6
+        name: ""
+        value: ""
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740999332538.5
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_d76a0e360f6b4f82b983e9d4b8606cec
+    parentId: fld_bb9353660a85450db30e151cdddc5f76
+    modified: 1761525394803
+    created: 1761522099991
+    url: localhost:8080/pedidos/filtro-cliente
+    name: Listar Pedidos por CPF Cliente
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_7c67931ae6a043eda703e7a838163f55
+        name: clienteCpf
+        value: 111.222.333-44
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740982349277.461
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_8f7b801fe64f4e08b188dc36d3e4e202
+    parentId: fld_bb9353660a85450db30e151cdddc5f76
+    modified: 1761524611730
+    created: 1761522069908
+    url: localhost:8080/pedidos/filtro-data-pedido
+    name: Listar Produtos Por Data do Pedido
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_d0bd28f43f8d4dc8841bc12800d03e1e
+        name: dataPedido
+        value: 2025-10-26 10:20:00
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740863466450.1875
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_1bf75877a9474a7a9c5229bd1b0b73a7
+    parentId: fld_bb9353660a85450db30e151cdddc5f76
+    modified: 1761524664164
+    created: 1761522115482
+    url: localhost:8080/pedidos/filtro-data-retirada
+    name: Listar Produtos Por Data de Retirada
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_d0bd28f43f8d4dc8841bc12800d03e1e
+        name: dataPedido
+        value: 2025-10-26 10:20:00
+        description: ""
+        disabled: false
+      - id: pair_178a902c05d344bbbd10ad7d78483b26
+        name: dataRetirada
+        value: 2025-10-26 10:20:00
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740795533406.0312
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c7a31f7e0b714e059e2f240f32549a52
+    parentId: fld_bb9353660a85450db30e151cdddc5f76
+    modified: 1761524702664
+    created: 1761522123219
+    url: localhost:8080/pedidos/filtro-data-pagamento
+    name: Listar Produtos Por Data de Pagamento
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_d0bd28f43f8d4dc8841bc12800d03e1e
+        name: dataPagamento
+        value: 2025-10-26 10:20:00
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740761566883.9531
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_b19d467f001f44408a2093dc39b5a373
+    parentId: fld_bb9353660a85450db30e151cdddc5f76
+    modified: 1761524016611
+    created: 1761522137222
+    url: localhost:8080/pedidos/filtro-forma-pagamento
+    name: Listar Produtos Por Forma de Pagamento
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_d0bd28f43f8d4dc8841bc12800d03e1e
+        name: formaPagamento
+        value: VOUCHER
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740744583622.914
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_01d4430386ba40e8b534420291265100
+    parentId: fld_bb9353660a85450db30e151cdddc5f76
+    modified: 1761524064190
+    created: 1761523758770
+    url: localhost:8080/pedidos/filtro-status
+    name: Listar Produtos Por Status do Pedido
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_d0bd28f43f8d4dc8841bc12800d03e1e
+        name: status
+        value: CONFIRMADO
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740736091992.3945
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_80cbb89548aa48cbb0135d297f359117
+    parentId: fld_bb9353660a85450db30e151cdddc5f76
+    modified: 1761525497547
+    created: 1761522069905
+    url: http://localhost:8080/pedidos/2
+    name: Atualizar Pedido
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "dataPedido": "2025-10-26 10:20:00",
+          "dataRetirada": "2025-10-26 10:20:00",
+          "dataPagamento": "2025-10-26 10:20:00",
+          "formaPagamento": "VOUCHER",
+          "status": "FINALIZADO",
+          "observacao": "Pedido FINALIZADO",
+          "usuarioId": 4,
+          "clienteId": 2
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868185.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a94a2ad4a9ab4e868723e3240b4c623f
+    parentId: fld_bb9353660a85450db30e151cdddc5f76
+    modified: 1761525466441
+    created: 1761522069905
+    url: http://localhost:8080/pedidos/1
+    name: Excluir Pedido
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868085.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_98ad7248db014810a0880e37b2f7cf41
+    parentId: fld_82b239e2df4d42f6829ac2109b282276
+    modified: 1761657330382
+    created: 1761528659326
+    url: http://localhost:8080/itens-pedido
+    name: Cadastrar ItemPedido
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "pedidoId": 2,
+          "produtoId": 2,
+          "quantidade": 2,
+          "peso": 1000.00
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086334338
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_82b239e2df4d42f6829ac2109b282276
+    parentId: wrk_9d5e9159513043dcace9674ba6f98d92
+    modified: 1761528659324
+    created: 1761528659324
+    name: ItemPedido
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1742086254335.8125
+    environmentType: kv
+    _type: request_group
+  - _id: req_8dc35b99de47441c836948391cce59c1
+    parentId: fld_82b239e2df4d42f6829ac2109b282276
+    modified: 1761528908652
+    created: 1761528659325
+    url: localhost:8080/itens-pedido
+    name: Listar ItensPedido
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086261145
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_4c24ffc5fafb4ac7a962efb5b38b5df5
+    parentId: fld_82b239e2df4d42f6829ac2109b282276
+    modified: 1761528912508
+    created: 1761528659328
+    url: localhost:8080/itens-pedido/1
+    name: Buscar ItemPedido por ID
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_2455e1157a054a86a4c209ffcdaefd34
+        name: ""
+        value: ""
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742018328107.0938
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_42e26f9ad3f34f4188080a90b7f9962e
+    parentId: fld_82b239e2df4d42f6829ac2109b282276
+    modified: 1761657353794
+    created: 1761528659327
+    url: localhost:8080/itens-pedido/filtro-pedido/2
+    name: Listar Pedidos por ID Pedido
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_14a7c44160ec44429ed8fbf9dfa8aca6
+        name: ""
+        value: ""
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740999332538.5
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_73e0dbc625434131a7f8cfe8501fb7d1
+    parentId: fld_82b239e2df4d42f6829ac2109b282276
+    modified: 1761531091105
+    created: 1761528659328
+    url: http://localhost:8080/itens-pedido/2
+    name: Atualizar ItemPedido
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "pedidoId": 2,
+          "produtoId": 4,
+          "quantidade": 1,
+          "valorFinal": 14.90,
+          "custoProducao": 7.00,
+          "peso": 500.00
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868185.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_803d38110319493d954fb7db98f3b4e1
+    parentId: fld_82b239e2df4d42f6829ac2109b282276
+    modified: 1761533294707
+    created: 1761528659328
+    url: http://localhost:8080/itens-pedido/1
+    name: Excluir ItemPedido
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868085.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_2b52b9eb8ef94c0d80717ce064a54b3a
+    parentId: fld_3a8039409bb949b08658f66d4775ab81
+    modified: 1761657313739
+    created: 1761430209381
+    url: http://localhost:8080/composicoes-produto
+    name: Cadastrar Composição
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "produtoId": 2,
+          "receitas": [
+            {
+              "receitaId": 2,
+              "quantidade": 1,
+              "observacao": "Massa para Bolo de Cenoura"
+            }
+          ]
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086334338
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_3a8039409bb949b08658f66d4775ab81
+    parentId: wrk_9d5e9159513043dcace9674ba6f98d92
+    modified: 1761430209379
+    created: 1761430209379
+    name: ComposicaoProduto
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1742086254334.25
+    environmentType: kv
+    _type: request_group
+  - _id: req_c673242881954c0dba8197deb35b4b41
+    parentId: fld_3a8039409bb949b08658f66d4775ab81
+    modified: 1761657099943
+    created: 1761430209380
+    url: localhost:8080/composicoes-produto/
+    name: Listar Composições por ID Produto
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086261145
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_e9250712e7bf4d39807eeca523ae6611
+    parentId: fld_3a8039409bb949b08658f66d4775ab81
+    modified: 1761440072987
+    created: 1761430209382
+    url: http://localhost:8080/composicoes-produto/4
+    name: Atualizar Composição
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "produtoId": 4,
+          "receitas": [
+            {
+              "receitaId": 2,
+              "quantidade": 1,
+              "observacao": "Massa para Bolo de Chocolate"
+            },
+        		{
+              "receitaId": 3,
+              "quantidade": 1,
+              "observacao": "2ª Massa para Bolo de Chocolate"
+            }
+          ]
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868185.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_f863e58a9d8a4a49ba62d58c31ad5695
+    parentId: fld_3a8039409bb949b08658f66d4775ab81
+    modified: 1761430930636
+    created: 1761430209383
+    url: http://localhost:8080/composicoes-produto/4
+    name: Excluir Composição
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868085.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_76589d0dfb214d41a6f578502a5ff229
+    parentId: fld_a82e59aa1c9f4758aa57ba9f1d4dda8b
+    modified: 1761872103496
+    created: 1758076500563
+    url: http://localhost:8080/usuarios
+    name: Cadastrar Usuário
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nome": "Murillo Moreira",
+          "cpf": "111.222.333-44",
+          "email": "murillo@email.com",
+          "senha": "1234",
+          "telefone": "(11) 99135-5474",
+          "funcao": "ATENDENTE"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086334338
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_a82e59aa1c9f4758aa57ba9f1d4dda8b
+    parentId: wrk_9d5e9159513043dcace9674ba6f98d92
+    modified: 1759442252434
+    created: 1758076500561
+    name: Usuário
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1742086254328
+    environmentType: kv
+    _type: request_group
+  - _id: req_309e75bfe72b49d7b5f95f7a58f9f969
+    parentId: fld_a82e59aa1c9f4758aa57ba9f1d4dda8b
+    modified: 1761886542395
+    created: 1758076500562
+    url: http://localhost:8080/usuarios
+    name: Listar Usuários
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtdXJpbGxvQGVtYWlsLmNvbSIsImlhdCI6MTc2MTg4NjUwOCwiZXhwIjoxNzY1NDg2NTA4fQ.e1K6tHgD-GmBGPrV11-9xzv2L7Dd8x28BmyK8NNcAFMYT9k0FZYsXPB7zYOu-HkuuDkclerak0lk5_CGYhYCKA
+    metaSortKey: -1742086261145
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_248a29d8f3204bbeb7f82eb08becc3bf
+    parentId: fld_a82e59aa1c9f4758aa57ba9f1d4dda8b
+    modified: 1759444497135
+    created: 1759444486368
+    url: http://localhost:8080/usuarios/3
+    name: Buscar Usuário por ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742052294626.0469
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_4db2fd08b0bc43e997f228ba114f836a
+    parentId: fld_a82e59aa1c9f4758aa57ba9f1d4dda8b
+    modified: 1759444664722
+    created: 1759444540196
+    url: http://localhost:8080/usuarios/filtro-cpf
+    name: Buscar Usuário por CPF
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_1d71a9cfff5a490da96b9bd98b451e8a
+        name: cpf
+        value: 111.222.333-44
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742035311366.5703
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_2881df59843c439fb2948f678c0bcb96
+    parentId: fld_a82e59aa1c9f4758aa57ba9f1d4dda8b
+    modified: 1759444699603
+    created: 1759444547893
+    url: http://localhost:8080/usuarios/filtro-email
+    name: Buscar Usuário por Email
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_4faf7b26c95b40bd99df65aea894fa65
+        name: email
+        value: murillo@email.com
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742026819736.832
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_6924543cb0df4b62b14aea4fa33b30af
+    parentId: fld_a82e59aa1c9f4758aa57ba9f1d4dda8b
+    modified: 1759444466510
+    created: 1758076500563
+    url: localhost:8080/usuarios/filtro-nome
+    name: Listar Usuários Por Nome
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_7c67931ae6a043eda703e7a838163f55
+        name: nome
+        value: M
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740999332538.5
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_c3e1e060df5643ecba9a642761a057cd
+    parentId: fld_a82e59aa1c9f4758aa57ba9f1d4dda8b
+    modified: 1759444776381
+    created: 1759444752212
+    url: localhost:8080/usuarios/filtro-funcao
+    name: Listar Usuários Por Função
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_7c67931ae6a043eda703e7a838163f55
+        name: funcao
+        value: ATENDENTE
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740931399494.3438
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_a71a082cc59f4bf080aa3702c27c5d28
+    parentId: fld_a82e59aa1c9f4758aa57ba9f1d4dda8b
+    modified: 1759445720378
+    created: 1758076500564
+    url: http://localhost:8080/usuarios/3
+    name: Atualizar Usuário
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nome": "Murillo Moreira",
+          "cpf": "111.222.333-44",
+          "email": "murillo@email.com",
+          "senha": "1234",
+          "telefone": "(11) 99135-5474",
+          "funcao": "GERENTE"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868185.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_2ece4aac98c94a3692b8fcb4210dd21a
+    parentId: fld_a82e59aa1c9f4758aa57ba9f1d4dda8b
+    modified: 1761875846217
+    created: 1758076500564
+    url: http://localhost:8080/usuarios/3
+    name: Excluir Usuário
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868085.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_79a35623383b4c7a863325868b72b5b5
+    parentId: fld_d495cb93f4324e31939d963b10a3cb9b
+    modified: 1759445847338
+    created: 1759434530114
+    url: http://localhost:8080/clientes
+    name: Cadastrar Cliente
+    description: ""
+    method: POST
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nome": "Murillo Moreira",
+          "cpf": "111.222.333-44",
+          "telefone": "(99) 99999-9999"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086334338
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: fld_d495cb93f4324e31939d963b10a3cb9b
+    parentId: wrk_9d5e9159513043dcace9674ba6f98d92
+    modified: 1759434530112
+    created: 1759434530112
+    name: Cliente
+    description: ""
+    environment: {}
+    environmentPropertyOrder: null
+    metaSortKey: -1742086254278
+    environmentType: kv
+    _type: request_group
+  - _id: req_ef5f052fb291479bbb22b8af9b9a9b9f
+    parentId: fld_d495cb93f4324e31939d963b10a3cb9b
+    modified: 1759434558782
+    created: 1759434530113
+    url: http://localhost:8080/clientes
+    name: Listar Clientes
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742086261145
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_f0c69f754619478884714af0bf7bbf18
+    parentId: fld_d495cb93f4324e31939d963b10a3cb9b
+    modified: 1759446010538
+    created: 1759445933480
+    url: http://localhost:8080/clientes/1
+    name: Buscar Cliente por ID
+    description: ""
+    method: GET
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1742069277885.5234
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_04dd8af1120d49eeb6835e123fa79434
+    parentId: fld_d495cb93f4324e31939d963b10a3cb9b
+    modified: 1759446077335
+    created: 1759434530114
+    url: localhost:8080/clientes/filtro-nome
+    name: Listar Clientes Por Nome
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_7c67931ae6a043eda703e7a838163f55
+        name: nome
+        value: m
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740999332538.5
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_dad7c59ce08849009623456175e079d5
+    parentId: fld_d495cb93f4324e31939d963b10a3cb9b
+    modified: 1759446156929
+    created: 1759446047453
+    url: localhost:8080/clientes/filtro-cpf
+    name: Buscar Cliente Por CPF
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_7c67931ae6a043eda703e7a838163f55
+        name: cpf
+        value: 111.222.333-44
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740965366016.4219
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_f971204398a547ab905260fe31d6a6a1
+    parentId: fld_d495cb93f4324e31939d963b10a3cb9b
+    modified: 1759446257413
+    created: 1759434530115
+    url: http://localhost:8080/clientes/1
+    name: Atualizar Cliente
+    description: ""
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+          "nome": "Murillo Moreira",
+          "cpf": "111.222.333-44",
+          "telefone": "(11) 99999-9999"
+        }
+    parameters: []
+    headers:
+      - name: Content-Type
+        value: application/json
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868185.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_d237ab80f8db4c7bb64eca8bf6a951b8
+    parentId: fld_d495cb93f4324e31939d963b10a3cb9b
+    modified: 1759446371960
+    created: 1759434530115
+    url: http://localhost:8080/clientes/1
+    name: Excluir Cliente
+    description: ""
+    method: DELETE
+    body: {}
+    parameters: []
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication: {}
+    metaSortKey: -1740455868085.25
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: env_417825b92af885cda2c1ab2c8c4b5271052fc7fc
+    parentId: wrk_9d5e9159513043dcace9674ba6f98d92
+    modified: 1742086167297
+    created: 1742086167297
+    name: Base Environment
+    data: {}
+    dataPropertyOrder: null
+    color: null
+    isPrivate: false
+    metaSortKey: 1742086167297
+    environmentType: kv
+    _type: environment
+  - _id: jar_417825b92af885cda2c1ab2c8c4b5271052fc7fc
+    parentId: wrk_9d5e9159513043dcace9674ba6f98d92
+    modified: 1758115655665
+    created: 1742086167300
+    name: Default Jar
+    cookies:
+      - key: JSESSIONID
+        value: D02C178431F6DD7863499EF0D0470CA1
+        domain: localhost
+        path: /
+        httpOnly: true
+        hostOnly: true
+        creation: 2025-09-17T02:18:13.703Z
+        lastAccessed: 2025-09-17T13:27:35.664Z
+        id: e1fe12cc-45ac-4e80-813a-fc2fdb930ff5
+    _type: cookie_jar
