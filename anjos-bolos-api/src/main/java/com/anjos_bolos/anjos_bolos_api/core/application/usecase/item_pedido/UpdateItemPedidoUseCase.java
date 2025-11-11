@@ -41,7 +41,7 @@ public class UpdateItemPedidoUseCase {
         itemPedido.setPedido(pedido);
         itemPedido.setProduto(produto);
         itemPedido.setQuantidade(command.quantidade());
-        itemPedido.setValorFinal(produto.getPrecoFinal());
+        itemPedido.setPrecoUnitario(produto.getPrecoFinal());
         itemPedido.setCustoProducao(produto.getCustoProducao());
         itemPedido.setPeso(command.peso());
 

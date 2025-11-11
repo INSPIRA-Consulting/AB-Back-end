@@ -9,28 +9,28 @@ public class ItemPedido {
     private Pedido pedido;
     private Produto produto;
     private Integer quantidade;
-    private Double valorFinal;
+    private Double precoUnitario;
     private Double custoProducao;
     private Double peso;
 
     public ItemPedido() {
     }
 
-    public ItemPedido(Pedido pedido, Produto produto, Integer quantidade, Double valorFinal, Double custoProducao, Double peso) {
+    public ItemPedido(Pedido pedido, Produto produto, Integer quantidade, Double precoUnitario, Double custoProducao, Double peso) {
         this.pedido = pedido;
         this.produto = produto;
         this.quantidade = quantidade;
-        this.valorFinal = valorFinal;
+        this.precoUnitario = precoUnitario;
         this.custoProducao = custoProducao;
         this.peso = peso;
     }
 
-    public ItemPedido(Integer id, Pedido pedido, Produto produto, Integer quantidade, Double valorFinal, Double custoProducao, Double peso) {
+    public ItemPedido(Integer id, Pedido pedido, Produto produto, Integer quantidade, Double precoUnitario, Double custoProducao, Double peso) {
         this.id = id;
         this.pedido = pedido;
         this.produto = produto;
         this.quantidade = quantidade;
-        this.valorFinal = valorFinal;
+        this.precoUnitario = precoUnitario;
         this.custoProducao = custoProducao;
         this.peso = peso;
     }
@@ -67,12 +67,12 @@ public class ItemPedido {
         this.quantidade = quantidade;
     }
 
-    public Double getValorFinal() {
-        return valorFinal;
+    public Double getPrecoUnitario() {
+        return precoUnitario;
     }
 
-    public void setValorFinal(Double valorFinal) {
-        this.valorFinal = valorFinal;
+    public void setPrecoUnitario(Double precoUnitario) {
+        this.precoUnitario = precoUnitario;
     }
 
     public Double getCustoProducao() {

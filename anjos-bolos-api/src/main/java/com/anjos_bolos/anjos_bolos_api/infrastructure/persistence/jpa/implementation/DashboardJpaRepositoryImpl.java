@@ -98,7 +98,7 @@ public class DashboardJpaRepositoryImpl implements DashboardJpaRepository {
                     SELECT NEW com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.PedidosFaturamentoResponseDTO(
                         COUNT(DISTINCT pd.id),
                         SUM(ip.quantidade),
-                        ROUND(SUM(ip.valorFinal * ip.quantidade), 2),
+                        ROUND(SUM(ip.precoUnitario * ip.quantidade), 2),
                         ROUND(SUM(ip.custoProducao * ip.quantidade), 2)
                     )
                     FROM PedidoEntity pd, ItemPedidoEntity ip, ProdutoEntity p

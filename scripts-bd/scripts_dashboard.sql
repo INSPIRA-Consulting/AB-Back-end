@@ -34,13 +34,15 @@ GROUP BY p.id;
 -- VENDAS TOTAIS POR PERÍODO -----------------------------------------------------------------------------
 SELECT 	  COUNT(DISTINCT pd.id) 								AS quantidadePedidos
 		, SUM(ip.quantidade) 									AS quantidadeProdutosVendidos
-		, ROUND(SUM(ip.valorFinal * ip.quantidade), 2) 			AS faturamento
+		, ROUND(SUM(ip.precoUnitario * ip.quantidade), 2) 			AS faturamento
 		, ROUND(SUM(ip.custoProducao * ip.quantidade)) 			AS custos
+        , DATE(pd.dataRetirada)									AS dataPedido
 FROM Pedido pd
 JOIN Item_Pedido ip 											ON ip.fkPedido = pd.id
 JOIN Produto p 													ON p.id = ip.fkProduto
-WHERE pd.dataPedido 											BETWEEN '2025-10-01' AND '2025-10-31'
+WHERE pd.dataPedido 											BETWEEN '2025-11-01' AND '2025-11-30'
 AND pd.status 													= 'FINALIZADO'
+GROUP BY DATE(pd.dataRetirada);
 
 -- PRODUTO MAIS VENDIDO NO PERÍODO
 SELECT p.nome 													AS produtoMaisVendido

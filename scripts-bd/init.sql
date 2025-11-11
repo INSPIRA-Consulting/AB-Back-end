@@ -1,5 +1,5 @@
 -- Criação da Database
--- drop database anjos_bolos;
+DROP DATABASE IF EXISTS anjos_bolos;
 CREATE DATABASE IF NOT EXISTS anjos_bolos;
 USE anjos_bolos;
 
@@ -171,7 +171,7 @@ CREATE TABLE Detalhamento_Pedido (
 -- Usuários
 -- =======================
 INSERT INTO Usuario (nome, cpf, email, senha, telefone, funcao) VALUES
-('root', '999.999.999-99', 'inspira@gmail.com', '$2a$10$P42PeHwYl2WTPhqC.8PMt.xdO8p18rG5VuEp2OiPzKOqFO0KYFjKu', '(11)99999-9999', 'ADMINISTRADOR'),
+('root', '999.999.999-99', 'inspira@email.com', '$2a$10$P42PeHwYl2WTPhqC.8PMt.xdO8p18rG5VuEp2OiPzKOqFO0KYFjKu', '(11)99999-9999', 'ADMINISTRADOR'),
 ('Ana Souza', '123.456.789-00', 'ana@anjosbolos.com', 'senha123', '(11)90000-0001', 'ATENDENTE'),
 ('Carla Mendes', '123.123.123-12', 'carla@anjosbolos.com', 'senha123', '(11)90000-0003', 'GERENTE');
 
@@ -328,11 +328,11 @@ INSERT INTO Composicao_Produto (fkProduto, fkReceita, fkIngrediente, quantidade,
 -- Pedidos
 -- =======================
 INSERT INTO Pedido (dataPedido, dataRetirada, dataPagamento, formaPagamento, status, observacao, fkUsuarioResponsavel, fkCliente) VALUES
-('2025-10-20 10:00:00', '2025-10-22 18:00:00', '2025-10-20 10:30:00', 'CARTAO_CREDITO', 'FINALIZADO', 'Bolo para aniversário', 2, 1),
-('2025-10-25 09:00:00', NULL, NULL, 'PIX', 'FINALIZADO', 'Pedido especial de festa', 1, 2),
-('2025-11-01 09:30:00', '2025-11-03 16:00:00', '2025-11-01 10:00:00', 'PIX', 'FINALIZADO', 'Bolo aniversário infantil', 1, 3),
-('2025-11-02 14:15:00', NULL, NULL, 'DINHEIRO', 'PENDENTE_PAGAMENTO', 'Pedido aguardando pagamento', 2, 5),
-('2025-11-03 08:00:00', '2025-11-03 12:30:00', '2025-11-03 08:10:00', 'CARTAO_DEBITO', 'FINALIZADO', NULL, 1, 8);
+('2025-10-20 10:00:00', '2025-10-22 18:00:00', '2025-10-22 18:00:00', 'CARTAO_CREDITO', 'FINALIZADO', 'Bolo para Aniversário', 2, 1),
+('2025-10-25 09:00:00', '2025-10-29 16:30:00', '2025-10-29 16:30:00', 'PIX', 'FINALIZADO', 'Pedido Especial de Festa', 1, 2),
+('2025-11-01 09:30:00', '2025-11-03 15:00:00', '2025-11-03 15:00:00', 'PIX', 'FINALIZADO', 'Bolo Aniversário Infantil', 1, 3),
+('2025-11-02 14:15:00', '2025-11-03 17:30:00', NULL, 'DINHEIRO', 'PENDENTE_PAGAMENTO', 'Pedido aguardando Pagamento', 2, 5),
+('2025-11-03 08:00:00', '2025-11-04 12:30:00', '2025-11-04 12:30:00', 'CARTAO_DEBITO', 'FINALIZADO', NULL, 1, 8);
 
 -- =======================
 -- Itens do Pedido

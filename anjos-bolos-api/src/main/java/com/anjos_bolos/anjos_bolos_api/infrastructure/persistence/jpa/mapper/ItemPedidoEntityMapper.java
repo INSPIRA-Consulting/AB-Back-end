@@ -14,7 +14,7 @@ public class ItemPedidoEntityMapper {
                 domain.getPedido().getId(),
                 domain.getProduto().getNome(),
                 domain.getQuantidade(),
-                domain.getValorFinal(),
+                domain.getPrecoUnitario(),
                 domain.getCustoProducao(),
                 domain.getPeso()
         );
@@ -57,7 +57,7 @@ public class ItemPedidoEntityMapper {
                 PedidoEntityMapper.toEntity(domain.getPedido()),
                 ProdutoEntityMapper.toEntity(domain.getProduto()),
                 domain.getQuantidade(),
-                domain.getValorFinal(),
+                domain.getPrecoUnitario(),
                 domain.getCustoProducao(),
                 domain.getPeso()
         );
@@ -69,7 +69,7 @@ public class ItemPedidoEntityMapper {
                 PedidoEntityMapper.toDomain(entity.getPedido()),
                 ProdutoEntityMapper.toDomain(entity.getProduto()),
                 entity.getQuantidade(),
-                entity.getValorFinal(),
+                entity.getPrecoUnitario(),
                 entity.getCustoProducao(),
                 entity.getPeso()
         );

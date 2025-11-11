@@ -5,7 +5,7 @@ public record ItemPedidoResponseDTO(
         Integer pedidoId,
         String produto,
         Integer quantidade,
-        Double valorFinal,
+        Double precoUnitario,
         Double custoProducao,
         Double peso
 ) {}
