@@ -39,13 +39,16 @@ public class DashboardMapper {
         return new GetPedidosFaturamentoQuery(inicio, fim);
     }
 
-    public static PedidosFaturamentoResponseDTO toResponse(PedidosFaturamentoDTO domain) {
-        return new PedidosFaturamentoResponseDTO(
-                domain.quantidadePedidos(),
-                domain.quantidadeProdutosVendidos(),
-                domain.faturamento(),
-                domain.custos()
-        );
+    public static List<PedidosFaturamentoResponseDTO> toFaturamentoResponse(List<PedidosFaturamentoDTO> domain) {
+        return domain.stream()
+                .map(faturamento -> new PedidosFaturamentoResponseDTO(
+                        faturamento.quantidadePedidos(),
+                        faturamento.quantidadeProdutosVendidos(),
+                        faturamento.faturamento(),
+                        faturamento.custos(),
+                        faturamento.dataPedido()
+                ))
+                .toList();
     }
 
     public static PedidosFaturamentoDTO toDTO(PedidosFaturamentoResponseDTO domain) {
@@ -53,7 +56,8 @@ public class DashboardMapper {
                 domain.quantidadePedidos(),
                 domain.quantidadeProdutosVendidos(),
                 domain.faturamento(),
-                domain.custos()
+                domain.custos(),
+                domain.dataPedido()
         );
     }
 
@@ -61,7 +65,7 @@ public class DashboardMapper {
         return new ListProdutosMaisVendidosQuery(inicio, fim, limit);
     }
 
-    public static List<ProdutoVendidoResponseDTO> toResponse(List<ProdutoVendidoDTO> domain) {
+    public static List<ProdutoVendidoResponseDTO> toProdutosVendidosResponse(List<ProdutoVendidoDTO> domain) {
         return domain.stream()
                 .map(produto -> new ProdutoVendidoResponseDTO(
                         produto.nomeProduto(),

@@ -15,7 +15,7 @@ public interface DashboardGateway {
 
     List<ProdutoVendidoDTO> listProdutosMaisVendidos(LocalDate inicio, LocalDate fim, Integer limit);
 
-    PedidosFaturamentoDTO getPedidosFaturamento(LocalDate inicio, LocalDate fim);
+    List<PedidosFaturamentoDTO> getPedidosFaturamento(LocalDate inicio, LocalDate fim);
 
     String getProdutoMaisVendido(LocalDate inicio, LocalDate fim, Integer limit);
 

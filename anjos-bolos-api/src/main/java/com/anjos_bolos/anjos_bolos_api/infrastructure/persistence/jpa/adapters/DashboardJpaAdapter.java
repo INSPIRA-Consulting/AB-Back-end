@@ -39,8 +39,11 @@ public class DashboardJpaAdapter implements DashboardGateway {
     }
 
     @Override
-    public PedidosFaturamentoDTO getPedidosFaturamento(LocalDate inicio, LocalDate fim) {
-         return DashboardMapper.toDTO(repository.getPedidosFaturamento(inicio, fim));
+    public List<PedidosFaturamentoDTO> getPedidosFaturamento(LocalDate inicio, LocalDate fim) {
+         return repository.getPedidosFaturamento(inicio, fim)
+                 .stream()
+                 .map(DashboardMapper::toDTO)
+                 .toList();
     }
 
     @Override

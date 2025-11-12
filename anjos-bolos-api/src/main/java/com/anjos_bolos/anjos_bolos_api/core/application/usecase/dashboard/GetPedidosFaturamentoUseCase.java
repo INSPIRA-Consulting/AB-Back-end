@@ -1,11 +1,12 @@
 package com.anjos_bolos.anjos_bolos_api.core.application.usecase.dashboard;
 
 import com.anjos_bolos.anjos_bolos_api.core.adapters.DashboardGateway;
-import com.anjos_bolos.anjos_bolos_api.core.application.command.dashboard.GetDiaSemanaComMaisVendasQuery;
 import com.anjos_bolos.anjos_bolos_api.core.application.command.dashboard.GetPedidosFaturamentoQuery;
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.InvalidArgumentException;
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundException;
 import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.PedidosFaturamentoDTO;
+
+import java.util.List;
 
 public class GetPedidosFaturamentoUseCase {
 
@@ -15,15 +16,15 @@ public class GetPedidosFaturamentoUseCase {
         this.gateway = gateway;
     }
 
-    public PedidosFaturamentoDTO execute(GetPedidosFaturamentoQuery query) {
+    public List<PedidosFaturamentoDTO> execute(GetPedidosFaturamentoQuery query) {
 
         if (query.inicio() == null || query.fim() == null || query.inicio().isAfter(query.fim())) {
             throw new InvalidArgumentException("Período inválido.");
         }
 
-        PedidosFaturamentoDTO pedidosFaturamento = gateway.getPedidosFaturamento(query.inicio(), query.fim());
+        List<PedidosFaturamentoDTO> pedidosFaturamento = gateway.getPedidosFaturamento(query.inicio(), query.fim());
 
-        if (pedidosFaturamento == null) {
+        if (pedidosFaturamento.isEmpty()) {
             throw new NotFoundException("Nenhum Pedido encontrado.");
         }
 

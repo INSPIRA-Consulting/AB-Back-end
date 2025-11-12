@@ -93,19 +93,21 @@ public class DashboardJpaRepositoryImpl implements DashboardJpaRepository {
     }
 
     @Override
-    public PedidosFaturamentoResponseDTO getPedidosFaturamento(LocalDate inicio, LocalDate fim) {
+    public List<PedidosFaturamentoResponseDTO> getPedidosFaturamento(LocalDate inicio, LocalDate fim) {
         String jpql = """
                     SELECT NEW com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.PedidosFaturamentoResponseDTO(
                         COUNT(DISTINCT pd.id),
                         SUM(ip.quantidade),
                         ROUND(SUM(ip.precoUnitario * ip.quantidade), 2),
-                        ROUND(SUM(ip.custoProducao * ip.quantidade), 2)
+                        ROUND(SUM(ip.custoProducao * ip.quantidade), 2),
+                        CAST(pd.dataRetirada AS LocalDate)
                     )
                     FROM PedidoEntity pd, ItemPedidoEntity ip, ProdutoEntity p
                     WHERE ip.pedido = pd
                         AND ip.produto = p
                         AND pd.dataPedido BETWEEN :inicio AND :fim
                         AND pd.status = 'FINALIZADO'
+                    GROUP BY CAST(pd.dataRetirada AS LocalDate)
                     """;
 
 
@@ -117,9 +119,7 @@ public class DashboardJpaRepositoryImpl implements DashboardJpaRepository {
         query.setParameter("inicio", inicioDateTime);
         query.setParameter("fim", fimDateTime);
 
-        List<PedidosFaturamentoResponseDTO> results =  query.getResultList();
-
-        return results.getFirst();
+        return query.getResultList();
     }
 
     @Override

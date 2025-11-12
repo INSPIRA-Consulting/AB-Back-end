@@ -87,7 +87,7 @@ public class DashboardController {
         ListProdutosMaisVendidosQuery query = DashboardMapper.toListProdutosMaisVendidosQuery(inicio, fim, 5);
         List<ProdutoVendidoDTO> produtosVendidos = listProdutosMaisVendidosUseCase.execute(query);
 
-        return ResponseEntity.status(200).body(DashboardMapper.toResponse(produtosVendidos));
+        return ResponseEntity.status(200).body(DashboardMapper.toProdutosVendidosResponse(produtosVendidos));
     }
 
     @Operation(summary = "Buscar Informações de Pedidos no Período", description = "Busca Informações de Faturamento e Custos dos Pedidos no Período informado.")
@@ -97,12 +97,12 @@ public class DashboardController {
     })
     @GetMapping("/pedidos-faturamento")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<PedidosFaturamentoResponseDTO> buscarFaturamentoPedidos(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate inicio,
+    public ResponseEntity<List<PedidosFaturamentoResponseDTO>> buscarFaturamentoPedidos(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate inicio,
                                                                                   @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fim) {
         GetPedidosFaturamentoQuery query = DashboardMapper.toGetPedidosFaturamentoQuery(inicio, fim);
-        PedidosFaturamentoDTO faturamento = getPedidosFaturamentoUseCase.execute(query);
+        List<PedidosFaturamentoDTO> faturamentos = getPedidosFaturamentoUseCase.execute(query);
 
-        return ResponseEntity.status(200).body(DashboardMapper.toResponse(faturamento));
+        return ResponseEntity.status(200).body(DashboardMapper.toFaturamentoResponse(faturamentos));
     }
 
     @Operation(summary = "Buscar Produto mais Vendido no Período", description = "Busca o Produto mais Vendido no período informado.")

@@ -15,7 +15,7 @@ public interface DashboardJpaRepository {
 
     List<ProdutoVendidoResponseDTO> listProdutosMaisVendidos(LocalDate inicio, LocalDate fim, Integer limit);
 
-    PedidosFaturamentoResponseDTO getPedidosFaturamento(LocalDate inicio, LocalDate fim);
+    List<PedidosFaturamentoResponseDTO> getPedidosFaturamento(LocalDate inicio, LocalDate fim);
 
     String getProdutoMaisVendido(LocalDate inicio, LocalDate fim, Integer limit);
 
