@@ -1,5 +1,5 @@
 -- Criação da Database
-DROP DATABASE IF EXISTS anjos_bolos;
+drop database if exists anjos_bolos;
 CREATE DATABASE IF NOT EXISTS anjos_bolos;
 USE anjos_bolos;
 
@@ -171,7 +171,7 @@ CREATE TABLE Detalhamento_Pedido (
 -- Usuários
 -- =======================
 INSERT INTO Usuario (nome, cpf, email, senha, telefone, funcao) VALUES
-('root', '999.999.999-99', 'inspira@email.com', '$2a$10$P42PeHwYl2WTPhqC.8PMt.xdO8p18rG5VuEp2OiPzKOqFO0KYFjKu', '(11)99999-9999', 'ADMINISTRADOR'),
+('root', '999.999.999-99', 'inspira@gmail.com', '$2a$10$P42PeHwYl2WTPhqC.8PMt.xdO8p18rG5VuEp2OiPzKOqFO0KYFjKu', '(11)99999-9999', 'ADMINISTRADOR'),
 ('Ana Souza', '123.456.789-00', 'ana@anjosbolos.com', 'senha123', '(11)90000-0001', 'ATENDENTE'),
 ('Carla Mendes', '123.123.123-12', 'carla@anjosbolos.com', 'senha123', '(11)90000-0003', 'GERENTE');
 
@@ -213,15 +213,12 @@ INSERT INTO Categoria_Produto (nome, descricao) VALUES
 -- =======================
 INSERT INTO Produto (nome, precoFinal, custoProducao, fkCategoriaProduto) VALUES
 -- Bolos Tradicionais
-('Bolo de Chocolate', 50.00, 30.00, 1),
+('Bolo de Chocolate', 30.00, 22.00, 1),
 ('Bolo de Cenoura', 40.00, 25.00, 1),
 ('Bolo de Fubá', 35.00, 20.00, 1),
 ('Bolo de Laranja', 38.00, 22.00, 1),
 ('Bolo de Coco', 45.00, 27.00, 1),
 ('Bolo de Limão', 42.00, 25.00, 1),
-('Bolo Red Velvet', 70.00, 40.00, 1),
-('Bolo Prestígio', 60.00, 35.00, 1),
-('Bolo Ninho com Morango', 65.00, 38.00, 1),
 
 -- Bolos de Pote
 ('Bolo de Pote de Chocolate', 10.00, 5.50, 4),
@@ -317,31 +314,25 @@ INSERT INTO Composicao_Produto (fkProduto, fkReceita, fkIngrediente, quantidade,
 (1, 3, 6, 100, 'Recheio de chocolate'),
 (2, 2, 1, 400, 'Base da massa de cenoura'),
 (3, 1, 1, 500, 'Massa base para bolo de festa'),
-(3, 3, 6, 100, 'Recheio de chocolate para festa'),
-(16, 4, 1, 450, 'Massa Red Velvet base'),
-(16, 5, 5, 100, 'Recheio leite ninho'),
-(17, 6, 1, 480, 'Massa Prestígio base'),
-(17, 3, 6, 120, 'Recheio chocolate extra'),
-(18, 5, 5, 150, 'Recheio ninho com morango');
+(3, 3, 6, 100, 'Recheio de chocolate para festa');
 
 -- =======================
 -- Pedidos
 -- =======================
 INSERT INTO Pedido (dataPedido, dataRetirada, dataPagamento, formaPagamento, status, observacao, fkUsuarioResponsavel, fkCliente) VALUES
-('2025-10-20 10:00:00', '2025-10-22 18:00:00', '2025-10-22 18:00:00', 'CARTAO_CREDITO', 'FINALIZADO', 'Bolo para Aniversário', 2, 1),
-('2025-10-25 09:00:00', '2025-10-29 16:30:00', '2025-10-29 16:30:00', 'PIX', 'FINALIZADO', 'Pedido Especial de Festa', 1, 2),
-('2025-11-01 09:30:00', '2025-11-03 15:00:00', '2025-11-03 15:00:00', 'PIX', 'FINALIZADO', 'Bolo Aniversário Infantil', 1, 3),
-('2025-11-02 14:15:00', '2025-11-03 17:30:00', NULL, 'DINHEIRO', 'PENDENTE_PAGAMENTO', 'Pedido aguardando Pagamento', 2, 5),
-('2025-11-03 08:00:00', '2025-11-04 12:30:00', '2025-11-04 12:30:00', 'CARTAO_DEBITO', 'FINALIZADO', NULL, 1, 8);
+('2025-10-20 10:00:00', '2025-10-22 18:00:00', '2025-10-20 10:30:00', 'CARTAO_CREDITO', 'FINALIZADO', 'Bolo para aniversário', 2, 1),
+('2025-10-25 09:00:00', NULL, NULL, 'PIX', 'FINALIZADO', 'Pedido especial de festa', 1, 2),
+('2025-11-01 09:30:00', '2025-11-03 16:00:00', '2025-11-01 10:00:00', 'PIX', 'FINALIZADO', 'Bolo aniversário infantil', 1, 3),
+('2025-11-02 14:15:00', NULL, NULL, 'DINHEIRO', 'PENDENTE_PAGAMENTO', 'Pedido aguardando pagamento', 2, 5),
+('2025-11-03 08:00:00', '2025-11-03 12:30:00', '2025-11-03 08:10:00', 'CARTAO_DEBITO', 'FINALIZADO', NULL, 1, 8);
 
 -- =======================
 -- Itens do Pedido
 -- =======================
 INSERT INTO Item_Pedido (fkPedido, fkProduto, quantidade, precoUnitario, custoProducao, peso) VALUES
-(1, 1, 1, 50.00, 30.00, 1.2),
-(1, 14, 5, 10.00, 5.00, 1.5),
-(2, 7, 1, 120.00, 70.00, 3.0),
-(3, 16, 1, 70.00, 40.00, 1.2),
-(4, 10, 10, 7.00, 3.50, 1.5),
-(5, 18, 2, 65.00, 39.00, 2.4);
-
+(1, 1, 1, 30.00, 22.00, 1),
+(1, 7, 5, 10.00, 5.50, 1),
+(2, 6, 1, 42.00, 25.00, 1),
+(3, 11, 7, 12.00, 6.50, 1),
+(4, 11, 10, 12.00, 6.50, 1), 
+(5, 10, 2, 13.50, 7.80, 1);
