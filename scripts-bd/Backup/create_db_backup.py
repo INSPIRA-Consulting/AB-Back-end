@@ -139,7 +139,7 @@ def main():
         logging.info("Enviando para S3")
         s3_key = f"backups/{sent_filename}"
         s3_path = upload_s3(gz_path, cfg["S3_BUCKET"], s3_key, region=cfg.get("AWS_DEFAULT_REGION"))
-        status = "Realizado com Sucesso"
+        status = "Backup Realizado com Sucesso"
         logging.info("Upload concluído: %s", s3_path)
 
         if cfg.get("REMOVE_LOCAL_AFTER_UPLOAD", "1") in ("1", "true", "True"):
@@ -152,7 +152,7 @@ def main():
     except Exception as e:
         logging.exception("Erro no processo de backup: %s", e)
 
-    if status == "Realizado com Sucesso":
+    if status == "Backup Realizado com Sucesso":
         message = {
             "nomeArquivo": sent_filename,
             "caminhoArquivo": s3_path,
