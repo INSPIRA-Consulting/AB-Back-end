@@ -37,11 +37,15 @@ public class UpdateItemPedidoUseCase {
         Pedido pedido = pedidoGateway.findById(command.pedidoId());
         Produto produto = produtoGateway.findById(command.produtoId());
 
+        Double precoUnitario = produto.getPrecoFinal() == 0.0
+                ? command.precoUnitario()
+                : produto.getPrecoFinal();
+
         ItemPedido itemPedido = gateway.findById(command.id());
         itemPedido.setPedido(pedido);
         itemPedido.setProduto(produto);
         itemPedido.setQuantidade(command.quantidade());
-        itemPedido.setPrecoUnitario(produto.getPrecoFinal());
+        itemPedido.setPrecoUnitario(precoUnitario);
         itemPedido.setCustoProducao(produto.getCustoProducao());
         itemPedido.setPeso(command.peso());
 

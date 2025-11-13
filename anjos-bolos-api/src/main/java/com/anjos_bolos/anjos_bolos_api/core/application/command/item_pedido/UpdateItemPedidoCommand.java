@@ -4,6 +4,7 @@ public record UpdateItemPedidoCommand(
         Integer id,
         Integer pedidoId,
         Integer produtoId,
+        Double precoUnitario,
         Integer quantidade,
         Double peso
 ) {}
