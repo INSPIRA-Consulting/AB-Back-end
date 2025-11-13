@@ -1,24 +1,24 @@
--- SCRIPTS DASHBOARD ---
+-- =======================
+-- Scripts Dashboard
+-- =======================
 
--- MARGEM DE LUCRO (%) POR Produto ----------------------------------------------------------------------- 
+-- =============================== Margem de Lucro (%) por Produto =======================================
 -- MAIOR MARGEM
-SELECT 
-    nome,
-    ROUND(((precoFinal - custoProducao) / precoFinal * 100), 2) AS margemLucro
+SELECT 	  nome
+		, ROUND(((precoFinal - custoProducao) / precoFinal * 100), 2) AS margemLucro
 FROM Produto
 ORDER BY margemLucro DESC
 LIMIT 1;
 
 -- MENOR MARGEM
-SELECT 
-    nome,
-    ROUND(((precoFinal - custoProducao) / precoFinal * 100), 2) AS margemLucro
+SELECT 	  nome
+		, ROUND(((precoFinal - custoProducao) / precoFinal * 100), 2) AS margemLucro
 FROM Produto
 ORDER BY margemLucro ASC
 LIMIT 1;
--- -------------------------------------------------------------------------------------------------------
+-- =======================================================================================================
 
--- RANKING DE PRODUTOS MAIS VENDIDOS POR PERÍODO ---------------------------------------------------------
+-- ======================== Ranking de Produtos mais vendidos por Período ================================
 SELECT    p.nome												AS nomeProduto
 		, SUM(ip.quantidade) 									AS quantidadeVendida
         , ctp.nome												AS categoriaProduto
@@ -28,10 +28,11 @@ JOIN Produto p 													ON ip.fkProduto = p.id
 JOIN Categoria_Produto ctp 										ON ctp.id = p.fkCategoriaProduto 
 WHERE pd.dataPedido 											BETWEEN '2025-10-01' AND '2025-10-31'
 AND pd.status 													= 'FINALIZADO'
-GROUP BY p.id;
--- -------------------------------------------------------------------------------------------------------
+GROUP BY p.id, p.nome, ctp.nome
+ORDER BY SUM(ip.quantidade) DESC;
+-- =======================================================================================================
 
--- VENDAS TOTAIS POR PERÍODO -----------------------------------------------------------------------------
+-- =============================== VENDAS TOTAIS POR PERÍODO =============================================
 SELECT 	  COUNT(DISTINCT pd.id) 								AS quantidadePedidos
 		, SUM(ip.quantidade) 									AS quantidadeProdutosVendidos
 		, ROUND(SUM(ip.precoUnitario * ip.quantidade), 2) 			AS faturamento
@@ -43,6 +44,7 @@ JOIN Produto p 													ON p.id = ip.fkProduto
 WHERE pd.dataPedido 											BETWEEN '2025-11-01' AND '2025-11-30'
 AND pd.status 													= 'FINALIZADO'
 GROUP BY DATE(pd.dataRetirada);
+-- =======================================================================================================
 
 -- PRODUTO MAIS VENDIDO NO PERÍODO
 SELECT p.nome 													AS produtoMaisVendido

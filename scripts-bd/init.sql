@@ -1,5 +1,7 @@
+-- =======================
 -- Criação da Database
-drop database if exists anjos_bolos;
+-- =======================
+DROP DATABASE IF EXISTS anjos_bolos;
 CREATE DATABASE IF NOT EXISTS anjos_bolos;
 USE anjos_bolos;
 
