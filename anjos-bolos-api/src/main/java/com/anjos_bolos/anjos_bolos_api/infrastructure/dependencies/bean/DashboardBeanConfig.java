@@ -34,8 +34,8 @@ public class DashboardBeanConfig {
     }
 
     @Bean
-    public GetDiaSemanaComMaisVendasUseCase getDiaSemanaComMaisVendasUseCase(DashboardJpaAdapter adapter) {
-        return new GetDiaSemanaComMaisVendasUseCase(adapter);
+    public ListVendasPorDiaSemanaUseCase getDiaSemanaComMaisVendasUseCase(DashboardJpaAdapter adapter) {
+        return new ListVendasPorDiaSemanaUseCase(adapter);
     }
 
 }

@@ -5,10 +5,12 @@ import com.anjos_bolos.anjos_bolos_api.core.application.usecase.dashboard.*;
 import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.MargemLucroProdutoDTO;
 import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.PedidosFaturamentoDTO;
 import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.ProdutoVendidoDTO;
+import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.VendasDiaSemanaDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.config.aws.s3.S3Adapter;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.MargemLucroProdutoResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.PedidosFaturamentoResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.ProdutoVendidoResponseDTO;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.VendasDiaSemanaResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.feriados.FeriadosResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.mapper.DashboardMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -33,17 +35,17 @@ public class DashboardController {
     private final ListProdutosMaisVendidosUseCase listProdutosMaisVendidosUseCase;
     private final GetPedidosFaturamentoUseCase getPedidosFaturamentoUseCase;
     private final GetProdutoMaisVendidoUseCase getProdutoMaisVendidoUseCase;
-    private final GetDiaSemanaComMaisVendasUseCase getDiaSemanaComMaisVendasUseCase;
+    private final ListVendasPorDiaSemanaUseCase listVendasPorDiaSemanaUseCase;
 
     private final S3Adapter s3Adapter;
 
-    public DashboardController(GetMenorMargemLucroUseCase getMenorMargemLucroUseCase, GetMaiorMargemLucroUseCase getMaiorMargemLucroUseCase, ListProdutosMaisVendidosUseCase listProdutosMaisVendidosUseCase, GetPedidosFaturamentoUseCase getPedidosFaturamentoUseCase, GetProdutoMaisVendidoUseCase getProdutoMaisVendidoUseCase, GetDiaSemanaComMaisVendasUseCase getDiaSemanaComMaisVendasUseCase, S3Adapter s3Adapter) {
+    public DashboardController(GetMenorMargemLucroUseCase getMenorMargemLucroUseCase, GetMaiorMargemLucroUseCase getMaiorMargemLucroUseCase, ListProdutosMaisVendidosUseCase listProdutosMaisVendidosUseCase, GetPedidosFaturamentoUseCase getPedidosFaturamentoUseCase, GetProdutoMaisVendidoUseCase getProdutoMaisVendidoUseCase, ListVendasPorDiaSemanaUseCase listVendasPorDiaSemanaUseCase, S3Adapter s3Adapter) {
         this.getMenorMargemLucroUseCase = getMenorMargemLucroUseCase;
         this.getMaiorMargemLucroUseCase = getMaiorMargemLucroUseCase;
         this.listProdutosMaisVendidosUseCase = listProdutosMaisVendidosUseCase;
         this.getPedidosFaturamentoUseCase = getPedidosFaturamentoUseCase;
         this.getProdutoMaisVendidoUseCase = getProdutoMaisVendidoUseCase;
-        this.getDiaSemanaComMaisVendasUseCase = getDiaSemanaComMaisVendasUseCase;
+        this.listVendasPorDiaSemanaUseCase = listVendasPorDiaSemanaUseCase;
         this.s3Adapter = s3Adapter;
     }
 
@@ -125,14 +127,14 @@ public class DashboardController {
             @ApiResponse(responseCode = "200", description = "Produto encontrado"),
             @ApiResponse(responseCode = "404", description = "Nenhum Produto encontrado")
     })
-    @GetMapping("/dia-semana-mais-vendas")
+    @GetMapping("/vendas-dia-semana")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<String> buscarDiaSemanaComMaisVendas(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate inicio,
-                                                           @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fim) {
-        GetDiaSemanaComMaisVendasQuery query = DashboardMapper.toGetDiaSemanaComMaisVendasQuery(inicio, fim, 1);
-        String diaSemana = getDiaSemanaComMaisVendasUseCase.execute(query);
+    public ResponseEntity<List<VendasDiaSemanaResponseDTO>> buscarVendasPorDiaSemana(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate inicio,
+                                                                               @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate fim) {
+        ListVendasPorDiaSemanaQuery query = DashboardMapper.toListVendasPorDiaSemanaQuery(inicio, fim);
+        List<VendasDiaSemanaDTO> vendas = listVendasPorDiaSemanaUseCase.execute(query);
 
-        return ResponseEntity.status(200).body(diaSemana);
+        return ResponseEntity.status(200).body(DashboardMapper.toResponse(vendas));
     }
 
     @Operation(summary = "Buscar Feriados", description = "Busca os Feriados Nacionais armazenados no S3.")

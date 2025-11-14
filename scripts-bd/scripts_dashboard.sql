@@ -68,27 +68,27 @@ LIMIT 1;
 -- ORDER BY COUNT(DISTINCT pd.id) DESC
 -- LIMIT 1;
 
-SELECT diaSemana, totalVendas
-FROM (
-    SELECT 
-        DAYNAME(pd.dataPedido) AS diaSemana,
-        COUNT(DISTINCT pd.id) AS totalVendas
-    FROM Pedido pd
-    JOIN Item_Pedido ip ON ip.fkPedido = pd.id
-    WHERE pd.dataPedido BETWEEN '2025-11-01' AND '2025-11-30'
-      AND pd.status = 'FINALIZADO'
-    GROUP BY DAYNAME(pd.dataPedido)
-) AS vendas
-WHERE totalVendas = (
-    SELECT MAX(totalVendas)
-    FROM (
-        SELECT 
-            COUNT(DISTINCT pd.id) AS totalVendas
-        FROM Pedido pd
-        JOIN Item_Pedido ip ON ip.fkPedido = pd.id
-        WHERE pd.dataPedido BETWEEN '2025-11-01' AND '2025-11-30'
-          AND pd.status = 'FINALIZADO'
-        GROUP BY DAYNAME(pd.dataPedido)
-    ) AS max_vendas
-);
+SELECT   CASE WEEKDAY(pd.dataPedido)
+				WHEN 0 THEN 'Segunda-feira'
+				WHEN 1 THEN 'Terça-feira'
+				WHEN 2 THEN 'Quarta-feira'
+				WHEN 3 THEN 'Quinta-feira'
+				WHEN 4 THEN 'Sexta-feira'
+				WHEN 5 THEN 'Sábado'
+				WHEN 6 THEN 'Domingo'
+		  END diaSemana
+        , COUNT(pd.id) totalVendas
+FROM Pedido pd
+WHERE pd.dataPedido BETWEEN '2025-11-01' AND '2025-11-30'
+	AND pd.status = 'FINALIZADO'
+GROUP BY WEEKDAY(pd.dataPedido), CASE WEEKDAY(pd.dataPedido)
+									 WHEN 0 THEN 'Segunda-feira'
+									 WHEN 1 THEN 'Terça-feira'
+									 WHEN 2 THEN 'Quarta-feira'
+									 WHEN 3 THEN 'Quinta-feira'
+									 WHEN 4 THEN 'Sexta-feira'
+									 WHEN 5 THEN 'Sábado'
+									 WHEN 6 THEN 'Domingo'
+								END
+ORDER BY WEEKDAY(pd.dataPedido);
 -- =======================================================================================================

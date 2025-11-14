@@ -4,9 +4,11 @@ import com.anjos_bolos.anjos_bolos_api.core.application.command.dashboard.*;
 import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.MargemLucroProdutoDTO;
 import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.PedidosFaturamentoDTO;
 import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.ProdutoVendidoDTO;
+import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.VendasDiaSemanaDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.MargemLucroProdutoResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.PedidosFaturamentoResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.ProdutoVendidoResponseDTO;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.VendasDiaSemanaResponseDTO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -28,10 +30,10 @@ public class DashboardMapper {
         );
     }
 
-    public static MargemLucroProdutoDTO toDTO(MargemLucroProdutoResponseDTO domain) {
+    public static MargemLucroProdutoDTO toDTO(MargemLucroProdutoResponseDTO dto) {
         return new MargemLucroProdutoDTO(
-                domain.nomeProduto(),
-                domain.margemLucro()
+                dto.nomeProduto(),
+                dto.margemLucro()
         );
     }
 
@@ -51,13 +53,13 @@ public class DashboardMapper {
                 .toList();
     }
 
-    public static PedidosFaturamentoDTO toDTO(PedidosFaturamentoResponseDTO domain) {
+    public static PedidosFaturamentoDTO toDTO(PedidosFaturamentoResponseDTO dto) {
         return new PedidosFaturamentoDTO(
-                domain.quantidadePedidos(),
-                domain.quantidadeProdutosVendidos(),
-                domain.faturamento(),
-                domain.custos(),
-                domain.dataPedido()
+                dto.quantidadePedidos(),
+                dto.quantidadeProdutosVendidos(),
+                dto.faturamento(),
+                dto.custos(),
+                dto.dataPedido()
         );
     }
 
@@ -75,11 +77,11 @@ public class DashboardMapper {
                 .toList();
     }
 
-    public static ProdutoVendidoDTO toDTO(ProdutoVendidoResponseDTO domain) {
+    public static ProdutoVendidoDTO toDTO(ProdutoVendidoResponseDTO dto) {
         return new ProdutoVendidoDTO(
-                domain.nomeProduto(),
-                domain.quantidadeVendida(),
-                domain.categoriaProduto()
+                dto.nomeProduto(),
+                dto.quantidadeVendida(),
+                dto.categoriaProduto()
         );
     }
 
@@ -87,8 +89,24 @@ public class DashboardMapper {
         return new GetProdutoMaisVendidoQuery(inicio, fim, limit);
     }
 
-    public static GetDiaSemanaComMaisVendasQuery toGetDiaSemanaComMaisVendasQuery(LocalDate inicio, LocalDate fim, Integer limit) {
-        return new GetDiaSemanaComMaisVendasQuery(inicio, fim, limit);
+    public static VendasDiaSemanaDTO toDTO(VendasDiaSemanaResponseDTO dto) {
+        return new VendasDiaSemanaDTO(
+                dto.diaSemana(),
+                dto.totalVendas()
+        );
+    }
+
+    public static List<VendasDiaSemanaResponseDTO> toResponse(List<VendasDiaSemanaDTO> domain) {
+        return domain.stream()
+                .map(venda -> new VendasDiaSemanaResponseDTO(
+                        venda.diaSemana(),
+                        venda.totalVendas()
+                ))
+                .toList();
+    }
+
+    public static ListVendasPorDiaSemanaQuery toListVendasPorDiaSemanaQuery(LocalDate inicio, LocalDate fim) {
+        return new ListVendasPorDiaSemanaQuery(inicio, fim);
     }
 
 }

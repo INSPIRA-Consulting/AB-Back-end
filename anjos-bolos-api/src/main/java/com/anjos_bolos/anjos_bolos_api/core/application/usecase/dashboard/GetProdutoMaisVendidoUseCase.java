@@ -1,7 +1,6 @@
 package com.anjos_bolos.anjos_bolos_api.core.application.usecase.dashboard;
 
 import com.anjos_bolos.anjos_bolos_api.core.adapters.DashboardGateway;
-import com.anjos_bolos.anjos_bolos_api.core.application.command.dashboard.GetDiaSemanaComMaisVendasQuery;
 import com.anjos_bolos.anjos_bolos_api.core.application.command.dashboard.GetProdutoMaisVendidoQuery;
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.InvalidArgumentException;
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundException;

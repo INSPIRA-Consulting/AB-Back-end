@@ -3,6 +3,7 @@ package com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.repositor
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.MargemLucroProdutoResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.PedidosFaturamentoResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.ProdutoVendidoResponseDTO;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.VendasDiaSemanaResponseDTO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -19,5 +20,5 @@ public interface DashboardJpaRepository {
 
     String getProdutoMaisVendido(LocalDate inicio, LocalDate fim, Integer limit);
 
-    String getDiaSemanaComMaisVendas(LocalDate inicio, LocalDate fim, Integer limit);
+    List<VendasDiaSemanaResponseDTO> listVendasPorDiaSemana(LocalDate inicio, LocalDate fim);
 }
