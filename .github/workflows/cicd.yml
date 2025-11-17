@@ -162,17 +162,7 @@ jobs:
           target: "/home/${{ secrets.REMOTE_USER }}/"
           strip_components: 3
 
-      # 14. Copiar arquivo .env do Email Service
-      - name: EMAIL - Copiar .env com secrets
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          source: "./.env-email"
-          target: "/home/${{ secrets.REMOTE_USER }}/"
-
-      # 15. Configurar e executar Email Service na EC2 privada
+      # 14. Configurar e executar Email Service na EC2 privada
       - name: EMAIL - Configurar e executar Email Service
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -199,14 +189,13 @@ jobs:
               /home/${{ secrets.REMOTE_USER }}/email_service.jar \
               $USUARIO_IP:/tmp/email_service.jar
             
-            # Transferir arquivo .env
-            scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM \
-              /home/${{ secrets.REMOTE_USER }}/.env-email \
-              $USUARIO_IP:/tmp/.env-email
-            
-            # Garantir que não existe diretório com o mesmo nome e mover .env
+            # Criar arquivo .env-email diretamente na EC2 privada
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
-              'sudo rm -rf /home/ubuntu/.env-email && mv /tmp/.env-email /home/ubuntu/.env-email && sudo chmod 644 /home/ubuntu/.env-email && sudo chown ubuntu:ubuntu /home/ubuntu/.env-email'
+              'sudo rm -rf /home/ubuntu/.env-email && cat > /home/ubuntu/.env-email << "ENV_EOF"
+            EMAIL_SECRET="${{ secrets.EMAIL_SECRET }}"
+            BACKUP_EMAIL_SECRET="${{ secrets.BACKUP_EMAIL_SECRET }}"
+            ENV_EOF
+            sudo chmod 644 /home/ubuntu/.env-email && sudo chown ubuntu:ubuntu /home/ubuntu/.env-email'
             
             # Mover JAR para o diretório final
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
@@ -289,6 +278,5 @@ jobs:
             # Limpar arquivos temporários
             echo "Limpando arquivos temporários do email service..."
             rm -f /home/${{ secrets.REMOTE_USER }}/email_service.jar
-            rm -f /home/${{ secrets.REMOTE_USER }}/.env-email
             
             echo "Limpeza do email service concluída!"
