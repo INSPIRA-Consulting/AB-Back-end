@@ -31,12 +31,16 @@ public class CreateItemPedidoUseCase {
         Pedido pedido = pedidoGateway.findById(command.pedidoId());
         Produto produto = produtoGateway.findById(command.produtoId());
 
+        Double precoUnitario = produto.getPrecoFinal() == 0.0
+                ? command.precoUnitario()
+                : produto.getPrecoFinal();
+
         ItemPedido itemPedido = new ItemPedido(
                 pedido,
                 produto,
                 command.quantidade(),
-                produto.getPrecoFinal() * command.quantidade(),
-                produto.getCustoProducao() * command.quantidade(),
+                precoUnitario,
+                produto.getCustoProducao(),
                 command.peso()
         );
 

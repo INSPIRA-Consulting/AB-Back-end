@@ -1,24 +1,24 @@
--- SCRIPTS DASHBOARD ---
+-- =======================
+-- Scripts Dashboard
+-- =======================
 
--- MARGEM DE LUCRO (%) POR Produto ----------------------------------------------------------------------- 
+-- =============================== Margem de Lucro (%) por Produto =======================================
 -- MAIOR MARGEM
-SELECT 
-    nome,
-    ROUND(((precoFinal - custoProducao) / precoFinal * 100), 2) AS margemLucro
+SELECT 	  nome
+		, ROUND(((precoFinal - custoProducao) / precoFinal * 100), 2) AS margemLucro
 FROM Produto
 ORDER BY margemLucro DESC
 LIMIT 1;
 
 -- MENOR MARGEM
-SELECT 
-    nome,
-    ROUND(((precoFinal - custoProducao) / precoFinal * 100), 2) AS margemLucro
+SELECT 	  nome
+		, ROUND(((precoFinal - custoProducao) / precoFinal * 100), 2) AS margemLucro
 FROM Produto
 ORDER BY margemLucro ASC
 LIMIT 1;
--- -------------------------------------------------------------------------------------------------------
+-- =======================================================================================================
 
--- RANKING DE PRODUTOS MAIS VENDIDOS POR PERÍODO ---------------------------------------------------------
+-- ======================== Ranking de Produtos mais vendidos por Período ================================
 SELECT    p.nome												AS nomeProduto
 		, SUM(ip.quantidade) 									AS quantidadeVendida
         , ctp.nome												AS categoriaProduto
@@ -28,10 +28,11 @@ JOIN Produto p 													ON ip.fkProduto = p.id
 JOIN Categoria_Produto ctp 										ON ctp.id = p.fkCategoriaProduto 
 WHERE pd.dataPedido 											BETWEEN '2025-10-01' AND '2025-10-31'
 AND pd.status 													= 'FINALIZADO'
-GROUP BY p.id;
--- -------------------------------------------------------------------------------------------------------
+GROUP BY p.id, p.nome, ctp.nome
+ORDER BY SUM(ip.quantidade) DESC;
+-- =======================================================================================================
 
--- VENDAS TOTAIS POR PERÍODO -----------------------------------------------------------------------------
+-- =============================== Vendas Totais por Período =============================================
 SELECT 	  COUNT(DISTINCT pd.id) 								AS quantidadePedidos
 		, SUM(ip.quantidade) 									AS quantidadeProdutosVendidos
 		, ROUND(SUM(ip.precoUnitario * ip.quantidade), 2) 			AS faturamento
@@ -43,8 +44,9 @@ JOIN Produto p 													ON p.id = ip.fkProduto
 WHERE pd.dataPedido 											BETWEEN '2025-11-01' AND '2025-11-30'
 AND pd.status 													= 'FINALIZADO'
 GROUP BY DATE(pd.dataRetirada);
+-- =======================================================================================================
 
--- PRODUTO MAIS VENDIDO NO PERÍODO
+-- ============================= Produto mais vendido no Período =========================================
 SELECT p.nome 													AS produtoMaisVendido
 FROM Pedido pd
 JOIN Item_Pedido ip 											ON ip.fkPedido = pd.id
@@ -53,25 +55,40 @@ WHERE pd.dataPedido 											BETWEEN '2025-10-01' AND '2025-10-31'
 AND pd.status 													= 'FINALIZADO'
 ORDER BY ip.quantidade DESC
 LIMIT 1;
+-- =======================================================================================================
 
--- DIA DA SEMANA COM MAIS VENDAS NO PERÍODO
-SELECT DAYNAME(pd.dataPedido) 									AS diaSemanaComMaisVendas
-FROM Pedido pd
-JOIN Item_Pedido ip 											ON ip.fkPedido = pd.id
-JOIN Produto p 													ON p.id = ip.fkProduto
-WHERE pd.dataPedido 											BETWEEN '2025-10-01' AND '2025-10-31'
-  AND pd.status													= 'FINALIZADO'
-GROUP BY DAYNAME(pd.dataPedido)
-ORDER BY COUNT(DISTINCT pd.id) DESC
-LIMIT 1;
+-- ======================= Dia(s) da Semana com mais Vendas no Período ===================================
+-- SELECT DAYNAME(pd.dataPedido) 									AS diaSemanaComMaisVendas
+-- FROM Pedido pd
+-- JOIN Item_Pedido ip 											ON ip.fkPedido = pd.id
+-- JOIN Produto p 													ON p.id = ip.fkProduto
+-- WHERE pd.dataPedido 											BETWEEN '2025-11-01' AND '2025-11-30'
+--   AND pd.status													= 'FINALIZADO'
+-- GROUP BY DAYNAME(pd.dataPedido), pd.dataPedido
+-- ORDER BY COUNT(DISTINCT pd.id) DESC
+-- LIMIT 1;
 
-SELECT DAYNAME(pd.dataPedido) 									AS diaSemanaComMaisVendas
+SELECT   CASE WEEKDAY(pd.dataPedido)
+				WHEN 0 THEN 'Segunda-feira'
+				WHEN 1 THEN 'Terça-feira'
+				WHEN 2 THEN 'Quarta-feira'
+				WHEN 3 THEN 'Quinta-feira'
+				WHEN 4 THEN 'Sexta-feira'
+				WHEN 5 THEN 'Sábado'
+				WHEN 6 THEN 'Domingo'
+		  END diaSemana
+        , COUNT(pd.id) totalVendas
 FROM Pedido pd
-JOIN `Item_Pedido` ip 											ON ip.fkPedido = pd.id
-JOIN Produto p 													ON p.id = ip.fkProduto
-WHERE pd.dataPedido 											BETWEEN '2025-10-01' AND '2025-10-31'
-AND pd.status 													= 'FINALIZADO'
-GROUP BY DAYOFWEEK(pd.dataPedido), DAYNAME(pd.dataPedido)
-ORDER BY COUNT(DISTINCT pd.id) DESC
-LIMIT 1;
--- -------------------------------------------------------------------------------------------------------
+WHERE pd.dataPedido BETWEEN '2025-11-01' AND '2025-11-30'
+	AND pd.status = 'FINALIZADO'
+GROUP BY WEEKDAY(pd.dataPedido), CASE WEEKDAY(pd.dataPedido)
+									 WHEN 0 THEN 'Segunda-feira'
+									 WHEN 1 THEN 'Terça-feira'
+									 WHEN 2 THEN 'Quarta-feira'
+									 WHEN 3 THEN 'Quinta-feira'
+									 WHEN 4 THEN 'Sexta-feira'
+									 WHEN 5 THEN 'Sábado'
+									 WHEN 6 THEN 'Domingo'
+								END
+ORDER BY WEEKDAY(pd.dataPedido);
+-- =======================================================================================================

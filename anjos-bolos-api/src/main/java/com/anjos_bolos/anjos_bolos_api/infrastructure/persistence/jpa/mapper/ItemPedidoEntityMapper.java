@@ -24,6 +24,7 @@ public class ItemPedidoEntityMapper {
         return new CreateItemPedidoCommand(
                 dto.pedidoId(),
                 dto.produtoId(),
+                dto.precoUnitario(),
                 dto.quantidade(),
                 dto.peso()
         );
@@ -34,6 +35,7 @@ public class ItemPedidoEntityMapper {
                 id,
                 dto.pedidoId(),
                 dto.produtoId(),
+                dto.precoUnitario(),
                 dto.quantidade(),
                 dto.peso()
         );

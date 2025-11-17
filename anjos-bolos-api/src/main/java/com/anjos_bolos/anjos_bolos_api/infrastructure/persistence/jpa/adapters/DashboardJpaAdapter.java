@@ -4,6 +4,7 @@ import com.anjos_bolos.anjos_bolos_api.core.adapters.DashboardGateway;
 import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.MargemLucroProdutoDTO;
 import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.PedidosFaturamentoDTO;
 import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.ProdutoVendidoDTO;
+import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.VendasDiaSemanaDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.mapper.DashboardMapper;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.repository.DashboardJpaRepository;
 import org.springframework.stereotype.Service;
@@ -52,7 +53,10 @@ public class DashboardJpaAdapter implements DashboardGateway {
     }
 
     @Override
-    public String getDiaSemanaComMaisVendas(LocalDate inicio, LocalDate fim, Integer limit) {
-        return repository.getDiaSemanaComMaisVendas(inicio, fim, limit);
+    public List<VendasDiaSemanaDTO> listVendasPorDiaSemana(LocalDate inicio, LocalDate fim) {
+        return repository.listVendasPorDiaSemana(inicio, fim)
+                .stream()
+                .map(DashboardMapper::toDTO)
+                .toList();
     }
 }

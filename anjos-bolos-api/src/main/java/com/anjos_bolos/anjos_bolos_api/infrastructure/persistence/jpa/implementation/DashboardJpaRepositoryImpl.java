@@ -3,6 +3,7 @@ package com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.implement
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.MargemLucroProdutoResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.PedidosFaturamentoResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.ProdutoVendidoResponseDTO;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.VendasDiaSemanaResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.repository.DashboardJpaRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -150,29 +151,41 @@ public class DashboardJpaRepositoryImpl implements DashboardJpaRepository {
     }
 
     @Override
-    public String getDiaSemanaComMaisVendas(LocalDate inicio, LocalDate fim, Integer limit) {
+    public List<VendasDiaSemanaResponseDTO> listVendasPorDiaSemana(LocalDate inicio, LocalDate fim) {
         String jpql = """
-                    SELECT FUNCTION('DAYNAME', pd.dataPedido)
-                    FROM PedidoEntity pd, ItemPedidoEntity ip
-                    WHERE ip.pedido = pd
-                        AND pd.dataPedido BETWEEN :inicio AND :fim
+                    SELECT NEW com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.VendasDiaSemanaResponseDTO(
+                        CASE FUNCTION('WEEKDAY', pd.dataPedido)
+                            WHEN 0 THEN 'Segunda-feira'
+                            WHEN 1 THEN 'Terça-feira'
+                            WHEN 2 THEN 'Quarta-feira'
+                            WHEN 3 THEN 'Quinta-feira'
+                            WHEN 4 THEN 'Sexta-feira'
+                            WHEN 5 THEN 'Sábado'
+                            WHEN 6 THEN 'Domingo'
+                        END,
+                        COUNT(pd.id)
+                    )
+                    FROM PedidoEntity pd
+                    WHERE pd.dataPedido BETWEEN :inicio AND :fim
                         AND pd.status = 'FINALIZADO'
-                    GROUP BY FUNCTION('DAYOFWEEK', pd.dataPedido), FUNCTION('DAYNAME', pd.dataPedido)
-                    ORDER BY COUNT(DISTINCT pd.id) DESC
+                    GROUP BY FUNCTION('WEEKDAY', pd.dataPedido), 
+                             CASE FUNCTION('WEEKDAY', pd.dataPedido)
+                                 WHEN 0 THEN 'Segunda-feira'
+                                 WHEN 1 THEN 'Terça-feira'
+                                 WHEN 2 THEN 'Quarta-feira'
+                                 WHEN 3 THEN 'Quinta-feira'
+                                 WHEN 4 THEN 'Sexta-feira'
+                                 WHEN 5 THEN 'Sábado'
+                                 WHEN 6 THEN 'Domingo'
+                             END
+                    ORDER BY FUNCTION('WEEKDAY', pd.dataPedido)
                     """;
 
-        TypedQuery<String> query = entityManager.createQuery(jpql, String.class);
+        TypedQuery<VendasDiaSemanaResponseDTO> query = entityManager.createQuery(jpql, VendasDiaSemanaResponseDTO.class);
+        query.setParameter("inicio", inicio.atStartOfDay());
+        query.setParameter("fim", fim.atTime(LocalTime.MAX));
 
-        LocalDateTime inicioDateTime = inicio.atStartOfDay();
-        LocalDateTime fimDateTime = fim.atTime(LocalTime.MAX);
-
-        query.setParameter("inicio", inicioDateTime);
-        query.setParameter("fim", fimDateTime);
-        query.setMaxResults(limit);
-
-        List<String> results =  query.getResultList();
-
-        return results.getFirst();
+        return query.getResultList();
     }
 
 }
