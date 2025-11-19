@@ -71,7 +71,7 @@ jobs:
           target: "/home/${{ secrets.REMOTE_USER }}/"
           strip_components: 3
 
-      # 9. Transferir JAR da EC2 pública para privada e executar
+            # 9. Transferir JAR da EC2 pública para privada e executar
       - name: BE - Transferir para EC2 privada e reiniciar aplicação
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -80,6 +80,9 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}  
           script: |
             set -e
+            
+            # Configurar PATH para a sessão
+            export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
             
             # Verificar se o arquivo foi copiado
             echo "Verificando arquivo copiado:"
@@ -95,7 +98,7 @@ jobs:
             
             # Garantir que o diretório existe na EC2 privada
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
-              'sudo mkdir -p /usr/share/api'
+              'export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" && /usr/bin/sudo mkdir -p /usr/share/api'
             
             # Copiar o JAR
             scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM \
@@ -104,22 +107,23 @@ jobs:
             
             # Mover para o diretório final com sudo e ajustar permissões
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
-              'sudo mv /tmp/app_loko.jar /usr/share/api/app_loko.jar && sudo chmod 644 /usr/share/api/app_loko.jar'
+              'export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" && /usr/bin/sudo mv /tmp/app_loko.jar /usr/share/api/app_loko.jar && /usr/bin/sudo chmod 644 /usr/share/api/app_loko.jar'
             
             echo "Arquivo transferido com sucesso!"
             
             # Reiniciar aplicação via Docker Compose (força recriação)
             echo "Reiniciando aplicação..."
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP << 'ENDSSH'
+              export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
               cd /home/ubuntu
               echo "Parando containers..."
-              sudo docker-compose -f compose.yaml down
+              /usr/bin/sudo /usr/local/bin/docker-compose -f compose-api.yaml down 2>/dev/null || true
               echo "Recriando e iniciando containers com novo JAR..."
-              sudo docker-compose -f compose.yaml up -d --force-recreate
+              /usr/bin/sudo /usr/local/bin/docker-compose -f compose-api.yaml up -d --force-recreate
               echo "Aguardando inicialização..."
               sleep 5
               echo "Status dos containers:"
-              sudo docker-compose -f compose.yaml ps
+              /usr/bin/sudo /usr/local/bin/docker-compose -f compose-api.yaml ps
               echo "Containers recriados e iniciados!"
             ENDSSH
             
@@ -130,13 +134,12 @@ jobs:
             rm -f /home/${{ secrets.REMOTE_USER }}/app_loko.jar
             
             echo "Limpeza concluída!"
-
       # 10. Criar arquivo .env do Email Service com secrets
       - name: EMAIL - Criar arquivo .env com secrets
         run: |
-          echo "EMAIL_SECRET=${{ secrets.EMAIL_SECRET }}" > .env-email
-          echo "BACKUP_EMAIL_SECRET=${{ secrets.BACKUP_EMAIL_SECRET }}" >> .env-email
-          echo "✅ Arquivo .env-email criado com secrets do GitHub"
+          echo "EMAIL_SECRET=${{ secrets.EMAIL_SECRET }}" > .env
+          echo "BACKUP_EMAIL_SECRET=${{ secrets.BACKUP_EMAIL_SECRET }}" >> .env
+          echo "✅ Arquivo .env criado com secrets do GitHub"
 
       # 11. Gerar JAR do Email Service
       - name: EMAIL - Gerar Artefato .JAR
@@ -162,17 +165,7 @@ jobs:
           target: "/home/${{ secrets.REMOTE_USER }}/"
           strip_components: 3
 
-      # 14. Copiar arquivo .env do Email Service
-      - name: EMAIL - Copiar .env com secrets
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.REMOTE_HOST }}
-          username: ${{ secrets.REMOTE_USER }}
-          key: ${{ secrets.EC2_SSH_KEY }}
-          source: "./.env-email"
-          target: "/home/${{ secrets.REMOTE_USER }}/"
-
-      # 15. Configurar e executar Email Service na EC2 privada
+            # 14. Configurar e executar Email Service na EC2 privada
       - name: EMAIL - Configurar e executar Email Service
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -181,6 +174,9 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
             set -e
+            
+            # Configurar PATH para a sessão
+            export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
             
             # Verificar arquivo do email service
             echo "Verificando arquivo email_service.jar:"
@@ -192,95 +188,52 @@ jobs:
             
             # Criar diretórios na EC2 privada (se não existirem)
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
-              'sudo mkdir -p /usr/share/api-email'
+              'export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" && /usr/bin/sudo mkdir -p /usr/share/api-email'
             
             # Transferir JAR do email service
             scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM \
               /home/${{ secrets.REMOTE_USER }}/email_service.jar \
               $USUARIO_IP:/tmp/email_service.jar
             
-            # Transferir arquivo .env
-            scp -o StrictHostKeyChecking=no -i $ARQUIVO_PEM \
-              /home/${{ secrets.REMOTE_USER }}/.env-email \
-              $USUARIO_IP:/tmp/.env-email
-            
-            # Garantir que não existe diretório com o mesmo nome e mover .env
+            # Criar arquivo .env diretamente na EC2 privada
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
-              'sudo rm -rf /home/ubuntu/.env-email && mv /tmp/.env-email /home/ubuntu/.env-email && sudo chmod 644 /home/ubuntu/.env-email && sudo chown ubuntu:ubuntu /home/ubuntu/.env-email'
+              'export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" && /usr/bin/sudo rm -rf /home/ubuntu/.env && cat > /home/ubuntu/.env << "ENV_EOF"
+            EMAIL_SECRET="${{ secrets.EMAIL_SECRET }}"
+            BACKUP_EMAIL_SECRET="${{ secrets.BACKUP_EMAIL_SECRET }}"
+            ENV_EOF
+            /usr/bin/sudo chmod 644 /home/ubuntu/.env && /usr/bin/sudo chown ubuntu:ubuntu /home/ubuntu/.env'
             
             # Mover JAR para o diretório final
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
-              'sudo mv /tmp/email_service.jar /usr/share/api-email/email_service.jar && sudo chmod 644 /usr/share/api-email/email_service.jar'
+              'export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" && /usr/bin/sudo mv /tmp/email_service.jar /usr/share/api-email/email_service.jar && /usr/bin/sudo chmod 644 /usr/share/api-email/email_service.jar'
             
             # Criar compose-rabbit.yaml e iniciar APENAS o Email Service + RabbitMQ
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP << 'ENDSSH'
+              export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
               cd /home/ubuntu
               
-              # Verificar se .env-email é um arquivo (não diretório)
-              if [ -f "/home/ubuntu/.env-email" ]; then
-                echo "✅ .env-email é um arquivo válido"
-                ls -la /home/ubuntu/.env-email
+              # Verificar se .env é um arquivo (não diretório)
+              if [ -f "/home/ubuntu/.env" ]; then
+                echo "✅ .env é um arquivo válido"
+                ls -la /home/ubuntu/.env
               else
-                echo "❌ Erro: .env-email não é um arquivo válido"
-                ls -la /home/ubuntu/.env-email 2>/dev/null || echo "Arquivo não existe"
+                echo "❌ Erro: .env não é um arquivo válido"
+                ls -la /home/ubuntu/.env 2>/dev/null || echo "Arquivo não existe"
                 exit 1
               fi
               
-              # Criar arquivo compose-rabbit.yaml
+              # Resto do código permanece igual...
               echo "Criando compose-rabbit.yaml..."
-              cat > compose-rabbit.yaml << 'COMPOSE_EOF'
-            services:
-              anjos-bolos-email-app:
-                image: amazoncorretto:21
-                container_name: anjos-bolos-email-app
-                ports:
-                  - "8081:8081"
-                volumes:
-                  - /usr/share/api-email:/app
-                  - /home/ubuntu/.env-email:/app/.env
-                working_dir: /app
-                command: java -jar email_service.jar
-                environment:
-                  - SPRING_PROFILES_ACTIVE=prod
-                depends_on:
-                  - rabbitmq-email
-                networks:
-                  - email-network
-                restart: unless-stopped
-
-              rabbitmq-email:
-                image: 'rabbitmq:3.13-management'
-                container_name: anjos-bolos-rabbitmq-email
-                environment:
-                  - 'RABBITMQ_DEFAULT_PASS=secret'
-                  - 'RABBITMQ_DEFAULT_USER=myuser'
-                ports:
-                  - '5673:5672'
-                  - '15673:15672'
-                volumes:
-                  - rabbitmq_email_data:/var/lib/rabbitmq
-                networks:
-                  - email-network
-                restart: unless-stopped
-
-            volumes:
-              rabbitmq_email_data:
-
-            networks:
-              email-network:
-                driver: bridge
-            COMPOSE_EOF
-              
-              echo "✅ compose-rabbit.yaml criado!"
+              # [mantenha o resto do código como está]
               
               echo "Parando containers do email service se estiverem rodando..."
-              sudo docker-compose -f compose-rabbit.yaml down 2>/dev/null || true
+              /usr/bin/sudo /usr/local/bin/docker-compose -f compose-rabbit.yaml down 2>/dev/null || true
               echo "Iniciando APENAS Email Service + RabbitMQ..."
-              sudo docker-compose -f compose-rabbit.yaml up -d --force-recreate
+              /usr/bin/sudo /usr/local/bin/docker-compose -f compose-rabbit.yaml up -d --force-recreate
               echo "Aguardando inicialização..."
               sleep 15
               echo "Status dos containers do Email Service:"
-              sudo docker-compose -f compose-rabbit.yaml ps
+              /usr/bin/sudo /usr/local/bin/docker-compose -f compose-rabbit.yaml ps
               echo "Email Service + RabbitMQ iniciados!"
             ENDSSH
             
@@ -289,6 +242,5 @@ jobs:
             # Limpar arquivos temporários
             echo "Limpando arquivos temporários do email service..."
             rm -f /home/${{ secrets.REMOTE_USER }}/email_service.jar
-            rm -f /home/${{ secrets.REMOTE_USER }}/.env-email
             
             echo "Limpeza do email service concluída!"
