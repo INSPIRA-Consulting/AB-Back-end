@@ -1,11 +1,11 @@
 _type: export
 __export_format: 4
-__export_date: 2025-11-10T20:50:51.948Z
+__export_date: 2025-11-19T03:14:42.249Z
 __export_source: insomnia.desktop.app:v10.3.1
 resources:
   - _id: req_ce9051e1cfca4f93b75a3a030b51a26d
     parentId: fld_bb0a126e3b304ff7a8680b59b5e0bf39
-    modified: 1761886552918
+    modified: 1763065129609
     created: 1761741435148
     url: localhost:8080/auth
     name: Login Usuário
@@ -15,12 +15,12 @@ resources:
     parameters:
       - id: pair_2fa8d12e0b414872af790729ec10d13a
         name: email
-        value: murillo@email.com
+        value: inspira@email.com
         description: ""
         disabled: false
       - id: pair_14d636922ac441a7898d54ad03a9a1c7
         name: senha
-        value: "1234"
+        value: inspira2025
         description: ""
         disabled: false
     headers:
@@ -274,6 +274,37 @@ resources:
       type: bearer
       token: ""
     metaSortKey: -1748588771797.5781
+    isPrivate: false
+    pathParameters: []
+    settingStoreCookies: true
+    settingSendCookies: true
+    settingDisableRenderRequestBody: false
+    settingEncodeUrl: true
+    settingRebuildPath: true
+    settingFollowRedirects: global
+    _type: request
+  - _id: req_9bf47b075a544e27978da3fdddf7433a
+    parentId: fld_6e15c59178584c6fae69a0089f37b522
+    modified: 1763522061976
+    created: 1763521940370
+    url: http://localhost:8080/dashboards/produtos-recomendados-feriados
+    name: Buscar Produtos Recomendados para os Feriados
+    description: ""
+    method: GET
+    body: {}
+    parameters:
+      - id: pair_20d022b83fd04f449bdff3c25ea512ab
+        name: ""
+        value: ""
+        description: ""
+        disabled: false
+    headers:
+      - name: User-Agent
+        value: insomnia/10.3.1
+    authentication:
+      type: bearer
+      token: ""
+    metaSortKey: -1748485084006.289
     isPrivate: false
     pathParameters: []
     settingStoreCookies: true
@@ -1913,7 +1944,7 @@ resources:
     _type: request
   - _id: req_98ad7248db014810a0880e37b2f7cf41
     parentId: fld_82b239e2df4d42f6829ac2109b282276
-    modified: 1761657330382
+    modified: 1763065673398
     created: 1761528659326
     url: http://localhost:8080/itens-pedido
     name: Cadastrar ItemPedido
@@ -1923,8 +1954,8 @@ resources:
       mimeType: application/json
       text: |-
         {
-          "pedidoId": 2,
-          "produtoId": 2,
+          "pedidoId": 1,
+          "produtoId": 1,
           "quantidade": 2,
           "peso": 1000.00
         }
@@ -1934,7 +1965,9 @@ resources:
         value: application/json
       - name: User-Agent
         value: insomnia/10.3.1
-    authentication: {}
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpbnNwaXJhQGVtYWlsLmNvbSIsImlhdCI6MTc2MzA2NTEzMCwiZXhwIjoxNzY2NjY1MTMwfQ.RLnS2fvy1av59X620Huz5Kt7oWtYwUeEudpxfBUv_s5yirwFHbeulqMoXumFQBmRN-KOqqAHrHSSnUz3Ym9ibA
     metaSortKey: -1742086334338
     isPrivate: false
     pathParameters: []
@@ -2076,9 +2109,9 @@ resources:
     _type: request
   - _id: req_803d38110319493d954fb7db98f3b4e1
     parentId: fld_82b239e2df4d42f6829ac2109b282276
-    modified: 1761533294707
+    modified: 1763065667022
     created: 1761528659328
-    url: http://localhost:8080/itens-pedido/1
+    url: http://localhost:8080/itens-pedido/7
     name: Excluir ItemPedido
     description: ""
     method: DELETE
@@ -2087,7 +2120,9 @@ resources:
     headers:
       - name: User-Agent
         value: insomnia/10.3.1
-    authentication: {}
+    authentication:
+      type: bearer
+      token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJpbnNwaXJhQGVtYWlsLmNvbSIsImlhdCI6MTc2MzA2NTEzMCwiZXhwIjoxNzY2NjY1MTMwfQ.RLnS2fvy1av59X620Huz5Kt7oWtYwUeEudpxfBUv_s5yirwFHbeulqMoXumFQBmRN-KOqqAHrHSSnUz3Ym9ibA
     metaSortKey: -1740455868085.25
     isPrivate: false
     pathParameters: []

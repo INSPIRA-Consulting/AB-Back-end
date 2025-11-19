@@ -146,10 +146,10 @@ public class DashboardController {
         return ResponseEntity.status(200).body(feriados);
     }
 
-    @Operation(summary = "Buscar Feriados", description = "Busca os Feriados Nacionais armazenados no S3.")
+    @Operation(summary = "Buscar Produtos Recomendados (Feriados)", description = "Busca os Produtos Recomendados para cada Categoria para os Próximos Feriados.")
     @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Feriados encontrados"),
-            @ApiResponse(responseCode = "404", description = "Nenhum Feriado encontrado")
+            @ApiResponse(responseCode = "200", description = "Produtos encontrados"),
+            @ApiResponse(responseCode = "404", description = "Nenhum Produto encontrado")
     })
     @GetMapping("/produtos-recomendados-feriados")
     @SecurityRequirement(name = "Bearer")
