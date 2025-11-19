@@ -1,10 +1,9 @@
 package com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.adapters;
 
 import com.anjos_bolos.anjos_bolos_api.core.adapters.DashboardGateway;
-import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.MargemLucroProdutoDTO;
-import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.PedidosFaturamentoDTO;
-import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.ProdutoVendidoDTO;
-import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.VendasDiaSemanaDTO;
+import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.*;
+import com.anjos_bolos.anjos_bolos_api.core.domain.feriados.FeriadosDTO;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.feriados.FeriadosResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.mapper.DashboardMapper;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.repository.DashboardJpaRepository;
 import org.springframework.stereotype.Service;
@@ -55,6 +54,16 @@ public class DashboardJpaAdapter implements DashboardGateway {
     @Override
     public List<VendasDiaSemanaDTO> listVendasPorDiaSemana(LocalDate inicio, LocalDate fim) {
         return repository.listVendasPorDiaSemana(inicio, fim)
+                .stream()
+                .map(DashboardMapper::toDTO)
+                .toList();
+    }
+
+    @Override
+    public List<ProdutoRecomendadoFeriadoDTO> listProdutosRecomendadosFeriados(List<FeriadosDTO> feriados) {
+        List<FeriadosResponseDTO> feriadosDTO = DashboardMapper.toFeriadosResponse(feriados);
+
+        return repository.listProdutosRecomendadosFeriados(feriadosDTO)
                 .stream()
                 .map(DashboardMapper::toDTO)
                 .toList();

@@ -18,6 +18,7 @@ import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.*;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class S3Adapter {
     @Value("${aws.s3.media-bucket-name}")
     private String mediaBucketName;
 
-    @Value("aws.s3.bucket-name")
+    @Value("${aws.s3.bucket-name}")
     private String bucketName;
 
     public S3Adapter(S3Client s3Client) {
@@ -69,7 +70,7 @@ public class S3Adapter {
     public List<FeriadosResponseDTO> listFeriadosNacionais(Integer ano) {
         try {
             ListObjectsV2Request request = ListObjectsV2Request.builder()
-                    .bucket(mediaBucketName)
+                    .bucket(bucketName)
                     .prefix("feriados/nacionais/%d.json".formatted(ano))
                     .build();
 
@@ -87,7 +88,7 @@ public class S3Adapter {
                 if (key.endsWith("/")) continue;
 
                 GetObjectRequest getRequest = GetObjectRequest.builder()
-                        .bucket(mediaBucketName)
+                        .bucket(bucketName)
                         .key(key)
                         .build();
 
@@ -125,6 +126,18 @@ public class S3Adapter {
                     "Erro ao processar o conteúdo dos feriados: " + e.getMessage(), e);
         }
 
+    }
+
+    public List<FeriadosResponseDTO> listProximosFeriados(Integer quantidade) {
+        List<FeriadosResponseDTO> feriados = new ArrayList<>();
+        feriados.addAll(listFeriadosNacionais(LocalDate.now().getYear()));
+        feriados.addAll(listFeriadosNacionais((LocalDate.now().getYear()) + 1));
+
+        return feriados.stream()
+                .filter(feriado -> feriado.data().isAfter(LocalDate.now()))
+                .sorted((f1, f2) -> f1.data().compareTo(f2.data()))
+                .limit(quantidade)
+                .toList();
     }
 
 }

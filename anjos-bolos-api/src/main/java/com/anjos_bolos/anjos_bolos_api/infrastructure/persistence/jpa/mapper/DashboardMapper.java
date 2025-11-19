@@ -1,14 +1,10 @@
 package com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.mapper;
 
 import com.anjos_bolos.anjos_bolos_api.core.application.command.dashboard.*;
-import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.MargemLucroProdutoDTO;
-import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.PedidosFaturamentoDTO;
-import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.ProdutoVendidoDTO;
-import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.VendasDiaSemanaDTO;
-import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.MargemLucroProdutoResponseDTO;
-import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.PedidosFaturamentoResponseDTO;
-import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.ProdutoVendidoResponseDTO;
-import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.VendasDiaSemanaResponseDTO;
+import com.anjos_bolos.anjos_bolos_api.core.domain.dashboard.*;
+import com.anjos_bolos.anjos_bolos_api.core.domain.feriados.FeriadosDTO;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.*;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.feriados.FeriadosResponseDTO;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -96,7 +92,7 @@ public class DashboardMapper {
         );
     }
 
-    public static List<VendasDiaSemanaResponseDTO> toResponse(List<VendasDiaSemanaDTO> domain) {
+    public static List<VendasDiaSemanaResponseDTO> toVendasDiaSemanaResponse(List<VendasDiaSemanaDTO> domain) {
         return domain.stream()
                 .map(venda -> new VendasDiaSemanaResponseDTO(
                         venda.diaSemana(),
@@ -107,6 +103,57 @@ public class DashboardMapper {
 
     public static ListVendasPorDiaSemanaQuery toListVendasPorDiaSemanaQuery(LocalDate inicio, LocalDate fim) {
         return new ListVendasPorDiaSemanaQuery(inicio, fim);
+    }
+
+    public static List<FeriadosDTO> toDTO(List<FeriadosResponseDTO> dto) {
+        return dto.stream()
+                .map(feriado -> new FeriadosDTO(
+                        feriado.data(),
+                        feriado.nome(),
+                        feriado.tipo(),
+                        feriado.descricao(),
+                        feriado.uf(),
+                        feriado.municipio()
+                ))
+                .toList();
+    }
+
+    public static List<FeriadosResponseDTO> toFeriadosResponse(List<FeriadosDTO> domain) {
+        return domain.stream()
+                .map(feriado -> new FeriadosResponseDTO(
+                        feriado.data(),
+                        feriado.nome(),
+                        feriado.tipo(),
+                        feriado.descricao(),
+                        feriado.uf(),
+                        feriado.municipio()
+                ))
+                .toList();
+    }
+
+
+    public static ProdutoRecomendadoFeriadoDTO toDTO(ProdutoRecomendadoFeriadoResponseDTO dto) {
+        return new ProdutoRecomendadoFeriadoDTO(
+                dto.dataFeriado(),
+                dto.feriado(),
+                dto.produto(),
+                dto.categoria()
+        );
+    }
+
+    public static List<ProdutoRecomendadoFeriadoResponseDTO> toResponse(List<ProdutoRecomendadoFeriadoDTO> domain) {
+        return domain.stream()
+                .map(produto -> new ProdutoRecomendadoFeriadoResponseDTO(
+                        produto.dataFeriado(),
+                        produto.feriado(),
+                        produto.produto(),
+                        produto.categoria()
+                ))
+                .toList();
+    }
+
+    public static ListProdutosRecomendadosFeriadosQuery listProdutosRecomendadosFeriadosQuery(List<FeriadosDTO> feriados) {
+        return new ListProdutosRecomendadosFeriadosQuery(feriados);
     }
 
 }

@@ -2,6 +2,7 @@ package com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.adapters;
 
 import com.anjos_bolos.anjos_bolos_api.core.adapters.UsuarioGateway;
 import com.anjos_bolos.anjos_bolos_api.core.application.exception.NotFoundException;
+import com.anjos_bolos.anjos_bolos_api.core.application.exception.UnauthorizedAcessException;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.CPF;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Email;
 import com.anjos_bolos.anjos_bolos_api.core.domain.shared.valueobject.Telefone;
@@ -120,6 +121,10 @@ public class UsuarioJpaAdapter implements UsuarioGateway {
     @Override
     public Usuario findByEmail(Email email) {
         UsuarioEntity entity = repository.findByEmail(email.toString());
+
+        if (entity == null) {
+            throw new UnauthorizedAcessException("Usuário e/ou Senha Inválidos.");
+        }
 
         return UsuarioEntityMapper.toDomain(entity);
     }

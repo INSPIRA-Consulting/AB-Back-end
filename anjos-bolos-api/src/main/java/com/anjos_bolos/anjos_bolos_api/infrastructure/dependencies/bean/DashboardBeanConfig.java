@@ -38,4 +38,9 @@ public class DashboardBeanConfig {
         return new ListVendasPorDiaSemanaUseCase(adapter);
     }
 
+    @Bean
+    public ListProdutosRecomendadosFeriadosUseCase listProdutosRecomendadosFeriadosUseCase(DashboardJpaAdapter adapter) {
+        return new ListProdutosRecomendadosFeriadosUseCase(adapter);
+    }
+
 }

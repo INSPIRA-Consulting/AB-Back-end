@@ -1,9 +1,7 @@
 package com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.implementation;
 
-import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.MargemLucroProdutoResponseDTO;
-import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.PedidosFaturamentoResponseDTO;
-import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.ProdutoVendidoResponseDTO;
-import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.VendasDiaSemanaResponseDTO;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.*;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.feriados.FeriadosResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.repository.DashboardJpaRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.TypedQuery;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository
@@ -186,6 +185,58 @@ public class DashboardJpaRepositoryImpl implements DashboardJpaRepository {
         query.setParameter("fim", fim.atTime(LocalTime.MAX));
 
         return query.getResultList();
+    }
+
+    @Override
+    public List<ProdutoRecomendadoFeriadoResponseDTO> listProdutosRecomendadosFeriados(List<FeriadosResponseDTO> feriados) {
+        List<ProdutoRecomendadoFeriadoResponseDTO> resultado = new ArrayList<>();
+
+        String jpql = """
+        SELECT NEW com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.dashboard.ProdutoRecomendadoFeriadoResponseDTO(
+            :dataFeriado,
+            :nomeFeriado,
+            p.nome,
+            cp.nome
+        )
+        FROM PedidoEntity pd
+        JOIN ItemPedidoEntity ip ON ip.pedido = pd
+        JOIN ProdutoEntity p ON ip.produto = p
+        JOIN CategoriaProdutoEntity cp ON p.categoriaProduto = cp
+        WHERE pd.status = 'FINALIZADO'
+        AND pd.dataPedido BETWEEN :feriadoInicio AND :feriadoFim
+        AND p.id = (
+            SELECT p2.id
+            FROM PedidoEntity pd2
+            JOIN ItemPedidoEntity ip2 ON ip2.pedido = pd2
+            JOIN ProdutoEntity p2 ON ip2.produto = p2
+            WHERE pd2.status = 'FINALIZADO'
+            AND p2.categoriaProduto = cp
+            AND pd2.dataPedido BETWEEN :feriadoInicio AND :feriadoFim
+            GROUP BY p2.id
+            ORDER BY SUM(ip2.quantidade) DESC
+            LIMIT 1
+        )
+        GROUP BY cp.id, p.id, p.nome, cp.nome
+        """;
+
+        // Processa os 3 primeiros feriados
+        for (FeriadosResponseDTO feriado : feriados.stream().limit(3).toList()) {
+            TypedQuery<ProdutoRecomendadoFeriadoResponseDTO> query = entityManager.createQuery(jpql, ProdutoRecomendadoFeriadoResponseDTO.class);
+
+            // Calcula o período do ano anterior (D-7 até o feriado)
+            LocalDate dataFeriadoAnoPassado = feriado.data().minusYears(1);
+            LocalDateTime inicioSemana = dataFeriadoAnoPassado.minusDays(7).atStartOfDay();
+            LocalDateTime fimFeriado = dataFeriadoAnoPassado.atTime(LocalTime.MAX);
+
+            query.setParameter("dataFeriado", feriado.data());
+            query.setParameter("nomeFeriado", feriado.nome());
+            query.setParameter("feriadoInicio", inicioSemana);
+            query.setParameter("feriadoFim", fimFeriado);
+
+            resultado.addAll(query.getResultList());
+        }
+
+        return resultado;
     }
 
 }
