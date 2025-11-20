@@ -192,6 +192,7 @@ jobs:
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
               'export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" && \
               /usr/bin/sudo mkdir -p /usr/share/api-email && \
+              /usr/bin/sudo rm -rf /usr/share/api-email/.env && \
               /usr/bin/sudo tee /usr/share/api-email/.env > /dev/null << "ENV_EOF"
             EMAIL_SECRET="${{ secrets.EMAIL_SECRET }}"
             BACKUP_EMAIL_SECRET="${{ secrets.BACKUP_EMAIL_SECRET }}"
