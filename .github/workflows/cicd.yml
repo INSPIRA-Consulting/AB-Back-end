@@ -188,13 +188,18 @@ jobs:
               /home/${{ secrets.REMOTE_USER }}/email_service.jar \
               $USUARIO_IP:/tmp/email_service.jar
             
-            # Criar arquivo .env diretamente na EC2 privada
+            # Criar arquivo .env-email diretamente na EC2 privada
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
-              'export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" && /usr/bin/sudo rm -rf /home/ubuntu/.env && cat > /home/ubuntu/.env << "ENV_EOF"
+              'export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin" && \
+              /usr/bin/sudo rm -rf /home/ubuntu/.env-email && \
+              /usr/bin/sudo tee /home/ubuntu/.env-email > /dev/null << "ENV_EOF"
             EMAIL_SECRET="${{ secrets.EMAIL_SECRET }}"
             BACKUP_EMAIL_SECRET="${{ secrets.BACKUP_EMAIL_SECRET }}"
             ENV_EOF
-            /usr/bin/sudo chmod 644 /home/ubuntu/.env && /usr/bin/sudo chown ubuntu:ubuntu /home/ubuntu/.env'
+            /usr/bin/sudo chmod 640 /home/ubuntu/.env-email && \
+            /usr/bin/sudo chown ubuntu:ubuntu /home/ubuntu/.env-email && \
+            /usr/bin/sudo ls -l /home/ubuntu/.env-email && \
+            /usr/bin/sudo file /home/ubuntu/.env-email'
             
             # Mover JAR para o diretório final
             ssh -o StrictHostKeyChecking=no -i $ARQUIVO_PEM $USUARIO_IP \
@@ -205,13 +210,13 @@ jobs:
               export PATH="/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
               cd /home/ubuntu
               
-              # Verificar se .env é um arquivo (não diretório)
-              if [ -f "/home/ubuntu/.env" ]; then
-                echo "✅ .env é um arquivo válido"
-                ls -la /home/ubuntu/.env
+              # Verificar se .env-email é um arquivo (não diretório)
+              if [ -f "/home/ubuntu/.env-email" ]; then
+                echo "✅ .env-email é um arquivo válido"
+                ls -la /home/ubuntu/.env-email
               else
-                echo "❌ Erro: .env não é um arquivo válido"
-                ls -la /home/ubuntu/.env 2>/dev/null || echo "Arquivo não existe"
+                echo "❌ Erro: .env-email não é um arquivo válido"
+                ls -la /home/ubuntu/.env-email 2>/dev/null || echo "Arquivo não existe"
                 exit 1
               fi
               
