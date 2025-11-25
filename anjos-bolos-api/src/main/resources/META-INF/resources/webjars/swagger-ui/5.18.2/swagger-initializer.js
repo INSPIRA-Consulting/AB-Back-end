@@ -17,7 +17,7 @@ window.onload = function() {   //<editor-fold desc="Changeable Configuration Blo
   ];
 
   // ordem desejada dos métodos (minúsculas)
-  var methodsOrder = ['post', 'patch', 'get', 'put', 'delete'];
+  var methodsOrder = ['post', 'get', 'put', 'patch', 'delete'];
 
   window.ui = SwaggerUIBundle({
     url: window.location.pathname.replace(/\/swagger-ui\.html.*$/, '/v3/api-docs'),

@@ -26,6 +26,11 @@ public class PedidoBeanConfig {
     }
 
     @Bean
+    public UpdateStatusPedidoUseCase updateStatusPedidoUseCase(PedidoJpaAdapter adapter) {
+        return new UpdateStatusPedidoUseCase(adapter);
+    }
+
+    @Bean
     public DeletePedidoUseCase deletePedidoUseCase(PedidoJpaAdapter adapter) {
         return new DeletePedidoUseCase(adapter);
     }

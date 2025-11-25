@@ -6,6 +6,7 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.pedido.valueobject.FormaPagam
 import com.anjos_bolos.anjos_bolos_api.core.domain.pedido.valueobject.StatusPedidoEnum;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.pedido.PedidoRequestDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.pedido.PedidoResponseDTO;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.pedido.StatusPedidoRequestDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.PedidoEntity;
 
 import java.time.LocalDateTime;
@@ -50,6 +51,16 @@ public class PedidoEntityMapper {
                 dto.observacao(),
                 dto.usuarioId(),
                 dto.clienteId()
+        );
+    }
+
+    public static UpdateStatusPedidoCommand toCommand(Integer id, StatusPedidoRequestDTO dto) {
+        return new UpdateStatusPedidoCommand(
+                id,
+                dto.dataRetirada(),
+                dto.formaPagamento(),
+                dto.status(),
+                dto.observacao()
         );
     }
 
