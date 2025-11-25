@@ -1,5 +1,5 @@
 -- Criação do usuário de serviço
-CREATE USER 'anjos_bolos_api'@'%' IDENTIFIED BY '@nj0sB0l0s';
+CREATE USER IF NOT EXISTS'anjos_bolos_api'@'%' IDENTIFIED BY '@nj0sB0l0s';
 
 -- Concedendo permissões apenas no banco da aplicação
 GRANT SELECT, INSERT, UPDATE, DELETE
@@ -10,7 +10,7 @@ TO 'anjos_bolos_api'@'%';
 FLUSH PRIVILEGES;
 
 -- Criação da Database
-drop database if exists anjos_bolos;
+DROP DATABASE IF EXISTS anjos_bolos;
 CREATE DATABASE IF NOT EXISTS anjos_bolos;
 USE anjos_bolos;
 
@@ -163,12 +163,12 @@ CREATE TABLE Detalhamento_Pedido (
     CONSTRAINT fk_detalhamento_receita FOREIGN KEY (fkReceita) REFERENCES Receita(id),
     CONSTRAINT fk_detalhamento_ingrediente FOREIGN KEY (fkIngrediente) REFERENCES Receita(fkIngrediente)
 );
-
+SELECT * FROM Usuario;
 
 -- =======================
 -- Usuários
 -- =======================
 INSERT INTO Usuario (nome, cpf, email, senha, telefone, funcao) VALUES
 ('root', '999.999.999-99', 'inspira@gmail.com', '$2a$10$P42PeHwYl2WTPhqC.8PMt.xdO8p18rG5VuEp2OiPzKOqFO0KYFjKu', '(11)99999-9999', 'ADMINISTRADOR'),
-('Ana Souza', '123.456.789-00', 'ana@anjosbolos.com', 'senha123', '(11)90000-0001', 'ATENDENTE'),
-('Carla Mendes', '123.123.123-12', 'carla@anjosbolos.com', 'senha123', '(11)90000-0003', 'GERENTE');
+('Ana Souza', '123.456.789-00', 'ana@anjosbolos.com', '$2a$10$Z8.B8i/nCUICjbwwMl35gu72uaXfrlWle5nCASux4E4/TOVUQ57fS', '(11)90000-0001', 'ATENDENTE'),
+('Carla Mendes', '123.123.123-12', 'carla@anjosbolos.com', '$2a$10$Z8.B8i/nCUICjbwwMl35gu72uaXfrlWle5nCASux4E4/TOVUQ57fS', '(11)90000-0003', 'GERENTE');
