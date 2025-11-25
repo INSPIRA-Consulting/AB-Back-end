@@ -1,5 +1,5 @@
 package school.sptech.dto;
 
-public record BoloDTO (
-        Double qtd
+public record BoloDTO(
+        PedidoBoloDTO pedido
 ) {}
