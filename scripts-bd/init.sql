@@ -128,7 +128,7 @@ CREATE TABLE Pedido (
     CONSTRAINT fk_pedido_usuario FOREIGN KEY (fkUsuarioResponsavel) REFERENCES Usuario(id),
     CONSTRAINT fk_pedido_cliente FOREIGN KEY (fkCliente) REFERENCES Cliente(id),
     CONSTRAINT chk_formaPagamento CHECK (formaPagamento IN (
-        'DINHEIRO', 'CARTAO_CREDITO', 'CARTAO_DEBITO', 'VOUCHER', 'PIX'
+        'DINHEIRO', 'CARTAO_CREDITO', 'CARTAO_DEBITO', 'VOUCHER', 'PIX', 'NAO_REALIZADO'
     )),
     CONSTRAINT chk_statusPedido CHECK (status IN (
         'CONFIRMADO', 'PENDENTE_PAGAMENTO', 'CANCELADO', 'FINALIZADO'
@@ -163,7 +163,6 @@ CREATE TABLE Detalhamento_Pedido (
     CONSTRAINT fk_detalhamento_receita FOREIGN KEY (fkReceita) REFERENCES Receita(id),
     CONSTRAINT fk_detalhamento_ingrediente FOREIGN KEY (fkIngrediente) REFERENCES Receita(fkIngrediente)
 );
-SELECT * FROM Usuario;
 
 -- =======================
 -- Usuários
