@@ -143,7 +143,7 @@ INSERT INTO Item_Pedido (id, fkPedido, fkProduto, quantidade, precoUnitario, cus
 INSERT INTO Pedido (id, dataPedido, dataRetirada, dataPagamento, formaPagamento, status, observacao, fkUsuarioResponsavel, fkCliente) VALUES (1071, '2024-12-24 13:16:00', '2024-12-25 13:16:00', '2024-12-24 13:16:00', 'CARTAO_CREDITO', 'FINALIZADO', NULL, 1, 1);
 INSERT INTO Item_Pedido (id, fkPedido, fkProduto, quantidade, precoUnitario, custoProducao, peso) VALUES (2071, 1071, 4, 1, 14.81, 8.89, NULL);
 INSERT INTO Pedido (id, dataPedido, dataRetirada, dataPagamento, formaPagamento, status, observacao, fkUsuarioResponsavel, fkCliente) VALUES (1072, '2024-12-20 12:11:00', '2024-12-21 12:11:00', '2024-12-20 12:11:00', 'CARTAO_CREDITO', 'PENDENTE_PAGAMENTO', NULL, 1, 1);
-INSERT INTO Item_Pedido (id, fkPedido, fkProduto, quantidade, precoUnitario, custoProducao, peso) VALUES (1072, 1072, 5, 1, 23.42, 14.05, NULL);
+INSERT INTO Item_Pedido (id, fkPedido, fkProduto, quantidade, precoUnitario, custoProducao, peso) VALUES (2072, 1072, 5, 1, 23.42, 14.05, NULL);
 INSERT INTO Pedido (id, dataPedido, dataRetirada, dataPagamento, formaPagamento, status, observacao, fkUsuarioResponsavel, fkCliente) VALUES (1073, '2024-12-18 02:13:00', '2024-12-19 02:13:00', '2024-12-18 02:13:00', 'PIX', 'PENDENTE_PAGAMENTO', NULL, 1, 1);
 INSERT INTO Item_Pedido (id, fkPedido, fkProduto, quantidade, precoUnitario, custoProducao, peso) VALUES (2073, 1073, 2, 4, 37.78, 22.67, NULL);
 INSERT INTO Pedido (id, dataPedido, dataRetirada, dataPagamento, formaPagamento, status, observacao, fkUsuarioResponsavel, fkCliente) VALUES (1074, '2024-12-23 07:28:00', '2024-12-24 07:28:00', '2024-12-23 07:28:00', 'CARTAO_DEBITO', 'FINALIZADO', NULL, 1, 1);
@@ -178,4 +178,3 @@ INSERT INTO Pedido (id, dataPedido, dataRetirada, dataPagamento, formaPagamento,
 INSERT INTO Item_Pedido (id, fkPedido, fkProduto, quantidade, precoUnitario, custoProducao, peso) VALUES (2088, 1088, 1, 1, 65.82, 39.49, NULL);
 INSERT INTO Pedido (id, dataPedido, dataRetirada, dataPagamento, formaPagamento, status, observacao, fkUsuarioResponsavel, fkCliente) VALUES (1089, '2024-12-25 10:26:00', '2024-12-26 10:26:00', '2024-12-25 10:26:00', 'DINHEIRO', 'FINALIZADO', NULL, 1, 1);
 INSERT INTO Item_Pedido (id, fkPedido, fkProduto, quantidade, precoUnitario, custoProducao, peso) VALUES (2089, 1089, 2, 3, 95.11, 57.07, NULL);
-
