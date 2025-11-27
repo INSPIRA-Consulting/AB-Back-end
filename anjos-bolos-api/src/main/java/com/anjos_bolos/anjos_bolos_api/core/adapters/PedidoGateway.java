@@ -2,6 +2,7 @@ package com.anjos_bolos.anjos_bolos_api.core.adapters;
 
 import com.anjos_bolos.anjos_bolos_api.core.domain.pedido.Pedido;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public interface PedidoGateway {
 
     List<Pedido> findByDataPedido(LocalDateTime dataPedido);
 
-    List<Pedido> findByDataRetirada(LocalDateTime dataRetirada);
+    List<Pedido> findByDataRetirada(LocalDateTime dataRetiradaInicio, LocalDateTime dataRetiradaFim);
 
     List<Pedido> findByDataPagamento(LocalDateTime dataPagamento);
 

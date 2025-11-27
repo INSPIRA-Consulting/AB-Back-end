@@ -18,7 +18,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Tag(name = "Pedidos", description = "Operações relacionadas à Entidade de Pedidos")
@@ -177,9 +179,12 @@ public class PedidoController {
     })
     @GetMapping("/filtro-data-retirada")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<List<PedidoResponseDTO>> buscarPorDataRetirada(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime dataPedido,
-                                                                         @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime dataRetirada) {
-        ListPedidosByDataRetiradaQuery query = PedidoEntityMapper.toListPedidosByDataRetiradaQuery(dataPedido, dataRetirada);
+    public ResponseEntity<List<PedidoResponseDTO>> buscarPorDataRetirada(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataRetirada) {
+        LocalDateTime dataRetiradaInicio = dataRetirada.atStartOfDay();
+        LocalDateTime dataRetiradaFim = dataRetirada.atTime(LocalTime.MAX);
+
+
+        ListPedidosByDataRetiradaQuery query = PedidoEntityMapper.toListPedidosByDataRetiradaQuery(dataRetiradaInicio, dataRetiradaFim);
         List<Pedido> pedidos = listPedidosByDataRetiradaUseCase.execute(query);
 
         if (pedidos.isEmpty()) {

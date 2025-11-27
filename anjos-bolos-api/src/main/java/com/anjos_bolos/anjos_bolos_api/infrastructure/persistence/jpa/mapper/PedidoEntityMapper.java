@@ -9,6 +9,7 @@ import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.pedido
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.pedido.StatusPedidoRequestDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.PedidoEntity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class PedidoEntityMapper {
@@ -84,9 +85,8 @@ public class PedidoEntityMapper {
         return new ListPedidosByDataPedidoQuery(dataPedido);
     }
 
-    public static ListPedidosByDataRetiradaQuery toListPedidosByDataRetiradaQuery(LocalDateTime dataPedido,
-                                                                                  LocalDateTime dataRetirada) {
-        return new ListPedidosByDataRetiradaQuery(dataPedido, dataRetirada);
+    public static ListPedidosByDataRetiradaQuery toListPedidosByDataRetiradaQuery(LocalDateTime dataRetiradaInicio, LocalDateTime dataRetiradaFim) {
+        return new ListPedidosByDataRetiradaQuery(dataRetiradaInicio, dataRetiradaFim);
     }
 
     public static ListPedidosByDataPagamentoQuery toListPedidosByDataPagamentoQuery(LocalDateTime dataPagamento) {
