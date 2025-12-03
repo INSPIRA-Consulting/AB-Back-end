@@ -6,8 +6,10 @@ import com.anjos_bolos.anjos_bolos_api.core.domain.pedido.valueobject.FormaPagam
 import com.anjos_bolos.anjos_bolos_api.core.domain.pedido.valueobject.StatusPedidoEnum;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.pedido.PedidoRequestDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.pedido.PedidoResponseDTO;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.pedido.StatusPedidoRequestDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.entity.PedidoEntity;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class PedidoEntityMapper {
@@ -53,6 +55,16 @@ public class PedidoEntityMapper {
         );
     }
 
+    public static UpdateStatusPedidoCommand toCommand(Integer id, StatusPedidoRequestDTO dto) {
+        return new UpdateStatusPedidoCommand(
+                id,
+                dto.dataRetirada(),
+                dto.formaPagamento(),
+                dto.status(),
+                dto.observacao()
+        );
+    }
+
     public static DeletePedidoCommand toCommand(Integer id) {
         return new DeletePedidoCommand(id);
     }
@@ -73,9 +85,8 @@ public class PedidoEntityMapper {
         return new ListPedidosByDataPedidoQuery(dataPedido);
     }
 
-    public static ListPedidosByDataRetiradaQuery toListPedidosByDataRetiradaQuery(LocalDateTime dataPedido,
-                                                                                  LocalDateTime dataRetirada) {
-        return new ListPedidosByDataRetiradaQuery(dataPedido, dataRetirada);
+    public static ListPedidosByDataRetiradaQuery toListPedidosByDataRetiradaQuery(LocalDateTime dataRetiradaInicio, LocalDateTime dataRetiradaFim) {
+        return new ListPedidosByDataRetiradaQuery(dataRetiradaInicio, dataRetiradaFim);
     }
 
     public static ListPedidosByDataPagamentoQuery toListPedidosByDataPagamentoQuery(LocalDateTime dataPagamento) {

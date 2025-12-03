@@ -18,7 +18,7 @@ public interface PedidoJpaRepository extends JpaRepository<PedidoEntity, Integer
 
     List<PedidoEntity> findByDataPedido(LocalDateTime dataPedido);
 
-    List<PedidoEntity> findByDataRetirada(LocalDateTime dataRetirada);
+    List<PedidoEntity> findByDataRetiradaBetween(LocalDateTime dataRetiradaInicio, LocalDateTime dataRetiradaFim);
 
     List<PedidoEntity> findByDataPagamento(LocalDateTime dataPagamento);
 

@@ -17,15 +17,12 @@ public class ListPedidosByDataRetiradaUseCase{
     }
 
     public List<Pedido> execute(ListPedidosByDataRetiradaQuery query) {
-        if (query.dataRetirada().isBefore(query.dataPedido())) {
-            throw new InvalidArgumentException("A Data de Retirada não pode ser inferior à Data do Pedido.");
-        }
 
-        List<Pedido> pedidos = gateway.findByDataRetirada(query.dataRetirada());
+        List<Pedido> pedidos = gateway.findByDataRetirada(query.dataRetiradaInicio(), query.dataRetiradaFim());
 
         if (pedidos.isEmpty()) {
             throw new InvalidArgumentException("Nenhum pedido encontrado para a Data de Retirada [%s]."
-                    .formatted(query.dataRetirada()));
+                    .formatted(query.dataRetiradaInicio().format(java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy"))));
         }
 
         return pedidos;

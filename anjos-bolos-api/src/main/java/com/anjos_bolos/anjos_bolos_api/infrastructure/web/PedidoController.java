@@ -5,6 +5,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.usecase.pedido.*;
 import com.anjos_bolos.anjos_bolos_api.core.domain.pedido.Pedido;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.pedido.PedidoRequestDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.pedido.PedidoResponseDTO;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.pedido.StatusPedidoRequestDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.mapper.PedidoEntityMapper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -17,7 +18,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
 @Tag(name = "Pedidos", description = "Operações relacionadas à Entidade de Pedidos")
@@ -26,6 +29,7 @@ import java.util.List;
 public class PedidoController {
     private final CreatePedidoUseCase createPedidoUseCase;
     private final UpdatePedidoUseCase updatePedidoUseCase;
+    private final UpdateStatusPedidoUseCase updateStatusPedidoUseCase;
     private final DeletePedidoUseCase deletePedidoUseCase;
     private final ListPedidosUseCase listPedidosUseCase;
     private final GetPedidoByIdUseCase getPedidoByIdUseCase;
@@ -37,9 +41,10 @@ public class PedidoController {
     private final ListPedidosByFormaPagamentoUseCase listPedidosByFormaPagamentoUseCase;
     private final ListPedidosByStatusUseCase listPedidosByStatusUseCase;
 
-    public PedidoController(CreatePedidoUseCase createPedidoUseCase, UpdatePedidoUseCase updatePedidoUseCase, DeletePedidoUseCase deletePedidoUseCase, ListPedidosUseCase listPedidosUseCase, GetPedidoByIdUseCase getPedidoByIdUseCase, ListPedidosByClienteIdUseCase listPedidosByClienteIdUseCase, ListPedidosByClienteCpfUseCase listPedidosByClienteCpfUseCase, ListPedidosByDataPedidoUseCase listPedidosByDataPedidoUseCase, ListPedidosByDataRetiradaUseCase listPedidosByDataRetiradaUseCase, ListPedidosByDataPagamentoUseCase listPedidosByDataPagamentoUseCase, ListPedidosByFormaPagamentoUseCase listPedidosByFormaPagamentoUseCase, ListPedidosByStatusUseCase listPedidosByStatusUseCase) {
+    public PedidoController(CreatePedidoUseCase createPedidoUseCase, UpdatePedidoUseCase updatePedidoUseCase, UpdateStatusPedidoUseCase updateStatusPedidoUseCase, DeletePedidoUseCase deletePedidoUseCase, ListPedidosUseCase listPedidosUseCase, GetPedidoByIdUseCase getPedidoByIdUseCase, ListPedidosByClienteIdUseCase listPedidosByClienteIdUseCase, ListPedidosByClienteCpfUseCase listPedidosByClienteCpfUseCase, ListPedidosByDataPedidoUseCase listPedidosByDataPedidoUseCase, ListPedidosByDataRetiradaUseCase listPedidosByDataRetiradaUseCase, ListPedidosByDataPagamentoUseCase listPedidosByDataPagamentoUseCase, ListPedidosByFormaPagamentoUseCase listPedidosByFormaPagamentoUseCase, ListPedidosByStatusUseCase listPedidosByStatusUseCase) {
         this.createPedidoUseCase = createPedidoUseCase;
         this.updatePedidoUseCase = updatePedidoUseCase;
+        this.updateStatusPedidoUseCase = updateStatusPedidoUseCase;
         this.deletePedidoUseCase = deletePedidoUseCase;
         this.listPedidosUseCase = listPedidosUseCase;
         this.getPedidoByIdUseCase = getPedidoByIdUseCase;
@@ -61,9 +66,9 @@ public class PedidoController {
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<PedidoResponseDTO> cadastrarPedido(@RequestBody @Valid PedidoRequestDTO dto) {
         CreatePedidoCommand command = PedidoEntityMapper.toCommand(dto);
-        Pedido produto = createPedidoUseCase.execute(command);
+        Pedido pedido = createPedidoUseCase.execute(command);
 
-        return ResponseEntity.status(201).body(PedidoEntityMapper.toDTO(produto));
+        return ResponseEntity.status(201).body(PedidoEntityMapper.toDTO(pedido));
     }
 
     @Operation(summary = "Listar todos os Pedidos", description = "Retorna uma lista com todos os Pedidos cadastrados.")
@@ -95,13 +100,13 @@ public class PedidoController {
     @SecurityRequirement(name = "Bearer")
     public ResponseEntity<PedidoResponseDTO> buscarPorIdPedido(@PathVariable Integer id) {
         GetPedidoByIdQuery query = PedidoEntityMapper.toGetPedidoByIdQuery(id);
-        Pedido produto = getPedidoByIdUseCase.execute(query);
+        Pedido pedido = getPedidoByIdUseCase.execute(query);
 
-        if (produto == null) {
+        if (pedido == null) {
             return ResponseEntity.status(204).build();
         }
 
-        return ResponseEntity.status(200).body(PedidoEntityMapper.toDTO(produto));
+        return ResponseEntity.status(200).body(PedidoEntityMapper.toDTO(pedido));
     }
 
     @Operation(summary = "Buscar Pedidos por ID do Cliente", description = "Filtra Pedidos que contenham o Cliente com o ID informado.")
@@ -174,9 +179,12 @@ public class PedidoController {
     })
     @GetMapping("/filtro-data-retirada")
     @SecurityRequirement(name = "Bearer")
-    public ResponseEntity<List<PedidoResponseDTO>> buscarPorDataRetirada(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime dataPedido,
-                                                                         @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime dataRetirada) {
-        ListPedidosByDataRetiradaQuery query = PedidoEntityMapper.toListPedidosByDataRetiradaQuery(dataPedido, dataRetirada);
+    public ResponseEntity<List<PedidoResponseDTO>> buscarPorDataRetirada(@RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataRetirada) {
+        LocalDateTime dataRetiradaInicio = dataRetirada.atStartOfDay();
+        LocalDateTime dataRetiradaFim = dataRetirada.atTime(LocalTime.MAX);
+
+
+        ListPedidosByDataRetiradaQuery query = PedidoEntityMapper.toListPedidosByDataRetiradaQuery(dataRetiradaInicio, dataRetiradaFim);
         List<Pedido> pedidos = listPedidosByDataRetiradaUseCase.execute(query);
 
         if (pedidos.isEmpty()) {
@@ -256,7 +264,6 @@ public class PedidoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Pedido atualizado com sucesso"),
             @ApiResponse(responseCode = "404", description = "Pedido não encontrado"),
-            @ApiResponse(responseCode = "409", description = "Pedido com esse nome já existe")
     })
     @PutMapping("/{id}")
     @SecurityRequirement(name = "Bearer")
@@ -265,9 +272,26 @@ public class PedidoController {
             @RequestBody @Valid PedidoRequestDTO dto
     ) {
         UpdatePedidoCommand command = PedidoEntityMapper.toCommand(id, dto);
-        Pedido produto = updatePedidoUseCase.execute(command);
+        Pedido pedido = updatePedidoUseCase.execute(command);
 
-        return ResponseEntity.status(200).body(PedidoEntityMapper.toDTO(produto));
+        return ResponseEntity.status(200).body(PedidoEntityMapper.toDTO(pedido));
+    }
+
+    @Operation(summary = "Atualizar Status do Pedido", description = "Atualiza o Status (e outras informações) de um Pedido existente com base no ID.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Pedido atualizado com sucesso"),
+            @ApiResponse(responseCode = "404", description = "Pedido não encontrado"),
+    })
+    @PatchMapping("/{id}")
+    @SecurityRequirement(name = "Bearer")
+    public ResponseEntity<PedidoResponseDTO> atualizarStatusPedido(
+            @Parameter(description = "ID do Pedido a ser atualizado") @PathVariable Integer id,
+            @RequestBody @Valid StatusPedidoRequestDTO dto
+    ) {
+        UpdateStatusPedidoCommand command = PedidoEntityMapper.toCommand(id, dto);
+        Pedido pedido = updateStatusPedidoUseCase.execute(command);
+
+        return ResponseEntity.status(200).body(PedidoEntityMapper.toDTO(pedido));
     }
 
     @Operation(summary = "Excluir Pedido", description = "Remove um Pedido do sistema com base no ID.")

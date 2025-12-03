@@ -30,6 +30,7 @@ public class DashboardJpaRepositoryImpl implements DashboardJpaRepository {
                         ROUND(((p.precoFinal - p.custoProducao) / p.precoFinal * 100), 2)
                     )
                     FROM ProdutoEntity p
+                    WHERE p.precoFinal > 0
                     ORDER BY ((p.precoFinal - p.custoProducao) / p.precoFinal) ASC
                     """;
 

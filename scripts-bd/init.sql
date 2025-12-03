@@ -128,7 +128,7 @@ CREATE TABLE Pedido (
     CONSTRAINT fk_pedido_usuario FOREIGN KEY (fkUsuarioResponsavel) REFERENCES Usuario(id),
     CONSTRAINT fk_pedido_cliente FOREIGN KEY (fkCliente) REFERENCES Cliente(id),
     CONSTRAINT chk_formaPagamento CHECK (formaPagamento IN (
-        'DINHEIRO', 'CARTAO_CREDITO', 'CARTAO_DEBITO', 'VOUCHER', 'PIX'
+        'DINHEIRO', 'CARTAO_CREDITO', 'CARTAO_DEBITO', 'VOUCHER', 'PIX', 'NAO_REALIZADO'
     )),
     CONSTRAINT chk_statusPedido CHECK (status IN (
         'CONFIRMADO', 'PENDENTE_PAGAMENTO', 'CANCELADO', 'FINALIZADO'
@@ -163,12 +163,11 @@ CREATE TABLE Detalhamento_Pedido (
     CONSTRAINT fk_detalhamento_receita FOREIGN KEY (fkReceita) REFERENCES Receita(id),
     CONSTRAINT fk_detalhamento_ingrediente FOREIGN KEY (fkIngrediente) REFERENCES Receita(fkIngrediente)
 );
-SELECT * FROM Usuario;
 
 -- =======================
 -- Usuários
 -- =======================
 INSERT INTO Usuario (nome, cpf, email, senha, telefone, funcao) VALUES
-('root', '999.999.999-99', 'inspira@gmail.com', '$2a$10$P42PeHwYl2WTPhqC.8PMt.xdO8p18rG5VuEp2OiPzKOqFO0KYFjKu', '(11)99999-9999', 'ADMINISTRADOR'),
+('Administrador', '999.999.999-99', 'inspira@gmail.com', '$2a$10$P42PeHwYl2WTPhqC.8PMt.xdO8p18rG5VuEp2OiPzKOqFO0KYFjKu', '(11)99999-9999', 'ADMINISTRADOR'),
 ('Ana Souza', '123.456.789-00', 'ana@anjosbolos.com', '$2a$10$Z8.B8i/nCUICjbwwMl35gu72uaXfrlWle5nCASux4E4/TOVUQ57fS', '(11)90000-0001', 'ATENDENTE'),
 ('Carla Mendes', '123.123.123-12', 'carla@anjosbolos.com', '$2a$10$Z8.B8i/nCUICjbwwMl35gu72uaXfrlWle5nCASux4E4/TOVUQ57fS', '(11)90000-0003', 'GERENTE');

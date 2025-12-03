@@ -80,8 +80,8 @@ public class PedidoJpaAdapter implements PedidoGateway {
     }
 
     @Override
-    public List<Pedido> findByDataRetirada(LocalDateTime dataRetirada) {
-        return repository.findByDataRetirada(dataRetirada)
+    public List<Pedido> findByDataRetirada(LocalDateTime dataRetiradaInicio, LocalDateTime dataRetiradaFim) {
+        return repository.findByDataRetiradaBetween(dataRetiradaInicio, dataRetiradaFim)
                 .stream()
                 .map(PedidoEntityMapper::toDomain)
                 .toList();

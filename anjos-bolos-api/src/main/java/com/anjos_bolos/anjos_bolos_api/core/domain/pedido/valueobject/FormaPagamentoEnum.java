@@ -11,7 +11,8 @@ public enum FormaPagamentoEnum {
     CARTAO_CREDITO("Cartão de Crédito"),
     CARTAO_DEBITO("Cartão de Débito"),
     VOUCHER("Vale Alimentação/Refeição"),
-    PIX("PIX");
+    PIX("PIX"),
+    NAO_REALIZADO("Não Realizado");
 
     private final String formaPagamento;
 
@@ -45,7 +46,7 @@ public enum FormaPagamentoEnum {
 
     public static FormaPagamentoEnum from(String formaPagamento) {
         if (formaPagamento == null) {
-            throw new InvalidArgumentException("Forma de Pagamento não pode ser nula.");
+            return null;
         }
         for (FormaPagamentoEnum f : FormaPagamentoEnum.values()) {
             if (f.name().equalsIgnoreCase(formaPagamento) || f.getFormaPagamento().equalsIgnoreCase(formaPagamento)) {
