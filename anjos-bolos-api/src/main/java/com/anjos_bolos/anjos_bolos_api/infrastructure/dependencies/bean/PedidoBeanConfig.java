@@ -2,6 +2,7 @@ package com.anjos_bolos.anjos_bolos_api.infrastructure.dependencies.bean;
 
 import com.anjos_bolos.anjos_bolos_api.core.application.usecase.pedido.*;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.adapters.ClienteJpaAdapter;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.adapters.ItemPedidoJpaAdapter;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.adapters.PedidoJpaAdapter;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.adapters.UsuarioJpaAdapter;
 import org.springframework.context.annotation.Bean;
@@ -80,6 +81,12 @@ public class PedidoBeanConfig {
     @Bean
     public ListPedidosByStatusUseCase listPedidosByStatusUseCase(PedidoJpaAdapter adapter) {
         return new ListPedidosByStatusUseCase(adapter);
+    }
+
+    @Bean
+    public ListProdutosByDataRetiradaUseCase listProdutosByDataRetiradaUseCase(PedidoJpaAdapter adapter,
+                                                                               ItemPedidoJpaAdapter itemAdapter) {
+        return new ListProdutosByDataRetiradaUseCase(adapter, itemAdapter);
     }
 
 }

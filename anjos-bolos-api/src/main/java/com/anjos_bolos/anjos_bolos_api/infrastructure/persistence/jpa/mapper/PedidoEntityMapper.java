@@ -101,6 +101,10 @@ public class PedidoEntityMapper {
         return new ListPedidosByStatusQuery(status);
     }
 
+    public static ListProdutosByDataRetiradaQuery toListProdutosByDataRetiradaQuery(LocalDateTime dataRetiradaInicio, LocalDateTime dataRetiradaFim) {
+        return new ListProdutosByDataRetiradaQuery(dataRetiradaInicio, dataRetiradaFim);
+    }
+
     public static PedidoEntity toEntity(Pedido domain) {
         return new PedidoEntity(
                 domain.getId(),

@@ -5,6 +5,7 @@ import com.anjos_bolos.anjos_bolos_api.core.application.usecase.pedido.*;
 import com.anjos_bolos.anjos_bolos_api.core.domain.pedido.Pedido;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.pedido.PedidoRequestDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.pedido.PedidoResponseDTO;
+import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.pedido.ProdutosPedidoResponseDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.dto.pedido.StatusPedidoRequestDTO;
 import com.anjos_bolos.anjos_bolos_api.infrastructure.persistence.jpa.mapper.PedidoEntityMapper;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,8 +41,9 @@ public class PedidoController {
     private final ListPedidosByDataPagamentoUseCase listPedidosByDataPagamentoUseCase;
     private final ListPedidosByFormaPagamentoUseCase listPedidosByFormaPagamentoUseCase;
     private final ListPedidosByStatusUseCase listPedidosByStatusUseCase;
+    private final ListProdutosByDataRetiradaUseCase listProdutosByDataRetiradaUseCase;
 
-    public PedidoController(CreatePedidoUseCase createPedidoUseCase, UpdatePedidoUseCase updatePedidoUseCase, UpdateStatusPedidoUseCase updateStatusPedidoUseCase, DeletePedidoUseCase deletePedidoUseCase, ListPedidosUseCase listPedidosUseCase, GetPedidoByIdUseCase getPedidoByIdUseCase, ListPedidosByClienteIdUseCase listPedidosByClienteIdUseCase, ListPedidosByClienteCpfUseCase listPedidosByClienteCpfUseCase, ListPedidosByDataPedidoUseCase listPedidosByDataPedidoUseCase, ListPedidosByDataRetiradaUseCase listPedidosByDataRetiradaUseCase, ListPedidosByDataPagamentoUseCase listPedidosByDataPagamentoUseCase, ListPedidosByFormaPagamentoUseCase listPedidosByFormaPagamentoUseCase, ListPedidosByStatusUseCase listPedidosByStatusUseCase) {
+    public PedidoController(CreatePedidoUseCase createPedidoUseCase, UpdatePedidoUseCase updatePedidoUseCase, UpdateStatusPedidoUseCase updateStatusPedidoUseCase, DeletePedidoUseCase deletePedidoUseCase, ListPedidosUseCase listPedidosUseCase, GetPedidoByIdUseCase getPedidoByIdUseCase, ListPedidosByClienteIdUseCase listPedidosByClienteIdUseCase, ListPedidosByClienteCpfUseCase listPedidosByClienteCpfUseCase, ListPedidosByDataPedidoUseCase listPedidosByDataPedidoUseCase, ListPedidosByDataRetiradaUseCase listPedidosByDataRetiradaUseCase, ListPedidosByDataPagamentoUseCase listPedidosByDataPagamentoUseCase, ListPedidosByFormaPagamentoUseCase listPedidosByFormaPagamentoUseCase, ListPedidosByStatusUseCase listPedidosByStatusUseCase, ListProdutosByDataRetiradaUseCase listProdutosByDataRetiradaUseCase) {
         this.createPedidoUseCase = createPedidoUseCase;
         this.updatePedidoUseCase = updatePedidoUseCase;
         this.updateStatusPedidoUseCase = updateStatusPedidoUseCase;
@@ -55,6 +57,7 @@ public class PedidoController {
         this.listPedidosByDataPagamentoUseCase = listPedidosByDataPagamentoUseCase;
         this.listPedidosByFormaPagamentoUseCase = listPedidosByFormaPagamentoUseCase;
         this.listPedidosByStatusUseCase = listPedidosByStatusUseCase;
+        this.listProdutosByDataRetiradaUseCase = listProdutosByDataRetiradaUseCase;
     }
 
     @Operation(summary = "Cadastrar novo Pedido", description = "Cria e salva um novo Pedido no Banco de Dados.")
@@ -195,6 +198,28 @@ public class PedidoController {
                 .stream()
                 .map(PedidoEntityMapper::toDTO)
                 .toList());
+    }
+
+    @Operation(summary = "Buscar Produtos dos Pedidos por Data de Retirada", description = "Busca todos os pedidos para hoje e amanhã, retornando os produtos associados.")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Produtos encontrados"),
+            @ApiResponse(responseCode = "204", description = "Nenhum Produto encontrado")
+    })
+    @GetMapping("/produtos-data-retirada")
+    @SecurityRequirement(name = "Bearer")
+    public ResponseEntity<List<ProdutosPedidoResponseDTO>> buscarProdutosPorDataRetirada(@RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate dataRetirada) {
+        LocalDate dataParaBuscar = dataRetirada != null ? dataRetirada : LocalDate.now();
+        LocalDateTime dataRetiradaInicio = dataParaBuscar.atStartOfDay();
+        LocalDateTime dataRetiradaFim = dataParaBuscar.atTime(LocalTime.MAX);
+
+        ListProdutosByDataRetiradaQuery query = PedidoEntityMapper.toListProdutosByDataRetiradaQuery(dataRetiradaInicio, dataRetiradaFim);
+        List<ProdutosPedidoResponseDTO> produtos = listProdutosByDataRetiradaUseCase.execute(query);
+
+        if (produtos.isEmpty()) {
+            return ResponseEntity.status(204).build();
+        }
+
+        return ResponseEntity.status(200).body(produtos);
     }
 
     @Operation(summary = "Buscar Pedidos por Data de Pagamento", description = "Filtra Pedidos que contenham a Data de Pagamento informada.")
