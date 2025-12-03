@@ -2,7 +2,7 @@
 CREATE USER IF NOT EXISTS'anjos_bolos_api'@'%' IDENTIFIED BY '@nj0sB0l0s';
 
 -- Concedendo permissões apenas no banco da aplicação
-GRANT SELECT, INSERT, UPDATE, DELETE
+GRANT SELECT, INSERT, UPDATE, DELETE, CREATE, ALTER, INDEX
 ON anjos_bolos.*
 TO 'anjos_bolos_api'@'%';
 
