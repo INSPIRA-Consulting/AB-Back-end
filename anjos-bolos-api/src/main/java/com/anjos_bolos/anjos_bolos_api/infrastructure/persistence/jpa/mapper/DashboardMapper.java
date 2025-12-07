@@ -113,7 +113,7 @@ public class DashboardMapper {
                         feriado.tipo(),
                         feriado.descricao(),
                         feriado.uf(),
-                        feriado.municipio()
+                        feriado.codigo_ibge()
                 ))
                 .toList();
     }
@@ -126,7 +126,7 @@ public class DashboardMapper {
                         feriado.tipo(),
                         feriado.descricao(),
                         feriado.uf(),
-                        feriado.municipio()
+                        feriado.codigo_ibge()
                 ))
                 .toList();
     }

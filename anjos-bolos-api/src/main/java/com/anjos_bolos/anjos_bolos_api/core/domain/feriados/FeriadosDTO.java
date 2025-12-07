@@ -8,5 +8,5 @@ public record FeriadosDTO(
         String tipo,
         String descricao,
         String uf,
-        String municipio
+        Integer codigo_ibge
 ) {}
