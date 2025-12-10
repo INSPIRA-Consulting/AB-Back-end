@@ -32,10 +32,10 @@ public class RedisConfig {
     public static final String INGREDIENTES_BY_NOME = "ingredientesByNome";
     public static final String INGREDIENTES_LISTA = "ingredientesLista";
 
-        @Value("${spring.data.redis.host:localhost}")
+        @Value("${spring.redis.host:localhost}")
         private String redisHost;
 
-        @Value("${spring.data.redis.port:6379}")
+        @Value("${spring.redis.port:6379}")
         private int redisPort;
 
         @Bean
@@ -44,7 +44,7 @@ public class RedisConfig {
                 return new LettuceConnectionFactory(config);
         }
 
-    @Bean
+        @Bean
         public RedisCacheManager cacheManager(RedisConnectionFactory connectionFactory) {
         ObjectMapper objectMapper = new ObjectMapper()
                 .registerModule(new ParameterNamesModule())
