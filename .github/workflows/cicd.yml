@@ -26,6 +26,7 @@ jobs:
         run: |
           # Substitui CORS origins pelo IP do REMOTE_HOST na porta 80
           sed -i "s|^cors.allowed.origins=.*|cors.allowed.origins=http://${{ secrets.REMOTE_HOST }}:80|g" src/main/resources/application.properties
+          sed -i "s|^spring.redis.host=.*|spring.redis.host=${{ secrets.REMOTE_HOST_PRIVADO }}|g" src/main/resources/application.properties
           
           echo "✅ IP_PUBLICO configurado para: http://${{ secrets.REMOTE_HOST }}:80"
           
